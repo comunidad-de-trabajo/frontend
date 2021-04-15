@@ -23,8 +23,14 @@ export default function App() {
     <Container maxWidth="xl" className={classes.root}>
       <Router>
         <Switch>
-          <Route path="/">
-            <RegistroEmpresa />
+          <Route path="/registroEmpresa1">
+            <RegistroEmpresa step={0} />
+          </Route>
+          <Route path="/registroEmpresa2">
+            <RegistroEmpresa step={1} />
+          </Route>
+          <Route path="/registroEmpresa3">
+            <RegistroEmpresa step={2} />
           </Route>
         </Switch>
       </Router>

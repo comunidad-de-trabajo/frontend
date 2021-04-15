@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import DatosEmpresa from './DatosEmpresa';
 import TipoEmpresa from './TipoEmpresa';
 import DatosRepresentante from './DatosRepresentante';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -67,9 +68,10 @@ function getStepContent(step) {
   }
 }
 
-export default function RegistroEmpresa() {
+export default function RegistroEmpresa(props) {
   const classes = useStyles();
-  const [activeStep, setActiveStep] = React.useState(0);
+  const { step } = props;
+  const [activeStep, setActiveStep] = React.useState(step);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -136,3 +138,7 @@ export default function RegistroEmpresa() {
     </React.Fragment>
   );
 }
+
+RegistroEmpresa.propTypes = {
+  step: PropTypes.number,
+};
