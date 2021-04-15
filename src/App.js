@@ -1,10 +1,8 @@
+import React from 'react';
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import DatosUsuario from './components/DatosUsuario';
-import Home from './components/Home';
-import RecoilHome from './components-recoil/Home';
-import RecoilDatosUsuario from './components-recoil/DatosUsuario';
+import NavBar from './components/navBar/NavBar';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,11 +21,10 @@ export default function App() {
   const classes = useStyles();
 
   return (
-    <Container maxWidth="xl" className={classes.root}>
-      <div className={classes.fixedHeader}>
-        Este es un texto fijo, va por afuera de las rutas.
-      </div>
-      <Router>
+    <React.Fragment>
+      <NavBar />
+      <Container maxWidth="xl" className={classes.root}>
+        {/* <Router>
         <Switch>
           <Route path="/recoil/usuarios/:id">
             <RecoilDatosUsuario />
@@ -42,7 +39,8 @@ export default function App() {
             <Home />
           </Route>
         </Switch>
-      </Router>
-    </Container>
+      </Router> */}
+      </Container>
+    </React.Fragment>
   );
 }
