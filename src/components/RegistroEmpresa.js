@@ -9,7 +9,8 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import DatosEmpresa from './DatosEmpresa';
 import TipoEmpresa from './TipoEmpresa';
-import DatosRepresentante from './DatosRepresentante';
+import { DatosRepresentante } from './DatosRepresentante';
+
 import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
