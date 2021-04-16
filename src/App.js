@@ -3,6 +3,7 @@ import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import NavBar from './components/navBar/NavBar';
+import SideBar from './components/sideBar/SideBar';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -23,6 +24,8 @@ export default function App() {
   return (
     <React.Fragment>
       <NavBar />
+      <SideBar />
+
       <Container maxWidth="xl" className={classes.root}>
         {/* <Router>
         <Switch>
