@@ -33,7 +33,7 @@ const ListadoDeEmpresas = () => {
 
   const handleFiltroChange = (e) => {
     setFiltro(e.target.value);
-    console.log(filtro);
+    // console.log(filtro);
   };
 
   function getElementoSegunFiltro() {
