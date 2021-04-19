@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import ListadoDeEmpresas from './components/listadoDeEmpresas/ListadoDeEmpresas';
+import ListadoDeEmpresasPage from './components/listadoDeEmpresas/ListadoDeEmpresasPage';
 
 const useStyles = makeStyles(() => ({
   root: {
@@ -24,7 +24,7 @@ export default function App() {
       <Router>
         <Switch>
           <Route path="/listadoEmpresas">
-            <ListadoDeEmpresas />
+            <ListadoDeEmpresasPage />
           </Route>
         </Switch>
       </Router>
