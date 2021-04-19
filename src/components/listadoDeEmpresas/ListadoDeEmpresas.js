@@ -66,9 +66,6 @@ const ListadoDeEmpresas = () => {
               onChange={handleFiltroChange}
               className={classes.filtro}
             >
-              <MenuItem value="">
-                <em>Filtrar</em>
-              </MenuItem>
               <MenuItem value="aceptadas">Aceptadas</MenuItem>
               <MenuItem value="pendientes">Pendientes</MenuItem>
               <MenuItem value="rechazadas">Rechazadas</MenuItem>

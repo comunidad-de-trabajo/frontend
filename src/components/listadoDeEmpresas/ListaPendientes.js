@@ -7,9 +7,9 @@ import {
   Button,
   List,
   Divider,
-  Paper,
   makeStyles,
 } from '@material-ui/core';
+import ModalEmpresas from './ModalEmpresas';
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -58,6 +58,12 @@ const useStyles = makeStyles((theme) => ({
 const ListaPendientes = () => {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <Grid item xs={12} md={12} className={classes.container}>
       <div>
@@ -73,6 +79,7 @@ const ListaPendientes = () => {
                     aria-label="ver"
                     className={classes.botonVer}
                     size="small"
+                    onClick={handleClickOpen}
                   >
                     Ver
                   </Button>
@@ -98,6 +105,7 @@ const ListaPendientes = () => {
             </React.Fragment>
           )}
         </List>
+        <ModalEmpresas open={open} setOpen={setOpen} />
       </div>
     </Grid>
   );
