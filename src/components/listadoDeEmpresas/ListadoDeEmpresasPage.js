@@ -5,6 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import ListadoDeEmpresas from './ListadoDeEmpresas';
+import Paginacion from './Paginacion';
 
 const useStyles = makeStyles({
   root: {
@@ -37,6 +38,7 @@ export default function MediaCard() {
           </CardContent>
         </CardActionArea>
         <ListadoDeEmpresas />
+        <Paginacion />
       </Card>
     </div>
   );
