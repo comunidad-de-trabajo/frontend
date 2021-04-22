@@ -2,26 +2,23 @@ import React from 'react';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { MenuItem } from '@material-ui/core';
+import { MenuItem, Select } from '@material-ui/core';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
-import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
 
 export default function TipoEmpresa() {
   return (
     <React.Fragment>
-      <Typography align="center" variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom>
         Tipo de Empresa
       </Typography>
       <Grid container spacing={3}>
         <Grid item xs={12}>
-          <TextField
+          <Select
             required
             id="Areas de interes"
-            label="Areas de interes"
+            labelId="Areas de interes"
             fullWidth
-            select
+            defaultValue=""
           >
             <MenuItem value="Administración">Administración</MenuItem>
             <MenuItem value="Producción">Producción</MenuItem>
@@ -43,7 +40,7 @@ export default function TipoEmpresa() {
             <MenuItem value="Cultura">Cultura</MenuItem>
             <MenuItem value="Actividad Fisica">Actividad Fisica</MenuItem>
             <MenuItem value="Deporte">Deporte</MenuItem>
-          </TextField>
+          </Select>
         </Grid>
         <Grid item xs={12}>
           <TextField required id="Sitio web" label="Sitio web" fullWidth />
@@ -52,13 +49,13 @@ export default function TipoEmpresa() {
           <TextField required id="Email" label="Email" fullWidth />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="Tipo" label="Tipo" fullWidth select>
+          <Select required id="Tipo" labelId="Tipo" fullWidth defaultValue="">
             <MenuItem value="Emprendimiento">Emprendimiento</MenuItem>
             <MenuItem value="PYME">PYME</MenuItem>
             <MenuItem value="Empresa">Empresa</MenuItem>
             <MenuItem value="Industria">Industria</MenuItem>
             <MenuItem value="Agencia">Agencia</MenuItem>
-          </TextField>
+          </Select>
         </Grid>
         <Grid item xs={12}>
           <TextField
