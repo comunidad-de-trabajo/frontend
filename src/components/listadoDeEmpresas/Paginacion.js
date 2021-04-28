@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme) => ({
     },
     display: 'grid',
     placeItems: 'center',
+    margin: '240px auto 0 auto',
   },
   paginacion: {
     position: 'relative',

@@ -33,7 +33,6 @@ const ListadoDeEmpresas = () => {
 
   const handleFiltroChange = (e) => {
     setFiltro(e.target.value);
-    // console.log(filtro);
   };
 
   function getElementoSegunFiltro() {
@@ -65,6 +64,7 @@ const ListadoDeEmpresas = () => {
               displayEmpty
               onChange={handleFiltroChange}
               className={classes.filtro}
+              defaultValue="pendientes"
             >
               <MenuItem value="aceptadas">Aceptadas</MenuItem>
               <MenuItem value="pendientes">Pendientes</MenuItem>

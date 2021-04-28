@@ -4,12 +4,12 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Button,
   List,
   Divider,
   makeStyles,
 } from '@material-ui/core';
 import ModalEmpresas from './ModalEmpresas';
+import BotonesDeLista from './BotonesDeLista';
 
 function generate(element) {
   return [0, 1, 2, 3, 4].map((value) =>
@@ -40,10 +40,6 @@ const ListaAceptadas = () => {
 
   const [open, setOpen] = React.useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
   return (
     <Grid item xs={12} md={12} className={classes.container}>
       <div>
@@ -54,15 +50,7 @@ const ListaAceptadas = () => {
               <ListItem>
                 <ListItemText primary="Single-line item" />
                 <ListItemSecondaryAction>
-                  <Button
-                    edge="end"
-                    aria-label="ver"
-                    className={classes.botonVer}
-                    size="small"
-                    onClick={handleClickOpen}
-                  >
-                    Ver
-                  </Button>
+                  <BotonesDeLista ver={true} aceptar={false} rechazar={false} />
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />

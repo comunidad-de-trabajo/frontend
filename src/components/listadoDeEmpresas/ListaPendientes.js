@@ -4,12 +4,11 @@ import {
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
-  Button,
   List,
   Divider,
   makeStyles,
 } from '@material-ui/core';
-import ModalEmpresas from './ModalEmpresas';
+import BotonesDeLista from './BotonesDeLista';
 
 function generate(element) {
   return [0, 1, 2].map((value) =>
@@ -23,46 +22,10 @@ const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(4),
   },
-  botonVer: {
-    margin: '0 2px 0 2px',
-    borderRadius: '10%',
-    backgroundColor: '#FFD646',
-    '&:hover': {
-      backgroundColor: '#e8c23c',
-      borderColor: '#0062cc',
-      boxShadow: 'none',
-    },
-  },
-  botonAceptar: {
-    margin: '0 2px 0 2px',
-    borderRadius: '10%',
-    backgroundColor: '#8ce075',
-    '&:hover': {
-      backgroundColor: '#69ab57',
-      borderColor: '#0062cc',
-      boxShadow: 'none',
-    },
-  },
-  botonRechazar: {
-    margin: '0 2px 0 2px',
-    borderRadius: '10%',
-    backgroundColor: '#ff4747',
-    '&:hover': {
-      backgroundColor: '#bd3535',
-      borderColor: '#0062cc',
-      boxShadow: 'none',
-    },
-  },
 }));
 
 const ListaPendientes = () => {
   const classes = useStyles();
-
-  const [open, setOpen] = React.useState(false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
 
   return (
     <Grid item xs={12} md={12} className={classes.container}>
@@ -74,38 +37,13 @@ const ListaPendientes = () => {
               <ListItem>
                 <ListItemText primary="Single-line item" />
                 <ListItemSecondaryAction>
-                  <Button
-                    edge="end"
-                    aria-label="ver"
-                    className={classes.botonVer}
-                    size="small"
-                    onClick={handleClickOpen}
-                  >
-                    Ver
-                  </Button>
-                  <Button
-                    edge="end"
-                    aria-label="ver"
-                    className={classes.botonAceptar}
-                    size="small"
-                  >
-                    Aceptar
-                  </Button>
-                  <Button
-                    edge="end"
-                    aria-label="ver"
-                    className={classes.botonRechazar}
-                    size="small"
-                  >
-                    Rechazar
-                  </Button>
+                  <BotonesDeLista ver={true} aceptar={true} rechazar={true} />
                 </ListItemSecondaryAction>
               </ListItem>
               <Divider />
             </React.Fragment>
           )}
         </List>
-        <ModalEmpresas open={open} setOpen={setOpen} />
       </div>
     </Grid>
   );
