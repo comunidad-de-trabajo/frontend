@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
     textAlign: 'center',
     marginBottom: theme.spacing(2),
   },
+  subtitulo: {
+    marginLeft: theme.spacing(2),
+  },
+  filtro: {
+    marginRight: theme.spacing(2),
+  },
 }));
 
 const ListadoDeEmpresas = () => {
@@ -46,11 +52,10 @@ const ListadoDeEmpresas = () => {
   return (
     <React.Fragment>
       <Grid container className={classes.root}>
-        <Grid item xs={12} sm={12} className={classes.titulo}>
-          <Typography variant="h6">Listado de empresas</Typography>
-        </Grid>
         <Grid item xs={8} sm={10}>
-          <Typography variant="h6">Empresas</Typography>
+          <Typography variant="h6" className={classes.subtitulo}>
+            Empresas
+          </Typography>
         </Grid>
         <Grid item xs={4} sm={2}>
           <FormControl fullWidth>
@@ -59,6 +64,7 @@ const ListadoDeEmpresas = () => {
               id="demo-simple-select"
               displayEmpty
               onChange={handleFiltroChange}
+              className={classes.filtro}
             >
               <MenuItem value="">
                 <em>Filtrar</em>

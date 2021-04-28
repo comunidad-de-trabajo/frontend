@@ -20,8 +20,38 @@ function generate(element) {
 }
 
 const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(2),
+  container: {
+    marginTop: theme.spacing(4),
+  },
+  botonVer: {
+    margin: '0 2px 0 2px',
+    borderRadius: '10%',
+    backgroundColor: '#FFD646',
+    '&:hover': {
+      backgroundColor: '#e8c23c',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+    },
+  },
+  botonAceptar: {
+    margin: '0 2px 0 2px',
+    borderRadius: '10%',
+    backgroundColor: '#8ce075',
+    '&:hover': {
+      backgroundColor: '#69ab57',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+    },
+  },
+  botonRechazar: {
+    margin: '0 2px 0 2px',
+    borderRadius: '10%',
+    backgroundColor: '#ff4747',
+    '&:hover': {
+      backgroundColor: '#bd3535',
+      borderColor: '#0062cc',
+      boxShadow: 'none',
+    },
   },
 }));
 
@@ -29,31 +59,45 @@ const ListaPendientes = () => {
   const classes = useStyles();
 
   return (
-    <Grid item xs={12} md={12}>
+    <Grid item xs={12} md={12} className={classes.container}>
       <div>
-        <Paper className={classes.paper}>
-          <List>
-            {generate(
-              <React.Fragment>
-                <ListItem>
-                  <ListItemText primary="Single-line item" />
-                  <ListItemSecondaryAction>
-                    <Button edge="end" aria-label="ver">
-                      Ver
-                    </Button>
-                    <Button edge="end" aria-label="ver">
-                      Aceptar
-                    </Button>
-                    <Button edge="end" aria-label="ver">
-                      Rechazar
-                    </Button>
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider />
-              </React.Fragment>
-            )}
-          </List>
-        </Paper>
+        <Divider />
+        <List>
+          {generate(
+            <React.Fragment>
+              <ListItem>
+                <ListItemText primary="Single-line item" />
+                <ListItemSecondaryAction>
+                  <Button
+                    edge="end"
+                    aria-label="ver"
+                    className={classes.botonVer}
+                    size="small"
+                  >
+                    Ver
+                  </Button>
+                  <Button
+                    edge="end"
+                    aria-label="ver"
+                    className={classes.botonAceptar}
+                    size="small"
+                  >
+                    Aceptar
+                  </Button>
+                  <Button
+                    edge="end"
+                    aria-label="ver"
+                    className={classes.botonRechazar}
+                    size="small"
+                  >
+                    Rechazar
+                  </Button>
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+            </React.Fragment>
+          )}
+        </List>
       </div>
     </Grid>
   );
