@@ -10,7 +10,7 @@ import React from 'react';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import logo from './logo_unahur1.svg';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   logo: {
     height: '32px',
     width: '256px',

@@ -1,42 +1,31 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import ListadoDeEmpresas from './ListadoDeEmpresas';
 import Paginacion from './Paginacion';
+import MediaCard from '../common/MediaCard';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
-const useStyles = makeStyles({
-  root: {
-    width: 1000,
-    minHeight: 600,
-  },
-  container: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
+export default function ListadoDeEmpresasPage({ routes }) {
+  const history = useHistory();
 
-export default function MediaCard() {
-  const classes = useStyles();
+  useEffect(() => {
+    history.push('/listadoEmpresas/pendientes');
+  }, [history]);
 
   return (
-    <div className={classes.container}>
-      <Card className={classes.root}>
-        <CardContent>
-          <Typography
-            gutterBottom
-            variant="h5"
-            component="h2"
-            style={{ textAlign: 'center' }}
-          >
-            Lista de empresas
-          </Typography>
-          <ListadoDeEmpresas />
-          <Paginacion />
-        </CardContent>
-      </Card>
-    </div>
+    <>
+      <MediaCard>
+        <Typography gutterBottom variant="h5" component="h2" align="center">
+          Lista de empresas
+        </Typography>
+        <ListadoDeEmpresas routes={routes} />
+        <Paginacion />
+      </MediaCard>
+    </>
   );
 }
+
+ListadoDeEmpresasPage.propTypes = {
+  routes: PropTypes.array,
+};

@@ -7,6 +7,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
   list: {
@@ -34,6 +35,7 @@ const SideBar = () => {
     bottom: false,
     right: false,
   });
+  const history = useHistory();
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -57,13 +59,18 @@ const SideBar = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List className={classes.botonesLista}>
-        {['Home', 'Listar empresas', 'Registro para empresas'].map(
-          (text, index) => (
-            <ListItem button key={text}>
-              <ListItemText primary={text} />
-            </ListItem>
-          )
-        )}
+        <ListItem button onClick={() => history.push('/')}>
+          <ListItemText primary={'Home'}></ListItemText>
+        </ListItem>
+        <ListItem
+          button
+          onClick={() => history.push('/listadoEmpresas/pendientes')}
+        >
+          <ListItemText primary={'Listado de empresas'}></ListItemText>
+        </ListItem>
+        <ListItem button onClick={() => history.push('/registroDeEmpresa')}>
+          <ListItemText primary={'Registro de empresas'}></ListItemText>
+        </ListItem>
       </List>
     </div>
   );

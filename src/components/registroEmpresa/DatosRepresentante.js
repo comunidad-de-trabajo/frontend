@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import AlertDialogSlide from './modales/ModalTerminosYCondiciones/ModalTerminosYCondiciones';
+import AlertDialogSlide from '../modales/ModalTerminosYCondiciones/ModalTerminosYCondiciones';
 
 export const DatosRepresentante = () => {
   const [isActive, setIsActive] = useState(false);

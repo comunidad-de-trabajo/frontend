@@ -6,10 +6,10 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
-import React, { useState } from 'react';
-import ListaAceptadas from './ListaAceptadas';
-import ListaPendientes from './ListaPendientes';
-import ListaRechazadas from './ListaRechazadas';
+import React from 'react';
+import { AppRoutes } from '../../routes/AppRoutes';
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,26 +27,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListadoDeEmpresas = () => {
+const ListadoDeEmpresas = ({ routes }) => {
   const classes = useStyles();
-  const [filtro, setFiltro] = useState('');
+  const history = useHistory();
 
   const handleFiltroChange = (e) => {
-    setFiltro(e.target.value);
+    history.push(e.target.value);
   };
-
-  function getElementoSegunFiltro() {
-    switch (filtro) {
-      case 'pendientes':
-        return <ListaPendientes />;
-      case 'aceptadas':
-        return <ListaAceptadas />;
-      case 'rechazadas':
-        return <ListaRechazadas />;
-      default:
-        return <ListaPendientes />;
-    }
-  }
 
   return (
     <React.Fragment>
@@ -72,10 +59,14 @@ const ListadoDeEmpresas = () => {
             </Select>
           </FormControl>
         </Grid>
-        {getElementoSegunFiltro()}
+        <AppRoutes routes={routes} />
       </Grid>
     </React.Fragment>
   );
+};
+
+ListadoDeEmpresas.propTypes = {
+  routes: PropTypes.array,
 };
 
 export default ListadoDeEmpresas;

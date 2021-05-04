@@ -11,22 +11,25 @@ import theme from './theme';
 import { RecoilRoot } from 'recoil';
 import { ErrorBoundary } from 'react-error-boundary';
 import { Alert } from '@material-ui/lab';
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <React.StrictMode>
-      <CssBaseline />
-      <RecoilRoot>
-        <Suspense fallback={<CircularProgress />}>
-          <ErrorBoundary
-            fallback={<Alert severity="error">Algo se rompió feo :(</Alert>}
-          >
-            <App />
-          </ErrorBoundary>
-        </Suspense>
-      </RecoilRoot>
-    </React.StrictMode>
-  </ThemeProvider>,
+  <BrowserRouter>
+    <ThemeProvider theme={theme}>
+      <React.StrictMode>
+        <CssBaseline />
+        <RecoilRoot>
+          <Suspense fallback={<CircularProgress />}>
+            <ErrorBoundary
+              fallback={<Alert severity="error">Algo se rompió feo :(</Alert>}
+            >
+              <App />
+            </ErrorBoundary>
+          </Suspense>
+        </RecoilRoot>
+      </React.StrictMode>
+    </ThemeProvider>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -7,11 +7,9 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import DatosEmpresa from './DatosEmpresa';
-import TipoEmpresa from './TipoEmpresa';
-import { DatosRepresentante } from './DatosRepresentante';
-
 import PropTypes from 'prop-types';
+import { AppRoutes } from '../../routes/AppRoutes';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -56,23 +54,14 @@ const steps = [
   'Datos del representante',
 ];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <DatosEmpresa />;
-    case 1:
-      return <TipoEmpresa />;
-    case 2:
-      return <DatosRepresentante />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
-export default function RegistroEmpresa(props) {
+export default function RegistroEmpresa({ routes }) {
   const classes = useStyles();
-  const { step } = props;
-  const [activeStep, setActiveStep] = React.useState(step);
+  const [activeStep, setActiveStep] = React.useState(0);
+  const history = useHistory();
+
+  useEffect(() => {
+    history.push(`/registroDeEmpresa/${activeStep}`);
+  }, [history, activeStep]);
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -115,7 +104,7 @@ export default function RegistroEmpresa(props) {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                <AppRoutes routes={routes} />
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
@@ -142,4 +131,5 @@ export default function RegistroEmpresa(props) {
 
 RegistroEmpresa.propTypes = {
   step: PropTypes.number,
+  routes: PropTypes.array,
 };
