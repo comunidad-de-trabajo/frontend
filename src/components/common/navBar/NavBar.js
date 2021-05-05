@@ -9,6 +9,7 @@ import {
 import React from 'react';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import logo from './logo_unahur1.svg';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(() => ({
   logo: {
@@ -41,7 +42,9 @@ const NavBar = () => {
   return (
     <AppBar position="static">
       <Toolbar className={classes.toolbar}>
-        <img src={logo} alt="logo unahur" className={classes.logo} />
+        <Link to="/">
+          <img src={logo} alt="logo unahur" className={classes.logo} />
+        </Link>
         <div className={classes.iconoAvatar}>
           <IconButton
             aria-label="account of current user"
