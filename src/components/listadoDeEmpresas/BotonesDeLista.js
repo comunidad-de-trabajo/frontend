@@ -1,7 +1,8 @@
 import { Button, makeStyles } from '@material-ui/core';
-import React from 'react';
+import React, { useState } from 'react';
 import ModalEmpresas from './ModalEmpresas';
 import propTypes from 'prop-types';
+import ModalConfirmarAccion from '../modales/ModalConfirmarAccion';
 
 const useStyles = makeStyles({
   boton: {
@@ -36,11 +37,35 @@ const useStyles = makeStyles({
 
 const BotonesDeLista = (props) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const { ver, aceptar, rechazar } = props;
+  const [openModalEmpresa, setOpenModalEmpresa] = useState(false);
+  const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
+  const [datosModalConfirmacion, setDatosModalConfirmacion] = useState({
+    titulo: '',
+    mensaje: '',
+  });
+  const { titulo, mensaje } = datosModalConfirmacion;
 
   const handleClickOpen = () => {
-    setOpen(true);
+    setOpenModalEmpresa(true);
+  };
+
+  const handleClickAceptar = () => {
+    setDatosModalConfirmacion({
+      titulo: 'Aceptar empresa',
+      mensaje:
+        'Una vez aceptada la empresa, esta accion no podra ser revocada.',
+    });
+    setOpenModalConfirmacion(true);
+  };
+
+  const handleClickRechazar = () => {
+    setDatosModalConfirmacion({
+      titulo: 'Rechazar empresa',
+      mensaje:
+        'Una vez rechazada la empresa, esta quedara en la lista de empresas rechazadas para una posterior revision.',
+    });
+    setOpenModalConfirmacion(true);
   };
 
   return (
@@ -62,6 +87,7 @@ const BotonesDeLista = (props) => {
           aria-label="ver"
           className={`${classes.botonAceptar} ${classes.boton}`}
           size="small"
+          onClick={handleClickAceptar}
         >
           Aceptar
         </Button>
@@ -72,11 +98,18 @@ const BotonesDeLista = (props) => {
           aria-label="ver"
           className={`${classes.botonRechazar} ${classes.boton}`}
           size="small"
+          onClick={handleClickRechazar}
         >
           Rechazar
         </Button>
       )}
-      <ModalEmpresas open={open} setOpen={setOpen} />
+      <ModalEmpresas open={openModalEmpresa} setOpen={setOpenModalEmpresa} />
+      <ModalConfirmarAccion
+        titulo={titulo}
+        mensaje={mensaje}
+        open={openModalConfirmacion}
+        setOpen={setOpenModalConfirmacion}
+      />
     </div>
   );
 };
