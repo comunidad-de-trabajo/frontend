@@ -1,6 +1,7 @@
 import React from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
+import { useState, useEffect } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -8,8 +9,37 @@ import {
   Select,
   Typography,
 } from '@material-ui/core';
+import {
+  getAllLocalidades,
+  getAllProvincias,
+} from '../../services/DatoGeograficoArg';
 
 export default function DatosEmpresa() {
+  const [provincias, setProvincias] = useState([]);
+  const [localidades, setLocalidades] = useState([]);
+  const [provinciaActual, setProvinciaActual] = useState([]);
+
+  const handleChange = (event) => {
+    setProvinciaActual(event.target.value);
+  };
+
+  async function fetchProvincias() {
+    const jsonProvincias = await getAllProvincias();
+    setProvincias(jsonProvincias.provincias);
+  }
+
+  async function fetchLocalidades(nombreProvincia) {
+    if (provinciaActual.length > 0) {
+      const jsonLocalidades = await getAllLocalidades(nombreProvincia);
+      setLocalidades(jsonLocalidades.departamentos);
+    }
+  }
+
+  useEffect(() => {
+    fetchProvincias();
+    fetchLocalidades(provinciaActual);
+  }, [provinciaActual]);
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -26,13 +56,21 @@ export default function DatosEmpresa() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="provincia"
-            name="provincia"
-            label="Provincia"
-            fullWidth
-          />
+          <FormControl fullWidth>
+            <InputLabel id="demo-simple-select-label">Provincia</InputLabel>
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              value={provinciaActual}
+              onChange={handleChange}
+            >
+              {provincias.map((p) => (
+                <MenuItem key={p.id} value={p.nombre}>
+                  {p.nombre}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -44,13 +82,16 @@ export default function DatosEmpresa() {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="localidad"
-            name="localidad"
-            label="Localidad"
-            fullWidth
-          />
+          <FormControl fullWidth disabled={!provinciaActual.length > 0}>
+            <InputLabel id="demo-simple-select-label">Localidad</InputLabel>
+            <Select labelId="demo-simple-select-label" id="demo-simple-select">
+              {localidades.map((l) => (
+                <MenuItem key={l.id} value={l.nombre}>
+                  {l.nombre}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField required id="cuit" name="cuit" label="CUIT" fullWidth />
