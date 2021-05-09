@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   ListItem,
@@ -9,14 +9,7 @@ import {
   makeStyles,
 } from '@material-ui/core';
 import BotonesDeLista from './BotonesDeLista';
-
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
+import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -26,23 +19,36 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaPendientes = () => {
   const classes = useStyles();
+  const [empresasPendientes, setEmpresasPendientes] = useState([]);
+
+  const fetchListadoEmpresasPendientes = async () => {
+    setEmpresasPendientes(await fetchListadoEmpresas('pendiente'));
+  };
+
+  useEffect(() => {
+    fetchListadoEmpresasPendientes();
+    return () => {
+      setEmpresasPendientes([]);
+    };
+  }, []);
 
   return (
     <Grid item xs={12} md={12} className={classes.container}>
       <div>
         <Divider />
         <List>
-          {generate(
-            <React.Fragment>
-              <ListItem>
-                <ListItemText primary="Single-line item" />
-                <ListItemSecondaryAction>
-                  <BotonesDeLista ver={true} aceptar={true} rechazar={true} />
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          )}
+          {empresasPendientes.length > 0 &&
+            empresasPendientes.map((emp) => (
+              <div key={emp.id}>
+                <ListItem>
+                  <ListItemText primary={emp.nombre} />
+                  <ListItemSecondaryAction>
+                    <BotonesDeLista ver={true} aceptar={true} rechazar={true} />
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
         </List>
       </div>
     </Grid>

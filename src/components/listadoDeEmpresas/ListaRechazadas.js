@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Grid,
   ListItem,
@@ -10,14 +10,7 @@ import {
 } from '@material-ui/core';
 import ModalEmpresas from './ModalEmpresas';
 import BotonesDeLista from './BotonesDeLista';
-
-function generate(element) {
-  return [0, 1, 2].map((value) =>
-    React.cloneElement(element, {
-      key: value,
-    })
-  );
-}
+import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,25 +20,41 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaRechazadas = () => {
   const classes = useStyles();
+  const [open, setOpen] = useState(false);
+  const [empresasRechazadas, setEmpresasRechazadas] = useState([]);
 
-  const [open, setOpen] = React.useState(false);
+  const fetchListadoEmpresasRechazadas = async () => {
+    setEmpresasRechazadas(await fetchListadoEmpresas('rechazada'));
+  };
+
+  useEffect(() => {
+    fetchListadoEmpresasRechazadas();
+    return () => {
+      setEmpresasRechazadas([]);
+    };
+  }, []);
 
   return (
     <Grid item xs={12} md={12} className={classes.container}>
       <div>
         <Divider />
         <List>
-          {generate(
-            <React.Fragment>
-              <ListItem>
-                <ListItemText primary="Single-line item" />
-                <ListItemSecondaryAction>
-                  <BotonesDeLista ver={true} aceptar={true} rechazar={false} />
-                </ListItemSecondaryAction>
-              </ListItem>
-              <Divider />
-            </React.Fragment>
-          )}
+          {empresasRechazadas.length > 0 &&
+            empresasRechazadas.map((emp) => (
+              <div key={emp.id}>
+                <ListItem>
+                  <ListItemText primary={emp.nombre} />
+                  <ListItemSecondaryAction>
+                    <BotonesDeLista
+                      ver={true}
+                      aceptar={true}
+                      rechazar={false}
+                    />
+                  </ListItemSecondaryAction>
+                </ListItem>
+                <Divider />
+              </div>
+            ))}
         </List>
         <ModalEmpresas open={open} setOpen={setOpen} />
       </div>
