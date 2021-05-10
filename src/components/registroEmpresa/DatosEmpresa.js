@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField';
-import { useState, useEffect } from 'react';
 import {
   FormControl,
   InputLabel,
@@ -13,11 +12,13 @@ import {
   getAllLocalidades,
   getAllProvincias,
 } from '../../services/DatoGeograficoArg';
+import { getTipoEmpleador } from '../../services/registroDeEmpresas/empleador';
 
 export default function DatosEmpresa() {
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
   const [provinciaActual, setProvinciaActual] = useState([]);
+  const [tiposEmpleador, setTiposEmpleador] = useState(null);
 
   const handleChange = (event) => {
     setProvinciaActual(event.target.value);
@@ -35,9 +36,17 @@ export default function DatosEmpresa() {
     }
   }
 
+  async function fetchTiposEmpleador() {
+    setTimeout(async () => {
+      const tipoEmpleador = await getTipoEmpleador();
+      setTiposEmpleador(tipoEmpleador);
+    }, 1000);
+  }
+
   useEffect(() => {
     fetchProvincias();
     fetchLocalidades(provinciaActual);
+    fetchTiposEmpleador();
   }, [provinciaActual]);
 
   return (
@@ -111,8 +120,14 @@ export default function DatosEmpresa() {
               Tipo de empresa
             </InputLabel>
             <Select labelId="demo-simple-select-label" id="demo-simple-select">
-              <MenuItem>Agencia de reclutamiento / consultora de RRHH</MenuItem>
-              <MenuItem>Empleador directo</MenuItem>
+              {tiposEmpleador &&
+                tiposEmpleador.map((tipo, index) => {
+                  return (
+                    <MenuItem value={tipo} key={String(index)}>
+                      {tipo}
+                    </MenuItem>
+                  );
+                })}
             </Select>
           </FormControl>
         </Grid>
