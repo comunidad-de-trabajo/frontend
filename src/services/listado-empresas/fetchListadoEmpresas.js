@@ -7,3 +7,9 @@ export async function fetchListadoEmpresas(filtro) {
   );
   return filtroAceptadas;
 }
+
+export async function detalleEmpresa(id) {
+  const listadoEmpresas = await getListadoEmpresas();
+  const datosEmpresa = listadoEmpresas.find((empresa) => empresa.id === id);
+  return datosEmpresa;
+}

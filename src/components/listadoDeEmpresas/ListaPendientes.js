@@ -43,7 +43,12 @@ const ListaPendientes = () => {
                 <ListItem>
                   <ListItemText primary={emp.nombre} />
                   <ListItemSecondaryAction>
-                    <BotonesDeLista ver={true} aceptar={true} rechazar={true} />
+                    <BotonesDeLista
+                      ver={true}
+                      aceptar={true}
+                      rechazar={true}
+                      empresa={emp}
+                    />
                   </ListItemSecondaryAction>
                 </ListItem>
                 <Divider />

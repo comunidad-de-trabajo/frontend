@@ -8,7 +8,6 @@ import {
   Divider,
   makeStyles,
 } from '@material-ui/core';
-import ModalEmpresas from './ModalEmpresas';
 import BotonesDeLista from './BotonesDeLista';
 import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
 
@@ -20,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaRechazadas = () => {
   const classes = useStyles();
-  const [open, setOpen] = useState(false);
   const [empresasRechazadas, setEmpresasRechazadas] = useState([]);
 
   const fetchListadoEmpresasRechazadas = async () => {
@@ -49,6 +47,7 @@ const ListaRechazadas = () => {
                       ver={true}
                       aceptar={true}
                       rechazar={false}
+                      empresa={emp}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -56,7 +55,6 @@ const ListaRechazadas = () => {
               </div>
             ))}
         </List>
-        <ModalEmpresas open={open} setOpen={setOpen} />
       </div>
     </Grid>
   );

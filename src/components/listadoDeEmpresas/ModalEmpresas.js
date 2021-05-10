@@ -2,11 +2,11 @@ import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
-import MuiDialogContent from '@material-ui/core/DialogContent';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import propTypes from 'prop-types';
+import DetallesEmpresa from './DetallesEmpresa';
 
 const styles = (theme) => ({
   root: {
@@ -39,46 +39,26 @@ const DialogTitle = withStyles(styles)((props) => {
   );
 });
 
-const DialogContent = withStyles((theme) => ({
-  root: {
-    padding: theme.spacing(2),
-  },
-}))(MuiDialogContent);
-
 export default function ModalEmpresas(props) {
-  const { open, setOpen } = props;
+  const { open, setOpen, empresa } = props;
 
   const handleClose = () => {
     setOpen(false);
   };
 
+  console.log(empresa);
   return (
     <div>
       <Dialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        fullWidth
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Nombre de la empresa
+          {empresa.nombre}
         </DialogTitle>
-        <DialogContent dividers>
-          <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
-          </Typography>
-          <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
-          </Typography>
-          <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
-          </Typography>
-        </DialogContent>
+        <DetallesEmpresa empresa={empresa} />
       </Dialog>
     </div>
   );
@@ -87,4 +67,5 @@ export default function ModalEmpresas(props) {
 ModalEmpresas.propTypes = {
   open: propTypes.bool,
   setOpen: propTypes.func,
+  empresa: propTypes.object,
 };

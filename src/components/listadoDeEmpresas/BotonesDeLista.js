@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 
 const BotonesDeLista = (props) => {
   const classes = useStyles();
-  const { ver, aceptar, rechazar } = props;
+  const { ver, aceptar, rechazar, empresa } = props;
   const [openModalEmpresa, setOpenModalEmpresa] = useState(false);
   const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
   const [datosModalConfirmacion, setDatosModalConfirmacion] = useState({
@@ -103,7 +103,11 @@ const BotonesDeLista = (props) => {
           Rechazar
         </Button>
       )}
-      <ModalEmpresas open={openModalEmpresa} setOpen={setOpenModalEmpresa} />
+      <ModalEmpresas
+        open={openModalEmpresa}
+        setOpen={setOpenModalEmpresa}
+        empresa={empresa}
+      />
       <ModalConfirmarAccion
         titulo={titulo}
         mensaje={mensaje}
@@ -118,6 +122,7 @@ BotonesDeLista.propTypes = {
   ver: propTypes.bool,
   aceptar: propTypes.bool,
   rechazar: propTypes.bool,
+  empresa: propTypes.object,
 };
 
 export default BotonesDeLista;
