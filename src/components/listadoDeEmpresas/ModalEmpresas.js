@@ -46,7 +46,6 @@ export default function ModalEmpresas(props) {
     setOpen(false);
   };
 
-  console.log(empresa);
   return (
     <div>
       <Dialog

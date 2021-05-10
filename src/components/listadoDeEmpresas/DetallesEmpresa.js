@@ -10,7 +10,7 @@ import {
 
 export default function DetallesEmpresa({ empresa }) {
   return (
-    <div styles={{ width: '100%' }}>
+    <div>
       <Divider />
       <List>
         <ListItem>
