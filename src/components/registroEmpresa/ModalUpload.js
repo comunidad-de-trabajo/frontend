@@ -48,6 +48,10 @@ export default function ModalUpload() {
 
   const handleToggle = () => {
     setOpenBackdrop(!openBackdrop);
+    setTimeout(() => {
+      handleClose();
+    }, 2000);
+    setAbrirCarga(true);
   };
 
   const handleCloseSnackbar = (event, reason) => {
