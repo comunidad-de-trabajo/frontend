@@ -68,7 +68,7 @@ const SideBar = () => {
         >
           <ListItemText primary={'Listado de empresas'}></ListItemText>
         </ListItem>
-        <ListItem button onClick={() => history.push('/registroDeEmpresa')}>
+        <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
           <ListItemText primary={'Registro de empresas'}></ListItemText>
         </ListItem>
       </List>
