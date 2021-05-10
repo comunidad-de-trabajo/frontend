@@ -1,21 +1,14 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-import AccountCircle from '@material-ui/icons/AccountCircle';
+
 import usuario from './usuario.svg';
 import {
   Grid,
   Backdrop,
   Snackbar,
   CircularProgress,
-  Avatar,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
   Typography,
 } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
