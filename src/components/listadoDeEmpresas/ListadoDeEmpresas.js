@@ -59,7 +59,9 @@ const ListadoDeEmpresas = ({ routes }) => {
             </Select>
           </FormControl>
         </Grid>
-        <AppRoutes routes={routes} />
+        <Grid item xs={12} sm={12}>
+          <AppRoutes routes={routes} />
+        </Grid>
       </Grid>
     </React.Fragment>
   );

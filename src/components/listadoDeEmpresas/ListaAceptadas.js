@@ -10,7 +10,6 @@ import {
 } from '@material-ui/core';
 import BotonesDeLista from './BotonesDeLista';
 import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
-
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(4),
@@ -44,28 +43,26 @@ const ListaAceptadas = () => {
 
   return (
     <Grid item xs={12} md={12} className={classes.container}>
-      <div>
-        <Divider />
-        <List>
-          {empresasAceptadas.length > 0 &&
-            empresasAceptadas.map((emp) => (
-              <div key={emp.id}>
-                <ListItem>
-                  <ListItemText primary={emp.nombre} />
-                  <ListItemSecondaryAction>
-                    <BotonesDeLista
-                      ver={true}
-                      aceptar={false}
-                      rechazar={false}
-                      empresa={emp}
-                    />
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider />
-              </div>
-            ))}
-        </List>
-      </div>
+      <Divider />
+      <List>
+        {empresasAceptadas.length > 0 &&
+          empresasAceptadas.map((emp) => (
+            <div key={emp.id}>
+              <ListItem>
+                <ListItemText primary={emp.nombre} />
+                <ListItemSecondaryAction>
+                  <BotonesDeLista
+                    ver={true}
+                    aceptar={false}
+                    rechazar={false}
+                    empresa={emp}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+            </div>
+          ))}
+      </List>
     </Grid>
   );
 };

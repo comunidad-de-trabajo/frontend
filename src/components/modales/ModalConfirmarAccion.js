@@ -10,9 +10,13 @@ import propTypes from 'prop-types';
 const ModalConfirmarAccion = (props) => {
   const { titulo, mensaje } = props;
   const { open, setOpen } = props;
+  const { setOpenAlert } = props;
 
   const handleClose = () => {
     setOpen(false);
+    setTimeout(() => {
+      setOpenAlert(true);
+    }, 1000);
   };
 
   return (
@@ -30,7 +34,12 @@ const ModalConfirmarAccion = (props) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button
+            onClick={() => {
+              setOpen(false);
+            }}
+            color="primary"
+          >
             Cancelar
           </Button>
           <Button onClick={handleClose} color="primary">
@@ -47,6 +56,7 @@ ModalConfirmarAccion.propTypes = {
   mensaje: propTypes.string,
   open: propTypes.bool,
   setOpen: propTypes.func,
+  setOpenAlert: propTypes.func,
 };
 
 export default ModalConfirmarAccion;

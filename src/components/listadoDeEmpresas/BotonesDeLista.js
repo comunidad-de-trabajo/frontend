@@ -41,29 +41,37 @@ const BotonesDeLista = (props) => {
   const [openModalEmpresa, setOpenModalEmpresa] = useState(false);
   const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
   const [datosModalConfirmacion, setDatosModalConfirmacion] = useState({
-    titulo: '',
-    mensaje: '',
+    tituloModalConfirmacion: '',
+    mensajeModalConfirmacion: '',
   });
-  const { titulo, mensaje } = datosModalConfirmacion;
+  const {
+    tituloModalConfirmacion,
+    mensajeModalConfirmacion,
+  } = datosModalConfirmacion;
+  const { setOpenAlert } = props;
 
   const handleClickOpen = () => {
     setOpenModalEmpresa(true);
   };
 
   const handleClickAceptar = () => {
-    setDatosModalConfirmacion({
-      titulo: 'Aceptar empresa',
-      mensaje:
-        'Una vez aceptada la empresa, esta accion no podra ser revocada.',
-    });
-    setOpenModalConfirmacion(true);
+    abrirModalConfirmacion(
+      'Aceptar empresa',
+      'Una vez aceptada la empresa, esta accion no podra ser revocada.'
+    );
   };
 
   const handleClickRechazar = () => {
+    abrirModalConfirmacion(
+      'Rechazar empresa',
+      'Una vez rechazada la empresa, esta quedara en la lista de empresas rechazadas para una posterior revision.'
+    );
+  };
+
+  const abrirModalConfirmacion = (titulo, mensaje) => {
     setDatosModalConfirmacion({
-      titulo: 'Rechazar empresa',
-      mensaje:
-        'Una vez rechazada la empresa, esta quedara en la lista de empresas rechazadas para una posterior revision.',
+      tituloModalConfirmacion: titulo,
+      mensajeModalConfirmacion: mensaje,
     });
     setOpenModalConfirmacion(true);
   };
@@ -109,10 +117,11 @@ const BotonesDeLista = (props) => {
         empresa={empresa}
       />
       <ModalConfirmarAccion
-        titulo={titulo}
-        mensaje={mensaje}
+        titulo={tituloModalConfirmacion}
+        mensaje={mensajeModalConfirmacion}
         open={openModalConfirmacion}
         setOpen={setOpenModalConfirmacion}
+        setOpenAlert={setOpenAlert}
       />
     </div>
   );
@@ -123,6 +132,7 @@ BotonesDeLista.propTypes = {
   aceptar: propTypes.bool,
   rechazar: propTypes.bool,
   empresa: propTypes.object,
+  setOpenAlert: propTypes.func,
 };
 
 export default BotonesDeLista;

@@ -2,16 +2,14 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-
 import usuario from './usuario.svg';
 import {
   Grid,
   Backdrop,
-  Snackbar,
   CircularProgress,
   Typography,
 } from '@material-ui/core';
-import MuiAlert from '@material-ui/lab/Alert';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -54,14 +52,6 @@ export default function ModalUpload() {
     setAbrirCarga(true);
   };
 
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    setOpenSnackbar(false);
-  };
-
   function cargar() {
     setAbrirCarga(false);
   }
@@ -74,10 +64,6 @@ export default function ModalUpload() {
     const primerArchivo = archivos[0];
     const objectURL = URL.createObjectURL(primerArchivo);
     $imagenAVisualizar.src = objectURL;
-  }
-
-  function Alert(props) {
-    return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
 
   return (
@@ -115,19 +101,12 @@ export default function ModalUpload() {
           El logo debe ser formato JPG o PNG, con peso maximo de 500kb y un
           tamaño minimo de 200px por 200px y maximo de 500px por 500px.
         </Typography>
-        <Snackbar
+        <AlertaOperacionTerminada
+          tipo="success"
+          mensaje="Imagen cargada con exito"
           open={openSnackbar}
-          autoHideDuration={4000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert onClose={handleCloseSnackbar} severity="success">
-            Imagen cargada con exito
-          </Alert>
-        </Snackbar>
-        {/*<Alert severity="error">This is an error message!</Alert>
-        <Alert severity="warning">This is a warning message!</Alert>
-        <Alert severity="info">This is an information message!</Alert>
-        <Alert severity="success">This is a success message!</Alert>*/}
+          setOpen={setOpenSnackbar}
+        />
       </Grid>
       <Grid item xs={6}>
         <img

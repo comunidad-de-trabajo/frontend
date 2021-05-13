@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import BotonesDeLista from './BotonesDeLista';
 import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 const ListaRechazadas = () => {
   const classes = useStyles();
   const [empresasRechazadas, setEmpresasRechazadas] = useState([]);
-
+  const [openAlert, setOpenAlert] = useState(false);
   const fetchListadoEmpresasRechazadas = async () => {
     setEmpresasRechazadas(await fetchListadoEmpresas('rechazada'));
   };
@@ -34,28 +35,32 @@ const ListaRechazadas = () => {
 
   return (
     <Grid item xs={12} md={12} className={classes.container}>
-      <div>
-        <Divider />
-        <List>
-          {empresasRechazadas.length > 0 &&
-            empresasRechazadas.map((emp) => (
-              <div key={emp.id}>
-                <ListItem>
-                  <ListItemText primary={emp.nombre} />
-                  <ListItemSecondaryAction>
-                    <BotonesDeLista
-                      ver={true}
-                      aceptar={true}
-                      rechazar={false}
-                      empresa={emp}
-                    />
-                  </ListItemSecondaryAction>
-                </ListItem>
-                <Divider />
-              </div>
-            ))}
-        </List>
-      </div>
+      <Divider />
+      <List>
+        {empresasRechazadas.length > 0 &&
+          empresasRechazadas.map((emp) => (
+            <div key={emp.id}>
+              <ListItem>
+                <ListItemText primary={emp.nombre} />
+                <ListItemSecondaryAction>
+                  <BotonesDeLista
+                    ver={true}
+                    aceptar={true}
+                    rechazar={false}
+                    empresa={emp}
+                    setOpenAlert={setOpenAlert}
+                  />
+                </ListItemSecondaryAction>
+              </ListItem>
+              <Divider />
+            </div>
+          ))}
+      </List>
+      <AlertaOperacionTerminada
+        tipo="success"
+        open={openAlert}
+        setOpen={setOpenAlert}
+      />
     </Grid>
   );
 };
