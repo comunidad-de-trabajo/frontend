@@ -13,15 +13,24 @@ import {
   getAllProvincias,
 } from '../../services/DatoGeograficoArg';
 import { getTipoEmpleador } from '../../services/registroDeEmpresas/empleador';
+import { useRecoilState } from 'recoil';
 
 export default function DatosEmpresa() {
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
   const [provinciaActual, setProvinciaActual] = useState([]);
   const [tiposEmpleador, setTiposEmpleador] = useState(null);
+  const [datosEmpresa, setDatosEmpresa] = useRecoilState(datosEmpresa);
 
   const handleChange = (event) => {
     setProvinciaActual(event.target.value);
+  };
+
+  const handleRecoilStateChange = (event) => {
+    setDatosEmpresa({
+      ...datosEmpresa,
+      [event.target.name]: event.target.value,
+    });
   };
 
   async function fetchProvincias() {
@@ -44,11 +53,14 @@ export default function DatosEmpresa() {
   }
 
   useEffect(() => {
-    fetchProvincias();
     fetchLocalidades(provinciaActual);
-    fetchTiposEmpleador();
     // eslint-disable-next-line
   }, [provinciaActual]);
+
+  useEffect(() => {
+    fetchProvincias();
+    fetchTiposEmpleador();
+  }, []);
 
   return (
     <React.Fragment>
@@ -63,6 +75,7 @@ export default function DatosEmpresa() {
             name="nombreComercial"
             label="Nombre comercial / Alias"
             fullWidth
+            onChange={handleRecoilStateChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -118,7 +131,7 @@ export default function DatosEmpresa() {
         <Grid item xs={12} sm={6}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
-              Tipo de empresa
+              Tipo de empleador
             </InputLabel>
             <Select labelId="demo-simple-select-label" id="demo-simple-select">
               {tiposEmpleador &&

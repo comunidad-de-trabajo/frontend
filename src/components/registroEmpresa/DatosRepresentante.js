@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import AlertDialogSlide from '../modales/ModalTerminosYCondiciones/ModalTerminosYCondiciones';
+import { useRecoilState } from 'recoil';
 
 export const DatosRepresentante = () => {
   const [isActive, setIsActive] = useState(false);
@@ -44,7 +45,7 @@ export const DatosRepresentante = () => {
             required
             id="cargo"
             name="cargo"
-            label="Cargo"
+            label="Cargo / Rol"
             fullWidth
             autoComplete="shipping address-line1"
           />
