@@ -2,15 +2,9 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-
 import usuario from './usuario.svg';
-import {
-  Grid,
-  Backdrop,
-  Snackbar,
-  CircularProgress,
-  Typography,
-} from '@material-ui/core';
+
+import { Grid, Snackbar, Typography } from '@material-ui/core';
 import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles((theme) => ({
@@ -36,22 +30,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalUpload() {
   const classes = useStyles();
-  const [abrirCarga, setAbrirCarga] = useState(true);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [image, setImage] = useState(usuario);
 
-  const handleClose = () => {
-    setOpenBackdrop(false);
+  const handleUpload = ({ target }) => {
+    setImage(URL.createObjectURL(target.files[0]));
     setOpenSnackbar(true);
-    previsualizar();
-  };
-
-  const handleToggle = () => {
-    setOpenBackdrop(!openBackdrop);
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
-    setAbrirCarga(true);
   };
 
   const handleCloseSnackbar = (event, reason) => {
@@ -61,20 +45,6 @@ export default function ModalUpload() {
 
     setOpenSnackbar(false);
   };
-
-  function cargar() {
-    setAbrirCarga(false);
-  }
-
-  function previsualizar() {
-    const $imagenSubida = document.querySelector('#contained-button-file');
-    const $imagenAVisualizar = document.querySelector('#previsualizar');
-    const archivos = $imagenSubida.files;
-    console.log(archivos[0]);
-    const primerArchivo = archivos[0];
-    const objectURL = URL.createObjectURL(primerArchivo);
-    $imagenAVisualizar.src = objectURL;
-  }
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -89,53 +59,33 @@ export default function ModalUpload() {
           id="contained-button-file"
           multiple
           type="file"
+          onChange={handleUpload}
         />
         <label htmlFor="contained-button-file">
-          <Button
-            variant="contained"
-            color="primary"
-            component="span"
-            onClick={cargar}
-          >
+          <Button variant="contained" color="primary" component="span">
             <Typography align="center">Logo de Empresa</Typography>
             <CameraAltOutlinedIcon fontSize="large" />
           </Button>
         </label>
-        <Button color="primary" disabled={abrirCarga} onClick={handleToggle}>
-          Subir
-        </Button>
-        <Backdrop
-          className={classes.backdrop}
-          open={openBackdrop}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-        <Typography variant="inherit" display="block" color="textSecondary">
-          El logo debe ser formato JPG o PNG, con peso maximo de 500kb y un
-          tamaño minimo de 200px por 200px y maximo de 500px por 500px.
-        </Typography>
-        <Snackbar
-          open={openSnackbar}
-          autoHideDuration={4000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert onClose={handleCloseSnackbar} severity="success">
-            Imagen cargada con exito
-          </Alert>
-        </Snackbar>
-        {/*<Alert severity="error">This is an error message!</Alert>
-        <Alert severity="warning">This is a warning message!</Alert>
-        <Alert severity="info">This is an information message!</Alert>
-        <Alert severity="success">This is a success message!</Alert>*/}
       </Grid>
+
+      <Typography variant="inherit" display="block" color="textSecondary">
+        El logo debe ser formato JPG o PNG, con peso maximo de 500kb y un tamaño
+        minimo de 200px por 200px y maximo de 500px por 500px.
+      </Typography>
+
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+      >
+        <Alert onClose={handleCloseSnackbar} severity="success">
+          Imagen cargada con exito
+        </Alert>
+      </Snackbar>
+
       <Grid item xs={6}>
-        <img
-          id="previsualizar"
-          alt=""
-          src={usuario}
-          className={classes.image}
-        />
+        <img alt="logo" src={image} className={classes.image} />
       </Grid>
     </>
   );
