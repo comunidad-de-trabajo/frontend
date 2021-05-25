@@ -99,7 +99,7 @@ export default function RegistroEmpresa({ routes }) {
                   <br />
                   Cualquier duda o consulta puede ponerse en contacto a traves
                   de la siguiente casilla de correo electrónico:{' '}
-                  <b>comunidad@unasur.edu.ar</b>
+                  <b>comunidad@unahur.edu.ar</b>
                 </Typography>
               </React.Fragment>
             ) : (

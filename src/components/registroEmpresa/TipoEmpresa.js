@@ -8,10 +8,24 @@ import InputLabel from '@material-ui/core/InputLabel';
 import ModalUpload from './ModalUpload';
 import { getTiposDeEmpresa } from '../../services/registroDeEmpresas/tipos-de-empresas';
 import { getAreasDeInteres } from '../../services/registroDeEmpresas/areas-de-interes';
+import { useRecoilState } from 'recoil';
+import { tipoEmpresaFormState } from '../../recoil/registro-empresa-atoms';
 
 export default function TipoEmpresa() {
   const [tiposDeEmpresa, setTiposDeEmpresa] = useState(null);
   const [areasDeInteres, setAreasDeInteres] = useState(null);
+  const [tipoEmpresaValues, setTipoEmpresaValues] = useRecoilState(
+    tipoEmpresaFormState
+  );
+
+  const handleRecoilStateChange = ({ target }) => {
+    setTipoEmpresaValues({
+      ...tipoEmpresaValues,
+      [target.name]: target.value,
+    });
+  };
+
+  console.log(tipoEmpresaValues);
 
   async function fetchTiposDeEmpresa() {
     setTimeout(async () => {
@@ -48,7 +62,9 @@ export default function TipoEmpresa() {
               id="Areas de interes"
               labelId="Areas de interes"
               fullWidth
-              defaultValue=""
+              name="areaDeInteres"
+              value={tipoEmpresaValues.areaDeInteres}
+              onChange={handleRecoilStateChange}
             >
               {areasDeInteres &&
                 areasDeInteres.map((area, index) => {
@@ -62,17 +78,41 @@ export default function TipoEmpresa() {
           </FormControl>
         </Grid>
         <Grid item xs={12}>
-          <TextField required id="Sitio web" label="Sitio web" fullWidth />
+          <TextField
+            required
+            id="Sitio web"
+            label="Sitio web"
+            fullWidth
+            name="sitioWeb"
+            value={tipoEmpresaValues.sitioWeb}
+            onChange={handleRecoilStateChange}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
-          <TextField required id="Email" label="Email" fullWidth />
+          <TextField
+            required
+            id="Email"
+            label="Email"
+            fullWidth
+            name="email"
+            value={tipoEmpresaValues.email}
+            onChange={handleRecoilStateChange}
+          />
         </Grid>
         <Grid item xs={12} md={6}>
           <FormControl fullWidth>
             <InputLabel id="demo-simple-select-label">
               Tipo de empresa
             </InputLabel>
-            <Select required id="Tipo" labelId="Tipo" fullWidth defaultValue="">
+            <Select
+              required
+              id="Tipo"
+              labelId="Tipo"
+              fullWidth
+              name="tipoEmpresa"
+              value={tipoEmpresaValues.tipoEmpresa}
+              onChange={handleRecoilStateChange}
+            >
               {tiposDeEmpresa &&
                 tiposDeEmpresa.map((tipoEmpresa, index) => {
                   return (
@@ -94,6 +134,9 @@ export default function TipoEmpresa() {
             helperText="Descripción general de la empresa. Puedo incluir datos sobre su história, 
             Equipo directivo y / o de trabajo Misión, Visión y Valores.Productos o servicios 
             que brinda."
+            name="descripcion"
+            value={tipoEmpresaValues.descripcion}
+            onChange={handleRecoilStateChange}
           />
         </Grid>
         <ModalUpload />

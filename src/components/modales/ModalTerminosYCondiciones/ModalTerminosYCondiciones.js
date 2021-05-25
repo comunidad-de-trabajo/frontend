@@ -36,10 +36,7 @@ export default function AlertDialogSlide(props) {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleChange} color="primary">
-            Ahora no
-          </Button>
-          <Button onClick={handleChange} color="primary">
-            Aceptar
+            Cerrar
           </Button>
         </DialogActions>
       </Dialog>

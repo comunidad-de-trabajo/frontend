@@ -14,7 +14,7 @@ import {
 } from '../../services/DatoGeograficoArg';
 import { getTipoEmpleador } from '../../services/registroDeEmpresas/empleador';
 import { useRecoilState } from 'recoil';
-import { datosEmpresaFormState } from '../../recoil/registro-empresa';
+import { datosEmpresaFormState } from '../../recoil/registro-empresa-atoms';
 import { sortedStrings } from '../../helpers/sortStrings';
 
 export default function DatosEmpresa() {
@@ -28,10 +28,10 @@ export default function DatosEmpresa() {
   //   setProvinciaActual(event.target.value);
   // };
 
-  const handleRecoilStateChange = (event) => {
+  const handleRecoilStateChange = ({ target }) => {
     setDatosEmpresa({
       ...datosEmpresa,
-      [event.target.name]: event.target.value,
+      [target.name]: target.value,
     });
   };
 
