@@ -1,5 +1,6 @@
 import React from 'react';
 import Typography from '@material-ui/core/Typography';
+import { NavLink } from 'react-router-dom';
 
 export const TerminosYCondiciones = () => {
   return (
@@ -49,11 +50,16 @@ export const TerminosYCondiciones = () => {
       </Typography>
       <Typography variant="body2">
         El sitio web de la Universidad Nacional de Hurlingham, ubicado en
-        http://www.unahur.edu.ar El mapa interactivo, ubicado en
-        http://mapa.unahur.edu.ar
+        {
+          <NavLink to="http://www.unahur.edu.ar/" color="inherit">
+            {' '}
+            http://www.unahur.edu.ar
+          </NavLink>
+        }
+        El mapa interactivo, ubicado en http://mapa.unahur.edu.ar
       </Typography>
       <Typography variant="body2">
-        Al ingresar al Sitio web oficial de la UNAHUR (Sitio Web) estás
+        Al ingresar al Sitio web oficial de la UNAHUR (pagina web) estás
         aceptando los siguientes Términos y Condiciones:
       </Typography>
       <Typography variant="subtitle1">
@@ -77,10 +83,9 @@ export const TerminosYCondiciones = () => {
         vulnerabilidades o explotación de las mismas para cualquier fin No
         divulgar información acerca de la detección de vulnerabilidades
         encontradas en el sitio Enviar información de vulnerabilidades
-        detectadas en el sitio a XXXX@XXXX El usuario acepta las políticas de
+        detectadas en el sitio a XXXX@XXXX .El usuario acepta las políticas de
         privacidad.
       </Typography>
-
       <Typography variant="subtitle1">
         <b>Propiedad Intelectual</b>
       </Typography>

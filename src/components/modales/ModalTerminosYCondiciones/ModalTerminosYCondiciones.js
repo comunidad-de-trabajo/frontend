@@ -17,30 +17,32 @@ export default function AlertDialogSlide(props) {
   const { isActive, handleChange } = props;
 
   return (
-    <div>
-      <Dialog
-        open={isActive}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleChange}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-      >
-        <DialogTitle id="alert-dialog-slide-title">
-          Términos y Condiciones del servicio
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-slide-description">
-            <TerminosYCondiciones />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleChange} color="primary">
-            Cerrar
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+    isActive && (
+      <>
+        <Dialog
+          open={isActive}
+          TransitionComponent={Transition}
+          keepMounted
+          onClose={handleChange}
+          aria-labelledby="alert-dialog-slide-title"
+          aria-describedby="alert-dialog-slide-description"
+        >
+          <DialogTitle id="alert-dialog-slide-title">
+            Términos y Condiciones del servicio
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-slide-description">
+              <TerminosYCondiciones />
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleChange} color="primary">
+              Cerrar
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </>
+    )
   );
 }
 
