@@ -14,17 +14,19 @@ import {
 } from '../../services/DatoGeograficoArg';
 import { getTipoEmpleador } from '../../services/registroDeEmpresas/empleador';
 import { useRecoilState } from 'recoil';
+import { datosEmpresaFormState } from '../../recoil/registro-empresa';
+import { sortedStrings } from '../../helpers/sortStrings';
 
 export default function DatosEmpresa() {
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
-  const [provinciaActual, setProvinciaActual] = useState([]);
+  // const [provinciaActual, setProvinciaActual] = useState([]);
   const [tiposEmpleador, setTiposEmpleador] = useState(null);
-  const [datosEmpresa, setDatosEmpresa] = useRecoilState(datosEmpresa);
+  const [datosEmpresa, setDatosEmpresa] = useRecoilState(datosEmpresaFormState);
 
-  const handleChange = (event) => {
-    setProvinciaActual(event.target.value);
-  };
+  // const handleChange = (event) => {
+  //   setProvinciaActual(event.target.value);
+  // };
 
   const handleRecoilStateChange = (event) => {
     setDatosEmpresa({
@@ -33,15 +35,19 @@ export default function DatosEmpresa() {
     });
   };
 
+  console.log(datosEmpresa);
+
   async function fetchProvincias() {
     const jsonProvincias = await getAllProvincias();
-    setProvincias(jsonProvincias.provincias);
+    const provinciasOrdenadas = sortedStrings(jsonProvincias.provincias);
+    setProvincias(provinciasOrdenadas);
   }
 
   async function fetchLocalidades(nombreProvincia) {
-    if (provinciaActual.length > 0) {
+    if (datosEmpresa.provinciaActual.length > 0) {
       const jsonLocalidades = await getAllLocalidades(nombreProvincia);
-      setLocalidades(jsonLocalidades.departamentos);
+      const localidadesOrdenadas = sortedStrings(jsonLocalidades.departamentos);
+      setLocalidades(localidadesOrdenadas);
     }
   }
 
@@ -53,9 +59,9 @@ export default function DatosEmpresa() {
   }
 
   useEffect(() => {
-    fetchLocalidades(provinciaActual);
+    fetchLocalidades(datosEmpresa.provinciaActual);
     // eslint-disable-next-line
-  }, [provinciaActual]);
+  }, [datosEmpresa.provinciaActual]);
 
   useEffect(() => {
     fetchProvincias();
@@ -75,6 +81,7 @@ export default function DatosEmpresa() {
             name="nombreComercial"
             label="Nombre comercial / Alias"
             fullWidth
+            value={datosEmpresa.nombreComercial}
             onChange={handleRecoilStateChange}
           />
         </Grid>
@@ -84,8 +91,9 @@ export default function DatosEmpresa() {
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
-              value={provinciaActual}
-              onChange={handleChange}
+              name="provinciaActual"
+              value={datosEmpresa.provinciaActual}
+              onChange={handleRecoilStateChange}
             >
               {provincias.map((p) => (
                 <MenuItem key={p.id} value={p.nombre}>
@@ -101,13 +109,24 @@ export default function DatosEmpresa() {
             id="razonSocial"
             name="razonSocial"
             label="Razon social"
+            value={datosEmpresa.razonSocial}
+            onChange={handleRecoilStateChange}
             fullWidth
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormControl fullWidth disabled={!provinciaActual.length > 0}>
+          <FormControl
+            fullWidth
+            disabled={!datosEmpresa.provinciaActual.length > 0}
+          >
             <InputLabel id="demo-simple-select-label">Localidad</InputLabel>
-            <Select labelId="demo-simple-select-label" id="demo-simple-select">
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="localidad"
+              value={datosEmpresa.localidad}
+              onChange={handleRecoilStateChange}
+            >
               {localidades.map((l) => (
                 <MenuItem key={l.id} value={l.nombre}>
                   {l.nombre}
@@ -117,7 +136,16 @@ export default function DatosEmpresa() {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField required id="cuit" name="cuit" label="CUIT" fullWidth />
+          <TextField
+            required
+            id="cuit"
+            name="cuit"
+            label="CUIT"
+            type="number"
+            fullWidth
+            value={datosEmpresa.cuit}
+            onChange={handleRecoilStateChange}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
@@ -126,6 +154,8 @@ export default function DatosEmpresa() {
             name="direccion"
             label="Dirección"
             fullWidth
+            value={datosEmpresa.direccion}
+            onChange={handleRecoilStateChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -133,7 +163,13 @@ export default function DatosEmpresa() {
             <InputLabel id="demo-simple-select-label">
               Tipo de empleador
             </InputLabel>
-            <Select labelId="demo-simple-select-label" id="demo-simple-select">
+            <Select
+              labelId="demo-simple-select-label"
+              id="demo-simple-select"
+              name="tipoEmpleador"
+              value={datosEmpresa.tipoEmpleador}
+              onChange={handleRecoilStateChange}
+            >
               {tiposEmpleador &&
                 tiposEmpleador.map((tipo, index) => {
                   return (
@@ -146,16 +182,27 @@ export default function DatosEmpresa() {
           </FormControl>
         </Grid>
         <Grid item xs={12} sm={6}>
-          <TextField required id="piso" name="piso" label="Piso" fullWidth />
+          <TextField
+            required
+            id="piso"
+            name="piso"
+            label="Piso"
+            fullWidth
+            value={datosEmpresa.piso}
+            onChange={handleRecoilStateChange}
+          />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
             required
             id="CP"
-            name="CP"
+            name="codigoPostal"
             label="Codigo Postal"
+            type="number"
             fullWidth
             autoComplete="shipping postal-code"
+            value={datosEmpresa.codigoPostal}
+            onChange={handleRecoilStateChange}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -165,19 +212,22 @@ export default function DatosEmpresa() {
             name="departamento"
             label="Departamento"
             fullWidth
+            value={datosEmpresa.departamento}
+            onChange={handleRecoilStateChange}
           />
         </Grid>
-        <Grid item xs={5} sm={2}>
+
+        <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="codigoArea"
-            name="codigoArea"
-            label="C. área"
+            id="tel"
+            name="tel"
+            label="Telefono"
+            type="number"
             fullWidth
+            value={datosEmpresa.telefono}
+            onChange={handleRecoilStateChange}
           />
-        </Grid>
-        <Grid item xs={7} sm={4}>
-          <TextField required id="tel" name="tel" label="Telefono" fullWidth />
         </Grid>
       </Grid>
     </React.Fragment>

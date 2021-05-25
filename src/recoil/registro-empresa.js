@@ -1,15 +1,20 @@
 import { atom } from 'recoil';
 
-export const datosEmpresa = atom({
-  key: 'datosEmpresa',
-  nombreComercial: '',
-  provincia: '',
-  direccionEmpresa: '',
-  tipoEmpleador: '',
-  codigoPostal: '',
-  departaMento: '',
-  codigoArea: '',
-  telefono: '',
+export const datosEmpresaFormState = atom({
+  key: 'datosEmpresaFormState',
+  default: {
+    nombreComercial: '',
+    provinciaActual: '',
+    razonSocial: '',
+    localidad: '',
+    cuit: null,
+    direccion: '',
+    tipoEmpleador: '',
+    piso: null,
+    codigoPostal: null,
+    departamento: '',
+    telefono: null,
+  },
 });
 
 const tipoEmpresa = atom({
