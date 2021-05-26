@@ -2,11 +2,12 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-import usuario from './usuario.svg';
+import usuario from './usuario.png';
 import {
   Grid,
   Backdrop,
   CircularProgress,
+  Avatar,
   Typography,
 } from '@material-ui/core';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
@@ -20,101 +21,103 @@ const useStyles = makeStyles((theme) => ({
   input: {
     display: 'none',
   },
-  backdrop: {
-    zIndex: theme.zIndex.drawer + 1,
-    color: '#fff',
+  camera: {
+    margin: '0px 0px 0px 10px',
   },
   image: {
-    width: theme.spacing(20),
-    height: theme.spacing(20),
-    margin: '0 0 0 50px',
-    borderRadius: '50%',
+    width: theme.spacing(10),
+    height: theme.spacing(10),
+    margin: '0 0 15px 70px',
   },
 }));
 
 export default function ModalUpload() {
   const classes = useStyles();
-  const [abrirCarga, setAbrirCarga] = useState(true);
-  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [imagen, setImagen] = useState(usuario);
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [alerta, setAlerta] = useState(0);
 
-  const handleClose = () => {
-    setOpenBackdrop(false);
+  function handleUpload(event) {
+    const imagenCargada = event.target.files[0];
+    validacion(imagenCargada);
     setOpenSnackbar(true);
-    previsualizar();
-  };
-
-  const handleToggle = () => {
-    setOpenBackdrop(!openBackdrop);
-    setTimeout(() => {
-      handleClose();
-    }, 2000);
-    setAbrirCarga(true);
-  };
-
-  function cargar() {
-    setAbrirCarga(false);
+    console.log(imagenCargada);
   }
 
-  function previsualizar() {
-    const $imagenSubida = document.querySelector('#contained-button-file');
-    const $imagenAVisualizar = document.querySelector('#previsualizar');
-    const archivos = $imagenSubida.files;
-    console.log(archivos[0]);
-    const primerArchivo = archivos[0];
-    const objectURL = URL.createObjectURL(primerArchivo);
-    $imagenAVisualizar.src = objectURL;
+  function validacion(imagen) {
+    const imagenURL = URL.createObjectURL(imagen);
+
+    if (imagen.type != 'image/png' && imagen.type != 'image/jpeg') {
+      setAlerta(1);
+      setImagen(usuario);
+    } else if (imagen.size > 50000) {
+      setAlerta(2);
+      setImagen(usuario);
+    } else {
+      setAlerta(0);
+      setImagen(imagenURL);
+    }
   }
 
   return (
     <>
       <Grid item xs={12} md={6}>
+        <Avatar src={imagen} className={classes.image} />
         <input
           accept="image/png, image/jpg"
           className={classes.input}
           id="contained-button-file"
           multiple
           type="file"
+          onChange={handleUpload}
         />
         <label htmlFor="contained-button-file">
-          <Button
-            variant="contained"
-            color="primary"
-            component="span"
-            onClick={cargar}
-          >
+          <Button variant="contained" color="primary" component="span">
             <Typography align="center">Logo de Empresa</Typography>
-            <CameraAltOutlinedIcon fontSize="large" />
+            <CameraAltOutlinedIcon
+              fontSize="normal"
+              className={classes.camera}
+            />
           </Button>
         </label>
-        <Button color="primary" disabled={abrirCarga} onClick={handleToggle}>
-          Subir
-        </Button>
-        <Backdrop
-          className={classes.backdrop}
-          open={openBackdrop}
-          onClick={handleClose}
-        >
-          <CircularProgress color="inherit" />
-        </Backdrop>
-        <Typography variant="inherit" display="block" color="textSecondary">
-          El logo debe ser formato JPG o PNG, con peso maximo de 500kb y un
-          tamaño minimo de 200px por 200px y maximo de 500px por 500px.
-        </Typography>
-        <AlertaOperacionTerminada
-          tipo="success"
-          mensaje="Imagen cargada con exito"
-          open={openSnackbar}
-          setOpen={setOpenSnackbar}
-        />
+        {alerta == 0 && (
+          <AlertaOperacionTerminada
+            tipo="success"
+            mensaje="Imagen cargada con exito"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 1 && (
+          <AlertaOperacionTerminada
+            tipo="error"
+            mensaje="La imagen debe ser formato JPG o PNG"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 2 && (
+          <AlertaOperacionTerminada
+            tipo="error"
+            mensaje="Debe tener un peso maximo 500KB"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
       </Grid>
       <Grid item xs={6}>
-        <img
-          id="previsualizar"
-          alt=""
-          src={usuario}
-          className={classes.image}
-        />
+        <Typography variant="inherit" display="block" color="textSecondary">
+          *LOGO importante:
+        </Typography>
+        <Typography variant="caption" display="block" color="textSecondary">
+          Debe ser de formato JPG o PNG
+        </Typography>
+        <Typography variant="caption" display="block" color="textSecondary">
+          Debe tener un peso maximo 500KB
+        </Typography>
+        <Typography variant="caption" display="block" color="textSecondary">
+          Tamaño entre 200px x 200px 500px x 500px
+        </Typography>
       </Grid>
     </>
   );
