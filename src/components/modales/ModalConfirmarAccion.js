@@ -6,17 +6,26 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import propTypes from 'prop-types';
+import { envioMailsIndividual } from '../../services/envio-mails-mailjet/envio-mails.services';
 
 const ModalConfirmarAccion = (props) => {
   const { titulo, mensaje } = props;
   const { open, setOpen } = props;
   const { setOpenAlert } = props;
 
-  const handleClose = () => {
-    setOpen(false);
-    setTimeout(() => {
+  const handleClose = async () => {
+    try {
+      await envioMailsIndividual({
+        emailTo: 'magaliantonella.gaiani@gmail.com',
+        aceptado: true,
+        textPart: 'For xxxx this test email',
+      });
       setOpenAlert(true);
-    }, 1000);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setOpen(false);
+    }
   };
 
   return (
