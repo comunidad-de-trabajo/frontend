@@ -3,13 +3,7 @@ import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
 import usuario from './usuario.png';
-import {
-  Grid,
-  Backdrop,
-  CircularProgress,
-  Avatar,
-  Typography,
-} from '@material-ui/core';
+import { Grid, Avatar, Typography } from '@material-ui/core';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
