@@ -6,25 +6,19 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import propTypes from 'prop-types';
-import { envioMailsIndividual } from '../../services/envio-mails-mailjet/envio-mails.services';
+import { getAccionesModalConfirmacion } from './acciones-modal-confirmacion';
 
 const ModalConfirmarAccion = (props) => {
-  const { titulo, mensaje } = props;
+  const { titulo, mensaje, accion, idEmpresa } = props;
   const { open, setOpen } = props;
   const { setOpenAlert } = props;
 
-  const handleClose = async () => {
-    try {
-      await envioMailsIndividual({
-        emailTo: 'magaliantonella.gaiani@gmail.com',
-        aceptado: true,
-        textPart: 'For xxxx this test email',
-      });
-      setOpenAlert(true);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setOpen(false);
+  const handleClose = () => {
+    let acciones = getAccionesModalConfirmacion();
+    if (accion === 'aceptar') {
+      acciones.aceptar(setOpenAlert, setOpen, idEmpresa);
+    } else if (accion === 'rechazar') {
+      acciones.rechazar(setOpenAlert, setOpen, idEmpresa);
     }
   };
 
@@ -61,6 +55,8 @@ const ModalConfirmarAccion = (props) => {
 };
 
 ModalConfirmarAccion.propTypes = {
+  idEmpresa: propTypes.number,
+  accion: propTypes.string,
   titulo: propTypes.string,
   mensaje: propTypes.string,
   open: propTypes.bool,
