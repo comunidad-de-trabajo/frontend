@@ -71,6 +71,9 @@ const SideBar = () => {
         <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
           <ListItemText primary={'Registro de empresas'}></ListItemText>
         </ListItem>
+        <ListItem button onClick={() => history.push('/ofertaLaboral')}>
+          <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
+        </ListItem>
       </List>
     </div>
   );
