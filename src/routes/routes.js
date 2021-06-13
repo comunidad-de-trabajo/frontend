@@ -7,6 +7,7 @@ import RegistroEmpresa from '../components/registroEmpresa/RegistroEmpresa';
 import DatosEmpresa from '../components/registroEmpresa/DatosEmpresa';
 import TipoEmpresa from '../components/registroEmpresa/TipoEmpresa';
 import { DatosRepresentante } from '../components/registroEmpresa/DatosRepresentante';
+import { OfertaLaboralPage } from '../components/ofertaLaboral/OfertaLaboralPage';
 
 export const routes = [
   {
@@ -53,5 +54,9 @@ export const routes = [
         component: DatosRepresentante,
       },
     ],
+  },
+  {
+    path: '/ofertaLaboral',
+    component: OfertaLaboralPage,
   },
 ];
