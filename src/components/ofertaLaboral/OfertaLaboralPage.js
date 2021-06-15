@@ -97,19 +97,21 @@ export function OfertaLaboralPage() {
             <CondicionesOferta />
 
             <ResponsableBusquedaOferta />
-          </Grid>
 
-          <Button
-            variant="contained"
-            color="primary"
-            style={{
-              marginTop: '15px',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-          >
-            Publicar
-          </Button>
+            <Grid item xs={12} align="center" style={{ marginTop: '15px' }}>
+              <Button
+                variant="contained"
+                color="primary"
+                style={{
+                  marginTop: '15px',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
+                Publicar
+              </Button>
+            </Grid>
+          </Grid>
         </Paper>
       </main>
       <GlobalCss />

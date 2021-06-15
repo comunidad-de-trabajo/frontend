@@ -31,17 +31,17 @@ export const CondicionesOferta = () => {
           >
             <FormControlLabel
               value="porHora"
-              control={<Radio />}
+              control={<Radio color="primary" />}
               label={<Typography variant="caption">Por hora</Typography>}
             />
             <FormControlLabel
               value="medioTiempo"
-              control={<Radio />}
+              control={<Radio color="primary" />}
               label={<Typography variant="caption">Medio tiempo</Typography>}
             />
             <FormControlLabel
               value="fullTime"
-              control={<Radio />}
+              control={<Radio color="primary" />}
               label={<Typography variant="caption">Full time</Typography>}
             />
           </RadioGroup>

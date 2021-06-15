@@ -20,15 +20,17 @@ export const RequisitosOferta = () => {
           *Marque si/no segun corresponda.
         </Typography>
       </Grid>
+
       <Grid
         item
-        xs={8}
+        xs={12}
         align="center"
         style={{ marginTop: '15px', backgroundColor: 'red' }}
       >
         <Typography variant="caption">Si</Typography>
         <Typography variant="caption">no</Typography>
       </Grid>
+
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Grid item xs={12} sm={6}>
           <Typography variant="caption">
