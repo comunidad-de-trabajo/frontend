@@ -3,6 +3,7 @@ import { atom } from 'recoil';
 export const datosEmpresaFormState = atom({
   key: 'datosEmpresaFormState',
   default: {
+    estado: 'pendiente',
     nombreComercial: '',
     provinciaActual: '',
     razonSocial: '',

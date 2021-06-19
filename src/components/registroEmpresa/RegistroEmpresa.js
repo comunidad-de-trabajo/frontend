@@ -10,6 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { AppRoutes } from '../../routes/AppRoutes';
 import { useHistory } from 'react-router';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+  tipoEmpresaFormState,
+  datosRepresentanteFormState,
+  datosEmpresaFormState,
+} from '../../recoil/registro-empresa-atoms';
+import { crearNuevoRegistro } from '../../services/registroDeEmpresas/registro-empresa-endpoint';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -58,6 +65,25 @@ export default function RegistroEmpresa({ routes }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const history = useHistory();
+
+  const datosEmpresa = useRecoilValue(datosEmpresaFormState);
+  const tipoEmpresa = useRecoilValue(tipoEmpresaFormState);
+  const datosRepresentante = useRecoilValue(datosRepresentanteFormState);
+
+  const handleEnviar = async () => {
+    let registroList = {
+      ...datosEmpresa,
+      ...tipoEmpresa,
+      ...datosRepresentante,
+    };
+    try {
+      await crearNuevoRegistro(registroList);
+    } catch (e) {
+      console.log(e);
+    } finally {
+      setActiveStep(activeStep + 1);
+    }
+  };
 
   useEffect(() => {
     history.push(`/registroDeEmpresa/${activeStep}`);
@@ -111,14 +137,26 @@ export default function RegistroEmpresa({ routes }) {
                       Atras
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Enviar' : 'Siguiente'}
-                  </Button>
+                  {activeStep < 2 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Siguiente
+                    </Button>
+                  )}
+                  {activeStep == 2 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleEnviar}
+                      className={classes.button}
+                    >
+                      Enviar
+                    </Button>
+                  )}
                 </div>
               </React.Fragment>
             )}

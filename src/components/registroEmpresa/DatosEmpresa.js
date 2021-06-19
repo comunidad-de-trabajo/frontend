@@ -220,8 +220,8 @@ export default function DatosEmpresa() {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="tel"
-            name="tel"
+            id="telefono"
+            name="telefono"
             label="Telefono"
             type="number"
             fullWidth
