@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FormControlLabel,
   Radio,
@@ -7,18 +8,29 @@ import {
 } from '@material-ui/core';
 import { FormControl } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
-import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  mt15: {
+    marginTop: '15px',
+  },
+  mt10: {
+    marginTop: '10px',
+  },
+}));
 
 export const CondicionesOferta = () => {
+  const classes = useStyles();
+
   return (
-    <Grid xs={8}>
-      <Grid item xs={12} style={{ marginTop: '15px' }}>
+    <Grid item xs={8}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="subtitle2" gutterBottom>
           Condiciones:
         </Typography>
       </Grid>
 
-      <Grid item xs={12} sm={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} sm={6} className={classes.mt15}>
         <Typography variant="caption">Jornada:</Typography>
       </Grid>
       <Grid item xs={12} sm={3}>
@@ -48,7 +60,7 @@ export const CondicionesOferta = () => {
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           Contrato:
         </Typography>
@@ -60,12 +72,12 @@ export const CondicionesOferta = () => {
             placeholder="Complete"
             multiline
             row={2}
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           Lugar de trabajo:
         </Typography>
@@ -75,12 +87,12 @@ export const CondicionesOferta = () => {
             id="filled-start-adornment"
             variant="filled"
             placeholder="Indicar zona"
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           Ofrecen:
         </Typography>
@@ -92,7 +104,7 @@ export const CondicionesOferta = () => {
             rows={3}
             multiline
             placeholder="Ej: Buenas condiciones de contratación"
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
