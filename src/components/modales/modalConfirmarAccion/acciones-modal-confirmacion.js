@@ -3,11 +3,11 @@ import { cambiarEstadoEmpresa } from '../../../services/listado-empresas/accione
 
 const aceptarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
   try {
-    /*await envioMailsIndividual({
-        emailTo: 'magaliantonella.gaiani@gmail.com',
-        aceptado: true,
-        textPart: 'For xxxx this test email',
-      });*/
+    await envioMailsIndividual({
+      emailTo: 'magaliantonella.gaiani@gmail.com',
+      aceptado: true,
+      textPart: 'For xxxx this test email',
+    });
     await cambiarEstadoEmpresa('aceptada', idEmpresa);
     await setOpenAlert(true);
   } catch (error) {
@@ -19,11 +19,11 @@ const aceptarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
 
 const rechazarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
   try {
-    /*await envioMailsIndividual({
-        emailTo: 'magaliantonella.gaiani@gmail.com',
-        aceptado: true,
-        textPart: 'For xxxx this test email',
-      });*/
+    await envioMailsIndividual({
+      emailTo: 'magaliantonella.gaiani@gmail.com',
+      aceptado: true,
+      textPart: 'For xxxx this test email',
+    });
     cambiarEstadoEmpresa('rechazada', idEmpresa);
     await setOpenAlert(true);
   } catch (error) {
