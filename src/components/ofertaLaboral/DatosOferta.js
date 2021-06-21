@@ -1,21 +1,17 @@
 import React from 'react';
-import { Grid, FormLabel, FormControl, withStyles } from '@material-ui/core';
+import { Grid, FormControl, withStyles } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import Radio from '@material-ui/core/Radio';
-import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDatePicker,
-} from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles(() => ({
+  mt15: {
+    marginTop: '15px',
+  },
+  mb5: {
+    marginBottom: '5px',
+  },
+}));
 
 const GlobalCss = withStyles({
   '@global': {
@@ -27,19 +23,19 @@ const GlobalCss = withStyles({
 
 export const DatosOferta = () => {
   const classes = useStyles();
+
   return (
-    <Grid xs={8}>
+    <Grid item xs={8}>
       <GlobalCss />
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={6} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           * Fecha de vigencia:
         </Typography>
-        <form className={classes.container} noValidate>
+        <form noValidate>
           <TextField
             id="date"
             type="date"
             defaultValue="2017-05-24"
-            className={classes.textField}
             InputLabelProps={{
               shrink: true,
             }}
@@ -48,7 +44,8 @@ export const DatosOferta = () => {
           />
         </form>
       </Grid>
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           * Titulo de la búsqueda:
         </Typography>
@@ -56,13 +53,10 @@ export const DatosOferta = () => {
           <TextField required id="filled-start-adornment" variant="filled" />
         </FormControl>
       </Grid>
-      <div style={{ marginTop: '15px' }}>
-        <Grid item xs={12} spacing={6}>
-          <Typography
-            variant="caption"
-            gutterBottom
-            style={{ maginBottom: '5px' }}
-          >
+
+      <div className={classes.mt15}>
+        <Grid item xs={12}>
+          <Typography variant="caption" gutterBottom className={classes.mb5}>
             * Descripción de la empresa:
           </Typography>
           <FormControl fullWidth>
@@ -78,13 +72,9 @@ export const DatosOferta = () => {
         </Grid>
       </div>
 
-      <div style={{ marginTop: '15px' }}>
-        <Grid item xs={12} spacing={6}>
-          <Typography
-            variant="caption"
-            gutterBottom
-            style={{ maginBottom: '5px' }}
-          >
+      <div className={classes.mt15}>
+        <Grid item xs={12}>
+          <Typography variant="caption" gutterBottom className={classes.mb5}>
             Misión:
           </Typography>
           <FormControl fullWidth>
@@ -93,13 +83,9 @@ export const DatosOferta = () => {
         </Grid>
       </div>
 
-      <div style={{ marginTop: '15px' }}>
-        <Grid item xs={12} spacing={6}>
-          <Typography
-            variant="caption"
-            gutterBottom
-            style={{ maginBottom: '5px' }}
-          >
+      <div className={classes.mt15}>
+        <Grid item xs={12}>
+          <Typography variant="caption" gutterBottom className={classes.mb5}>
             Responsabilidades principales:
           </Typography>
           <FormControl fullWidth>

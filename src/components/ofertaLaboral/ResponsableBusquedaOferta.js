@@ -1,22 +1,28 @@
-import {
-  Button,
-  FormControl,
-  Grid,
-  TextField,
-  Typography,
-} from '@material-ui/core';
 import React from 'react';
+import { FormControl, Grid, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles(() => ({
+  mt15: {
+    marginTop: '15px',
+  },
+  mt10: {
+    marginTop: '10px',
+  },
+}));
 
 export const ResponsableBusquedaOferta = () => {
+  const classes = useStyles();
+
   return (
-    <Grid xs={8}>
-      <Grid item xs={12} style={{ marginTop: '15px' }}>
+    <Grid item xs={8}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="subtitle2" gutterBottom>
           *Responsable de la búsqueda:
         </Typography>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           * Nombre y Apellido:
         </Typography>
@@ -25,12 +31,12 @@ export const ResponsableBusquedaOferta = () => {
             required
             id="filled-start-adornment"
             variant="filled"
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           * Email:
         </Typography>
@@ -40,12 +46,12 @@ export const ResponsableBusquedaOferta = () => {
             id="filled-start-adornment"
             variant="filled"
             type="email"
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
           *Otro:
         </Typography>
@@ -57,14 +63,14 @@ export const ResponsableBusquedaOferta = () => {
             type="text"
             multiline
             row={2}
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>
 
-      <Grid item xs={12} spacing={6} style={{ marginTop: '15px' }}>
+      <Grid item xs={12} className={classes.mt15}>
         <Typography variant="caption" gutterBottom>
-          * Otras acaraciones:
+          * Otras aclaraciones:
         </Typography>
         <FormControl fullWidth>
           <TextField
@@ -74,7 +80,7 @@ export const ResponsableBusquedaOferta = () => {
             type="text"
             multiline
             row={3}
-            style={{ marginTop: '10px' }}
+            className={classes.mt10}
           />
         </FormControl>
       </Grid>

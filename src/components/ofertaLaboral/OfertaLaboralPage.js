@@ -3,30 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import {
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  createMuiTheme,
-  withStyles,
-  Box,
-  Button,
-} from '@material-ui/core';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import { Grid, withStyles, Button } from '@material-ui/core';
 import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
 
 const useStyles = makeStyles((theme) => ({
-  appBar: {
-    position: 'relative',
-  },
   layout: {
     width: 'auto',
     marginLeft: theme.spacing(2),
@@ -47,16 +30,13 @@ const useStyles = makeStyles((theme) => ({
       padding: theme.spacing(3),
     },
   },
-  stepper: {
-    padding: theme.spacing(3, 0, 5),
-  },
-  buttons: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-  },
   button: {
-    marginTop: theme.spacing(3),
-    marginLeft: theme.spacing(1),
+    marginTop: '15px',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mt15: {
+    marginTop: '15px',
   },
 }));
 
@@ -88,7 +68,7 @@ export function OfertaLaboralPage() {
             spacing={3}
             justify="center"
             alignItems="center"
-            style={{ marginTop: '15px' }}
+            className={classes.mt15}
           >
             <DatosOferta />
 
@@ -98,15 +78,11 @@ export function OfertaLaboralPage() {
 
             <ResponsableBusquedaOferta />
 
-            <Grid item xs={12} align="center" style={{ marginTop: '15px' }}>
+            <Grid item xs={12} align="center" className={classes.mt15}>
               <Button
                 variant="contained"
                 color="primary"
-                style={{
-                  marginTop: '15px',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}
+                className={classes.button}
               >
                 Publicar
               </Button>
