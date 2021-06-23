@@ -1,4 +1,5 @@
 import { atom } from 'recoil';
+import usuario from '../components/registroEmpresa/usuario.png';
 
 export const datosEmpresaFormState = atom({
   key: 'datosEmpresaFormState',
@@ -42,4 +43,9 @@ export const datosRepresentanteFormState = atom({
     telefono2: '',
     terminosYCondiciones: false,
   },
+});
+
+export const logoEmpresaState = atom({
+  key: 'logoEmpresaState',
+  default: usuario,
 });

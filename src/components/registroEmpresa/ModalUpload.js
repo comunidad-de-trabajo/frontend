@@ -2,9 +2,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-import usuario from './usuario.png';
 import { Grid, Avatar, Typography } from '@material-ui/core';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { useRecoilState } from 'recoil';
+import { logoEmpresaState } from '../../recoil/registro-empresa-atoms';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalUpload() {
   const classes = useStyles();
-  const [imagen, setImagen] = useState(usuario);
+  const [imagen, setImagen] = useRecoilState(logoEmpresaState);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alerta, setAlerta] = useState(0);
 
@@ -43,10 +44,8 @@ export default function ModalUpload() {
 
     if (imagen.type != 'image/png' && imagen.type != 'image/jpeg') {
       setAlerta(1);
-      setImagen(usuario);
     } else if (imagen.size > 50000) {
       setAlerta(2);
-      setImagen(usuario);
     } else {
       setAlerta(0);
       setImagen(imagenURL);
