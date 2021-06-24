@@ -25,8 +25,6 @@ export default function TipoEmpresa() {
     });
   };
 
-  console.log(tipoEmpresaValues);
-
   async function fetchTiposDeEmpresa() {
     setTimeout(async () => {
       const tiposEmpresa = await getTiposDeEmpresa();

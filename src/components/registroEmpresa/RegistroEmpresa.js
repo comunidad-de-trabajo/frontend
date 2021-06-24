@@ -10,11 +10,12 @@ import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 import { AppRoutes } from '../../routes/AppRoutes';
 import { useHistory } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import {
   tipoEmpresaFormState,
   datosRepresentanteFormState,
   datosEmpresaFormState,
+  logoEmpresaState,
 } from '../../recoil/registro-empresa-atoms';
 import { crearNuevoRegistro } from '../../services/registroDeEmpresas/registro-empresa-endpoint';
 
@@ -69,6 +70,7 @@ export default function RegistroEmpresa({ routes }) {
   const datosEmpresa = useRecoilValue(datosEmpresaFormState);
   const tipoEmpresa = useRecoilValue(tipoEmpresaFormState);
   const datosRepresentante = useRecoilValue(datosRepresentanteFormState);
+  const logoEmpresa = useRecoilValue(logoEmpresaState);
 
   const handleEnviar = async () => {
     let registroList = {
@@ -77,7 +79,7 @@ export default function RegistroEmpresa({ routes }) {
       ...datosRepresentante,
     };
     try {
-      await crearNuevoRegistro(registroList);
+      await crearNuevoRegistro(registroList, logoEmpresa.imagenFile);
     } catch (e) {
       console.log(e);
     } finally {

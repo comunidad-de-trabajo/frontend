@@ -25,8 +25,6 @@ export const DatosRepresentante = () => {
     });
   };
 
-  console.log(datosRepresentante);
-
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>

@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ModalUpload() {
   const classes = useStyles();
-  const [imagen, setImagen] = useRecoilState(logoEmpresaState);
+  const [imagenState, setImagenState] = useRecoilState(logoEmpresaState);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [alerta, setAlerta] = useState(0);
 
@@ -36,7 +36,6 @@ export default function ModalUpload() {
     const imagenCargada = event.target.files[0];
     validacion(imagenCargada);
     setOpenSnackbar(true);
-    console.log(imagenCargada);
   }
 
   function validacion(imagen) {
@@ -48,14 +47,17 @@ export default function ModalUpload() {
       setAlerta(2);
     } else {
       setAlerta(0);
-      setImagen(imagenURL);
+      setImagenState({
+        imagenFile: imagen,
+        imagenURL,
+      });
     }
   }
 
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Avatar src={imagen} className={classes.image} />
+        <Avatar src={imagenState.imagenURL} className={classes.image} />
         <input
           accept="image/png, image/jpg"
           className={classes.input}

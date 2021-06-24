@@ -47,5 +47,8 @@ export const datosRepresentanteFormState = atom({
 
 export const logoEmpresaState = atom({
   key: 'logoEmpresaState',
-  default: usuario,
+  default: {
+    imagenURL: usuario,
+    imagenFile: '',
+  },
 });

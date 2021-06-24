@@ -30,7 +30,6 @@ export const InputTipoTelefono = (props) => {
     setTiposDeTelefono(tiposTelefono);
   }
 
-  console.log(tipoTelefono);
   return (
     <>
       <Grid item xs={12} md={6}>
