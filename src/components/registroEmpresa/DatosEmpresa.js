@@ -35,8 +35,6 @@ export default function DatosEmpresa() {
     });
   };
 
-  console.log(datosEmpresa);
-
   async function fetchProvincias() {
     const jsonProvincias = await getAllProvincias();
     const provinciasOrdenadas = sortedStrings(jsonProvincias.provincias);
