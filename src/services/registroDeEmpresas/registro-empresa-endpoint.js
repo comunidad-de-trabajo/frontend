@@ -6,5 +6,5 @@ export const crearNuevoRegistro = async (data, imagen) => {
   for (var key in data) {
     body.append(key, data[key]);
   }
-  await api.post('api/registro', body);
+  return await api.post('api/registro', body);
 };
