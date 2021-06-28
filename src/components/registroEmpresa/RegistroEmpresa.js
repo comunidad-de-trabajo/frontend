@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -18,6 +18,8 @@ import {
   logoEmpresaState,
 } from '../../recoil/registro-empresa-atoms';
 import { crearNuevoRegistro } from '../../services/registroDeEmpresas/registro-empresa-endpoint';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { Backdrop, CircularProgress } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -54,6 +56,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  backdrop: {
+    zIndex: '1',
+  },
 }));
 
 const steps = [
@@ -65,6 +70,12 @@ const steps = [
 export default function RegistroEmpresa({ routes }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  const [openAlerta, setOpenAlerta] = useState(false);
+  const [datosAlerta, setDatosAlerta] = useState({
+    severity: '',
+    mensaje: '',
+  });
+  const [openBackdrop, setOpenBackdrop] = useState(false);
   const history = useHistory();
 
   const datosEmpresa = useRecoilValue(datosEmpresaFormState);
@@ -79,11 +90,33 @@ export default function RegistroEmpresa({ routes }) {
       ...datosRepresentante,
     };
     try {
-      await crearNuevoRegistro(registroList, logoEmpresa.imagenFile);
-    } catch (e) {
-      console.log(e);
-    } finally {
+      setOpenBackdrop(true);
+      const registro = await crearNuevoRegistro(
+        registroList,
+        logoEmpresa.imagenFile
+      );
+      setOpenBackdrop(false);
+      registro.status === 200
+        ? setDatosAlerta({
+            severity: 'success',
+            mensaje: registro.data.message,
+          })
+        : setDatosAlerta({
+            severity: 'info',
+            mensaje: registro.data.message,
+          });
+      setOpenAlerta(true);
       setActiveStep(activeStep + 1);
+    } catch (e) {
+      setDatosAlerta({
+        severity: 'error',
+        mensaje:
+          'Lo sentimos, no pudimos registrar la empresa. Intentalo mas tarde.',
+      });
+      setOpenAlerta(true);
+      setTimeout(() => {
+        history.push('/');
+      }, 4000);
     }
   };
 
@@ -164,7 +197,20 @@ export default function RegistroEmpresa({ routes }) {
             )}
           </React.Fragment>
         </Paper>
+        <AlertaOperacionTerminada
+          tipo={datosAlerta.severity}
+          mensaje={datosAlerta.mensaje}
+          open={openAlerta}
+          setOpen={setOpenAlerta}
+        />
       </main>
+      <Backdrop
+        className={classes.backdrop}
+        open={openBackdrop}
+        onClick={() => {}}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </React.Fragment>
   );
 }
