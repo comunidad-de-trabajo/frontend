@@ -9,16 +9,21 @@ import propTypes from 'prop-types';
 import { getAccionesModalConfirmacion } from './acciones-modal-confirmacion';
 
 const ModalConfirmarAccion = (props) => {
-  const { titulo, mensaje, accion, idEmpresa } = props;
+  const {
+    titulo,
+    mensaje,
+    accion,
+    empresa: { id, nombre, tipoEmpresa },
+  } = props;
   const { open, setOpen } = props;
   const { setOpenAlert } = props;
 
   const handleClose = () => {
     let acciones = getAccionesModalConfirmacion();
     if (accion === 'aceptar') {
-      acciones.aceptar(setOpenAlert, setOpen, idEmpresa);
+      acciones.aceptar(setOpenAlert, setOpen, id, nombre, tipoEmpresa.email);
     } else if (accion === 'rechazar') {
-      acciones.rechazar(setOpenAlert, setOpen, idEmpresa);
+      acciones.rechazar(setOpenAlert, setOpen, id, nombre, tipoEmpresa.email);
     }
   };
 
@@ -55,7 +60,11 @@ const ModalConfirmarAccion = (props) => {
 };
 
 ModalConfirmarAccion.propTypes = {
-  idEmpresa: propTypes.number,
+  empresa: propTypes.shape({
+    id: propTypes.number,
+    nombre: propTypes.string,
+    tipoEmpresa: propTypes.shape({ email: propTypes.string }),
+  }),
   accion: propTypes.string,
   titulo: propTypes.string,
   mensaje: propTypes.string,

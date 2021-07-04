@@ -41,13 +41,13 @@ const BotonesDeLista = (props) => {
   const [openModalEmpresa, setOpenModalEmpresa] = useState(false);
   const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
   const [datosModalConfirmacion, setDatosModalConfirmacion] = useState({
-    idEmpresa: '',
+    empresaSelected: '',
     accion: '',
     tituloModalConfirmacion: '',
     mensajeModalConfirmacion: '',
   });
   const {
-    idEmpresa,
+    empresaSelected,
     accion,
     tituloModalConfirmacion,
     mensajeModalConfirmacion,
@@ -60,7 +60,7 @@ const BotonesDeLista = (props) => {
 
   const handleClickAceptar = () => {
     abrirModalConfirmacion(
-      empresa.id,
+      empresa,
       'aceptar',
       'Aceptar empresa',
       'Una vez aceptada la empresa, esta accion no podra ser revocada.'
@@ -69,16 +69,16 @@ const BotonesDeLista = (props) => {
 
   const handleClickRechazar = () => {
     abrirModalConfirmacion(
-      empresa.id,
+      empresa,
       'rechazar',
       'Rechazar empresa',
       'Una vez rechazada la empresa, esta quedara en la lista de empresas rechazadas para una posterior revision.'
     );
   };
 
-  const abrirModalConfirmacion = (idEmpresa, accion, titulo, mensaje) => {
+  const abrirModalConfirmacion = (empresa, accion, titulo, mensaje) => {
     setDatosModalConfirmacion({
-      idEmpresa: idEmpresa,
+      empresaSelected: empresa,
       accion: accion,
       tituloModalConfirmacion: titulo,
       mensajeModalConfirmacion: mensaje,
@@ -127,7 +127,7 @@ const BotonesDeLista = (props) => {
         empresa={empresa}
       />
       <ModalConfirmarAccion
-        idEmpresa={idEmpresa}
+        empresa={empresa}
         accion={accion}
         titulo={tituloModalConfirmacion}
         mensaje={mensajeModalConfirmacion}

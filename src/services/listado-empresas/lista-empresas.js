@@ -12,7 +12,9 @@ export const listaEmpresas = [
     descripcion:
       'Nullam pharetra augue turpis, in eleifend enim consectetur nec. Ut lobortis maximus elit sed congue. Ut rhoncus lobortis pellentesque. Pellentesque ligula magna, egestas non consequat at, accumsan vel risus. Cras rutrum diam ac sagittis malesuada. Praesent in ante aliquet, fermentum massa ac, scelerisque tortor. Fusce efficitur metus at mi semper placerat. Aliquam erat volutpat. Proin consequat leo ac magna venenatis, sit amet fringilla nibh facilisis. Donec auctor posuere nunc vulputate tempus.',
     sitioWeb: 'www.${Red Owl}.com',
-    tipoEmpresa: 'Agencia de reclutamiento/consultora de RRHH',
+    tipoEmpresa: {
+      email: 'variuiiiiissjdnnss.orci@Crasdolordolor.net',
+    },
     estado: 'pendiente',
     datosRepr: {
       nombre: 'Beau',

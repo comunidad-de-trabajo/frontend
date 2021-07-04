@@ -1,12 +1,18 @@
 import { envioMailsIndividual } from '../../../services/envio-mails-mailjet/envio-mails.services';
 import { cambiarEstadoEmpresa } from '../../../services/listado-empresas/acciones-listado-empresas';
 
-const aceptarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
+const aceptarEmpresa = async (
+  setOpenAlert,
+  setOpen,
+  idEmpresa,
+  nombreComercial,
+  email
+) => {
   try {
     await envioMailsIndividual({
-      emailTo: 'magaliantonella.gaiani@gmail.com',
+      emailTo: email,
       aceptado: true,
-      textPart: 'For xxxx this test email',
+      textPart: `For ${nombreComercial} this test email`,
     });
     await cambiarEstadoEmpresa('aceptada', idEmpresa);
     await setOpenAlert(true);
@@ -17,12 +23,18 @@ const aceptarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
   }
 };
 
-const rechazarEmpresa = async (setOpenAlert, setOpen, idEmpresa) => {
+const rechazarEmpresa = async (
+  setOpenAlert,
+  setOpen,
+  idEmpresa,
+  nombreComercial,
+  email
+) => {
   try {
     await envioMailsIndividual({
-      emailTo: 'magaliantonella.gaiani@gmail.com',
-      aceptado: true,
-      textPart: 'For xxxx this test email',
+      emailTo: email,
+      aceptado: false,
+      textPart: `For ${nombreComercial} this test email`,
     });
     cambiarEstadoEmpresa('rechazada', idEmpresa);
     await setOpenAlert(true);
