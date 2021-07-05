@@ -82,6 +82,7 @@ export const cuitValidation = (cuit) => {
   }
   return 'CUIT invalido';
 };
+
 export const onlyNumbersValidation = (field) => {
   if (notEmptyOrNullValidation(field)) {
     return 'Campo requerido';
@@ -90,6 +91,7 @@ export const onlyNumbersValidation = (field) => {
   }
   return 'Solo se permiten numeros.';
 };
+
 export const phoneValidation = (phone) => {
   if (notEmptyOrNullValidation(phone)) {
     return 'Campo requerido';

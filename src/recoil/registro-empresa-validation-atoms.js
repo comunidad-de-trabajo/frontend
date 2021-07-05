@@ -16,3 +16,14 @@ export const datosEmpresaValidacion = atom({
     telefono: null,
   },
 });
+
+export const tipoEmpresaValidacion = atom({
+  key: 'tipoEmpresaValidacion',
+  default: {
+    areaDeInteres: null,
+    sitioWeb: null,
+    email: null,
+    tipoEmpresa: null,
+    descripcion: null,
+  },
+});

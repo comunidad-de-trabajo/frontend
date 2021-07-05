@@ -10,6 +10,8 @@ import { getTiposDeEmpresa } from '../../services/registroDeEmpresas/tipos-de-em
 import { getAreasDeInteres } from '../../services/registroDeEmpresas/areas-de-interes';
 import { useRecoilState } from 'recoil';
 import { tipoEmpresaFormState } from '../../recoil/registro-empresa-atoms';
+import { tipoEmpresaValidacion } from '../../recoil/registro-empresa-validation-atoms';
+import { tipoEmpresaValidations } from './validation/validationByField';
 
 export default function TipoEmpresa() {
   const [tiposDeEmpresa, setTiposDeEmpresa] = useState(null);
@@ -17,11 +19,16 @@ export default function TipoEmpresa() {
   const [tipoEmpresaValues, setTipoEmpresaValues] = useRecoilState(
     tipoEmpresaFormState
   );
+  const [validacion, setValidacion] = useRecoilState(tipoEmpresaValidacion);
 
   const handleRecoilStateChange = ({ target }) => {
     setTipoEmpresaValues({
       ...tipoEmpresaValues,
       [target.name]: target.value,
+    });
+    setValidacion({
+      ...validacion,
+      [target.name]: tipoEmpresaValidations[target.name](target.value),
     });
   };
 
@@ -63,6 +70,7 @@ export default function TipoEmpresa() {
               name="areaDeInteres"
               value={tipoEmpresaValues.areaDeInteres}
               onChange={handleRecoilStateChange}
+              error={validacion.areaDeInteres}
             >
               {areasDeInteres &&
                 areasDeInteres.map((area, index) => {
@@ -84,6 +92,8 @@ export default function TipoEmpresa() {
             name="sitioWeb"
             value={tipoEmpresaValues.sitioWeb}
             onChange={handleRecoilStateChange}
+            error={validacion.sitioWeb}
+            helperText={validacion.sitioWeb}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -95,6 +105,8 @@ export default function TipoEmpresa() {
             name="email"
             value={tipoEmpresaValues.email}
             onChange={handleRecoilStateChange}
+            error={validacion.email}
+            helperText={validacion.email}
           />
         </Grid>
         <Grid item xs={12} md={6}>
@@ -110,6 +122,8 @@ export default function TipoEmpresa() {
               name="tipoEmpresa"
               value={tipoEmpresaValues.tipoEmpresa}
               onChange={handleRecoilStateChange}
+              error={validacion.tipoEmpresa}
+              helperText={validacion.tipoEmpresa}
             >
               {tiposDeEmpresa &&
                 tiposDeEmpresa.map((tipoEmpresa, index) => {
@@ -135,6 +149,7 @@ export default function TipoEmpresa() {
             name="descripcion"
             value={tipoEmpresaValues.descripcion}
             onChange={handleRecoilStateChange}
+            error={validacion.descripcion}
           />
         </Grid>
         <ModalUpload />

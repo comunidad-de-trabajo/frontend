@@ -5,7 +5,7 @@
 
 import {
   cuitValidation,
-  onlyLettersValidation,
+  emailValidation,
   onlyNotEmptyOrNullValidation,
   onlyNumbersValidation,
   onlyValidCharactersValidation,
@@ -24,4 +24,12 @@ export const datosEmpresaValidations = {
   codigoPostal: onlyValidCharactersValidation,
   departamento: onlyValidCharactersValidation,
   telefono: phoneValidation,
+};
+
+export const tipoEmpresaValidations = {
+  areaDeInteres: onlyNotEmptyOrNullValidation,
+  sitioWeb: onlyNotEmptyOrNullValidation,
+  email: emailValidation,
+  tipoEmpresa: onlyNotEmptyOrNullValidation,
+  descripcion: onlyNotEmptyOrNullValidation,
 };
