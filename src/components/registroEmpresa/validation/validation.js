@@ -97,7 +97,8 @@ export const phoneValidation = (phone) => {
     return 'Campo requerido';
   }
   let num = phone.replace(/\D/g, '');
-  if ((num + '').replace('.', '').length != 10) {
+  let validLengths = [6, 7, 8, 10];
+  if (!validLengths.includes((num + '').replace('.', '').length)) {
     return 'Numero invalido';
   }
   return null;

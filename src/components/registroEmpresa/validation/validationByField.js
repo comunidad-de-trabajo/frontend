@@ -6,6 +6,7 @@
 import {
   cuitValidation,
   emailValidation,
+  onlyLettersValidation,
   onlyNotEmptyOrNullValidation,
   onlyNumbersValidation,
   onlyValidCharactersValidation,
@@ -32,4 +33,15 @@ export const tipoEmpresaValidations = {
   email: emailValidation,
   tipoEmpresa: onlyNotEmptyOrNullValidation,
   descripcion: onlyNotEmptyOrNullValidation,
+};
+
+export const datosRepresentanteValidations = {
+  nombreRepresentante: onlyLettersValidation,
+  apellidoRepresentante: onlyLettersValidation,
+  rolRepresentante: onlyLettersValidation,
+  emailRepresentante: emailValidation,
+  tipoTelefono1: onlyNotEmptyOrNullValidation,
+  telefono1: phoneValidation,
+  tipoTelefono2: onlyNotEmptyOrNullValidation,
+  telefono2: phoneValidation,
 };

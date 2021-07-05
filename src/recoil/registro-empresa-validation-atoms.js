@@ -28,3 +28,18 @@ export const tipoEmpresaValidacion = atom({
     logoEmpresa: null,
   },
 });
+
+export const datosRepresentanteValidacion = atom({
+  key: 'datosRepresentanteValidacion',
+  default: {
+    nombreRepresentante: null,
+    apellidoRepresentante: null,
+    rolRepresentante: null,
+    emailRepresentante: null,
+    tipoTelefono1: null,
+    telefono1: null,
+    tipoTelefono2: null,
+    telefono2: null,
+    terminosYCondiciones: null,
+  },
+});

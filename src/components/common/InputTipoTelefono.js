@@ -19,6 +19,8 @@ export const InputTipoTelefono = (props) => {
     required,
     nameSelect,
     nameTextField,
+    validacionTipoTelefono,
+    validacionTelefono,
   } = props;
 
   useEffect(() => {
@@ -45,6 +47,7 @@ export const InputTipoTelefono = (props) => {
             name={nameSelect}
             value={tipoTelefono}
             onChange={handleRecoilStateChange}
+            error={validacionTipoTelefono}
           >
             {tiposDeTelefono &&
               tiposDeTelefono.map((tipoTelefono, index) => {
@@ -67,6 +70,8 @@ export const InputTipoTelefono = (props) => {
           name={nameTextField}
           value={telefono}
           onChange={handleRecoilStateChange}
+          error={validacionTelefono}
+          helperText={validacionTelefono}
         />
       </Grid>
     </>
@@ -80,4 +85,6 @@ InputTipoTelefono.propTypes = {
   required: PropTypes.bool,
   nameSelect: PropTypes.string,
   nameTextField: PropTypes.string,
+  validacionTipoTelefono: PropTypes.string,
+  validacionTelefono: PropTypes.string,
 };

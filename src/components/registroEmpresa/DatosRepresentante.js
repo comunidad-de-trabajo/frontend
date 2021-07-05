@@ -7,11 +7,16 @@ import { useRecoilState } from 'recoil';
 import { datosRepresentanteFormState } from '../../recoil/registro-empresa-atoms';
 import { InputTipoTelefono } from '../common/InputTipoTelefono';
 import { Button } from '@material-ui/core';
+import { datosRepresentanteValidations } from './validation/validationByField';
+import { datosRepresentanteValidacion } from '../../recoil/registro-empresa-validation-atoms';
 
 export const DatosRepresentante = () => {
   const [isOpenModal, setOpenModal] = useState(false);
   const [datosRepresentante, setDatosRepresentante] = useRecoilState(
     datosRepresentanteFormState
+  );
+  const [validacion, setValidacion] = useRecoilState(
+    datosRepresentanteValidacion
   );
 
   const handleModal = () => {
@@ -22,6 +27,10 @@ export const DatosRepresentante = () => {
     setDatosRepresentante({
       ...datosRepresentante,
       [target.name]: target.value,
+    });
+    setValidacion({
+      ...validacion,
+      [target.name]: datosRepresentanteValidations[target.name](target.value),
     });
   };
 
@@ -41,6 +50,8 @@ export const DatosRepresentante = () => {
             fullWidth
             value={datosRepresentante.nombreRepresentante}
             onChange={handleRecoilStateChange}
+            error={validacion.nombreRepresentante}
+            helperText={validacion.nombreRepresentante}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -53,6 +64,8 @@ export const DatosRepresentante = () => {
             autoComplete="family-name"
             value={datosRepresentante.apellidoRepresentante}
             onChange={handleRecoilStateChange}
+            error={validacion.apellidoRepresentante}
+            helperText={validacion.apellidoRepresentante}
           />
         </Grid>
         <Grid item xs={12}>
@@ -65,6 +78,8 @@ export const DatosRepresentante = () => {
             autoComplete="shipping address-line1"
             value={datosRepresentante.rolRepresentante}
             onChange={handleRecoilStateChange}
+            error={validacion.rolRepresentante}
+            helperText={validacion.rolRepresentante}
           />
         </Grid>
         <Grid item xs={12}>
@@ -77,6 +92,8 @@ export const DatosRepresentante = () => {
             autoComplete="shipping address-line2"
             value={datosRepresentante.emailRepresentante}
             onChange={handleRecoilStateChange}
+            error={validacion.emailRepresentante}
+            helperText={validacion.emailRepresentante}
           />
         </Grid>
         {/* <Grid item xs={12} sm={6}>
@@ -99,6 +116,8 @@ export const DatosRepresentante = () => {
           tipoTelefono={datosRepresentante.tipoTelefono1}
           handleRecoilStateChange={handleRecoilStateChange}
           telefono={datosRepresentante.telefono1}
+          validacionTipoTelefono={validacion.tipoTelefono1}
+          validacionTelefono={validacion.telefono1}
         />
 
         <InputTipoTelefono
@@ -108,6 +127,8 @@ export const DatosRepresentante = () => {
           tipoTelefono={datosRepresentante.tipoTelefono2}
           handleRecoilStateChange={handleRecoilStateChange}
           telefono={datosRepresentante.telefono2}
+          validacionTipoTelefono={validacion.tipoTelefono2}
+          validacionTelefono={validacion.telefono2}
         />
 
         <Grid item xs={12}>
