@@ -10,7 +10,7 @@ import { getTiposDeEmpresa } from '../../services/registroDeEmpresas/tipos-de-em
 import { getAreasDeInteres } from '../../services/registroDeEmpresas/areas-de-interes';
 import { useRecoilState } from 'recoil';
 import { tipoEmpresaFormState } from '../../recoil/registro-empresa-atoms';
-import { tipoEmpresaValidacion } from '../../recoil/registro-empresa-validation-atoms';
+import { tipoEmpresaValidacionState } from '../../recoil/registro-empresa-validation-atoms';
 import { tipoEmpresaValidations } from './validation/validationByField';
 
 export default function TipoEmpresa() {
@@ -19,7 +19,9 @@ export default function TipoEmpresa() {
   const [tipoEmpresaValues, setTipoEmpresaValues] = useRecoilState(
     tipoEmpresaFormState
   );
-  const [validacion, setValidacion] = useRecoilState(tipoEmpresaValidacion);
+  const [validacion, setValidacion] = useRecoilState(
+    tipoEmpresaValidacionState
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setTipoEmpresaValues({

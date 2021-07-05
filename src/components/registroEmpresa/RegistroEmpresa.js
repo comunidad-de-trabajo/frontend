@@ -20,6 +20,12 @@ import {
 import { crearNuevoRegistro } from '../../services/registroDeEmpresas/registro-empresa-endpoint';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 import { Backdrop, CircularProgress } from '@material-ui/core';
+import {
+  datosEmpresaValidacionState,
+  datosRepresentanteValidacionState,
+  tipoEmpresaValidacionState,
+} from '../../recoil/registro-empresa-validation-atoms';
+import { completeFormValidation } from './validation/validation';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -82,6 +88,11 @@ export default function RegistroEmpresa({ routes }) {
   const tipoEmpresa = useRecoilValue(tipoEmpresaFormState);
   const datosRepresentante = useRecoilValue(datosRepresentanteFormState);
   const logoEmpresa = useRecoilValue(logoEmpresaState);
+  const datosEmpresaValidacion = useRecoilValue(datosEmpresaValidacionState);
+  const tipoEmpresaValidacion = useRecoilValue(tipoEmpresaValidacionState);
+  const datosRepresentanteValidacion = useRecoilValue(
+    datosRepresentanteValidacionState
+  );
 
   const handleEnviar = async () => {
     let registroList = {
@@ -89,6 +100,16 @@ export default function RegistroEmpresa({ routes }) {
       ...tipoEmpresa,
       ...datosRepresentante,
     };
+
+    if (!validarStep(activeStep)) {
+      setDatosAlerta({
+        severity: 'warning',
+        mensaje: 'Algunos campos estan incorrectos, o faltantes!',
+      });
+      setOpenAlerta(true);
+      return;
+    }
+
     try {
       setOpenBackdrop(true);
       const registro = await crearNuevoRegistro(
@@ -125,11 +146,38 @@ export default function RegistroEmpresa({ routes }) {
   }, [history, activeStep]);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if (validarStep(activeStep)) {
+      setActiveStep(activeStep + 1);
+      return;
+    }
+    setDatosAlerta({
+      severity: 'warning',
+      mensaje: 'Algunos campos estan incorrectos, o faltantes!',
+    });
+    setOpenAlerta(true);
+    return;
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
+  };
+
+  const validarStep = (step) => {
+    if (step === 0) {
+      return completeFormValidation(datosEmpresaValidacion, datosEmpresa, step);
+    } else if (step === 1) {
+      return (
+        completeFormValidation(tipoEmpresaValidacion, tipoEmpresa, step) &&
+        logoEmpresa.validacion === true
+      );
+    } else if (step === 2) {
+      return completeFormValidation(
+        datosRepresentanteValidacion,
+        datosRepresentante,
+        step
+      );
+    }
+    return true;
   };
 
   return (

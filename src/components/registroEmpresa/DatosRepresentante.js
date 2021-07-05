@@ -8,7 +8,7 @@ import { datosRepresentanteFormState } from '../../recoil/registro-empresa-atoms
 import { InputTipoTelefono } from '../common/InputTipoTelefono';
 import { Button } from '@material-ui/core';
 import { datosRepresentanteValidations } from './validation/validationByField';
-import { datosRepresentanteValidacion } from '../../recoil/registro-empresa-validation-atoms';
+import { datosRepresentanteValidacionState } from '../../recoil/registro-empresa-validation-atoms';
 
 export const DatosRepresentante = () => {
   const [isOpenModal, setOpenModal] = useState(false);
@@ -16,7 +16,7 @@ export const DatosRepresentante = () => {
     datosRepresentanteFormState
   );
   const [validacion, setValidacion] = useRecoilState(
-    datosRepresentanteValidacion
+    datosRepresentanteValidacionState
   );
 
   const handleModal = () => {
@@ -96,18 +96,6 @@ export const DatosRepresentante = () => {
             helperText={validacion.emailRepresentante}
           />
         </Grid>
-        {/* <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="codigoArea"
-            name="codigoArea"
-            label="Cod. Área"
-            fullWidth
-            autoComplete="shipping address-level2"
-            value={datosRepresentante.emailRepresentante}
-            onChange={handleRecoilStateChange}
-          />
-        </Grid> */}
 
         <InputTipoTelefono
           required={true}

@@ -1,7 +1,7 @@
 import { atom } from 'recoil';
 
-export const datosEmpresaValidacion = atom({
-  key: 'datosEmpresaValidacion',
+export const datosEmpresaValidacionState = atom({
+  key: 'datosEmpresaValidacionState',
   default: {
     nombreComercial: null,
     provinciaActual: null,
@@ -17,8 +17,8 @@ export const datosEmpresaValidacion = atom({
   },
 });
 
-export const tipoEmpresaValidacion = atom({
-  key: 'tipoEmpresaValidacion',
+export const tipoEmpresaValidacionState = atom({
+  key: 'tipoEmpresaValidacionState',
   default: {
     areaDeInteres: null,
     sitioWeb: null,
@@ -29,8 +29,8 @@ export const tipoEmpresaValidacion = atom({
   },
 });
 
-export const datosRepresentanteValidacion = atom({
-  key: 'datosRepresentanteValidacion',
+export const datosRepresentanteValidacionState = atom({
+  key: 'datosRepresentanteValidacionState',
   default: {
     nombreRepresentante: null,
     apellidoRepresentante: null,

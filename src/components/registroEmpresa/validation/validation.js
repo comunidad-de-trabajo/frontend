@@ -103,3 +103,41 @@ export const phoneValidation = (phone) => {
   }
   return null;
 };
+
+export const completeFormValidation = (objectValidacion, object, step) => {
+  /* Aca lo que hago es verificar que en cada property de el objeto de validacion
+     no haya ningun mensaje de error. Y tambien verifico que en cada property
+     del objeto de datos no sea un string vacio. Esta es una verificacion necesaria
+     ya que cuando inicializo el objeto de validacion no hay ninguna property con
+     mensaje de error.
+  */
+
+  //Particularidad del ultimo step
+  if (step === 2) {
+    let objectFiltrado = { ...object };
+    let objectValidacionFiltrado = { ...objectValidacion };
+
+    //ignoro el campo terminos y condiciones debido a que el mismo se da por hecho que se acepta
+    delete objectFiltrado.terminosYCondiciones;
+    delete objectValidacionFiltrado.terminosYCondiciones;
+
+    //Si no se ingreso un segundo telefono, --que no es requerido-- filtro esos campos para no validarlos
+    if (object.telefono2 === '' && object.tipoTelefono2 === '') {
+      delete objectFiltrado.telefono2;
+      delete objectFiltrado.tipoTelefono2;
+      delete objectValidacionFiltrado.telefono2;
+      delete objectValidacionFiltrado.tipoTelefono2;
+    }
+
+    return (
+      Object.entries(objectValidacionFiltrado).every(
+        (entrie) => entrie[1] === null
+      ) &&
+      Object.entries(objectFiltrado).every((entrie) => entrie[1].trim() != '')
+    );
+  }
+  return (
+    Object.entries(objectValidacion).every((entrie) => entrie[1] === null) &&
+    Object.entries(object).every((entrie) => entrie[1].trim() != '')
+  );
+};

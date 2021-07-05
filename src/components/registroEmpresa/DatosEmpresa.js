@@ -17,7 +17,7 @@ import { useRecoilState } from 'recoil';
 import { datosEmpresaFormState } from '../../recoil/registro-empresa-atoms';
 import { sortedStrings } from '../../helpers/sortStrings';
 import { datosEmpresaValidations } from './validation/validationByField';
-import { datosEmpresaValidacion } from '../../recoil/registro-empresa-validation-atoms';
+import { datosEmpresaValidacionState } from '../../recoil/registro-empresa-validation-atoms';
 
 export default function DatosEmpresa() {
   const [provincias, setProvincias] = useState([]);
@@ -25,7 +25,7 @@ export default function DatosEmpresa() {
   const [tiposEmpleador, setTiposEmpleador] = useState(null);
   const [datosEmpresa, setDatosEmpresa] = useRecoilState(datosEmpresaFormState);
   const [validaciones, setValidaciones] = useRecoilState(
-    datosEmpresaValidacion
+    datosEmpresaValidacionState
   );
 
   const handleRecoilStateChange = ({ target }) => {
