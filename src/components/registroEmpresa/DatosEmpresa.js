@@ -16,22 +16,26 @@ import { getTipoEmpleador } from '../../services/registroDeEmpresas/empleador';
 import { useRecoilState } from 'recoil';
 import { datosEmpresaFormState } from '../../recoil/registro-empresa-atoms';
 import { sortedStrings } from '../../helpers/sortStrings';
+import { datosEmpresaValidations } from './validation/validationByField';
+import { datosEmpresaValidacion } from '../../recoil/registro-empresa-validation-atoms';
 
 export default function DatosEmpresa() {
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
-  // const [provinciaActual, setProvinciaActual] = useState([]);
   const [tiposEmpleador, setTiposEmpleador] = useState(null);
   const [datosEmpresa, setDatosEmpresa] = useRecoilState(datosEmpresaFormState);
-
-  // const handleChange = (event) => {
-  //   setProvinciaActual(event.target.value);
-  // };
+  const [validaciones, setValidaciones] = useRecoilState(
+    datosEmpresaValidacion
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setDatosEmpresa({
       ...datosEmpresa,
       [target.name]: target.value,
+    });
+    setValidaciones({
+      ...validaciones,
+      [target.name]: datosEmpresaValidations[target.name](target.value),
     });
   };
 
@@ -81,6 +85,8 @@ export default function DatosEmpresa() {
             fullWidth
             value={datosEmpresa.nombreComercial}
             onChange={handleRecoilStateChange}
+            error={validaciones.nombreComercial}
+            helperText={validaciones.nombreComercial}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -92,6 +98,8 @@ export default function DatosEmpresa() {
               name="provinciaActual"
               value={datosEmpresa.provinciaActual}
               onChange={handleRecoilStateChange}
+              error={validaciones.provinciaActual}
+              helperText={validaciones.provinciaActual}
             >
               {provincias.map((p) => (
                 <MenuItem key={p.id} value={p.nombre}>
@@ -110,6 +118,8 @@ export default function DatosEmpresa() {
             value={datosEmpresa.razonSocial}
             onChange={handleRecoilStateChange}
             fullWidth
+            error={validaciones.razonSocial}
+            helperText={validaciones.razonSocial}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -124,6 +134,8 @@ export default function DatosEmpresa() {
               name="localidad"
               value={datosEmpresa.localidad}
               onChange={handleRecoilStateChange}
+              error={validaciones.localidad}
+              helperText={validaciones.localidad}
             >
               {localidades.map((l) => (
                 <MenuItem key={l.id} value={l.nombre}>
@@ -139,10 +151,11 @@ export default function DatosEmpresa() {
             id="cuit"
             name="cuit"
             label="CUIT"
-            type="number"
             fullWidth
             value={datosEmpresa.cuit}
             onChange={handleRecoilStateChange}
+            error={validaciones.cuit}
+            helperText={validaciones.cuit}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -154,6 +167,8 @@ export default function DatosEmpresa() {
             fullWidth
             value={datosEmpresa.direccion}
             onChange={handleRecoilStateChange}
+            error={validaciones.direccion}
+            helperText={validaciones.direccion}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -167,6 +182,8 @@ export default function DatosEmpresa() {
               name="tipoEmpleador"
               value={datosEmpresa.tipoEmpleador}
               onChange={handleRecoilStateChange}
+              error={validaciones.tipoEmpleador}
+              helperText={validaciones.tipoEmpleador}
             >
               {tiposEmpleador &&
                 tiposEmpleador.map((tipo, index) => {
@@ -188,6 +205,8 @@ export default function DatosEmpresa() {
             fullWidth
             value={datosEmpresa.piso}
             onChange={handleRecoilStateChange}
+            error={validaciones.piso}
+            helperText={validaciones.piso}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -196,11 +215,12 @@ export default function DatosEmpresa() {
             id="CP"
             name="codigoPostal"
             label="Codigo Postal"
-            type="number"
             fullWidth
             autoComplete="shipping postal-code"
             value={datosEmpresa.codigoPostal}
             onChange={handleRecoilStateChange}
+            error={validaciones.codigoPostal}
+            helperText={validaciones.codigoPostal}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -212,6 +232,8 @@ export default function DatosEmpresa() {
             fullWidth
             value={datosEmpresa.departamento}
             onChange={handleRecoilStateChange}
+            error={validaciones.departamento}
+            helperText={validaciones.departamento}
           />
         </Grid>
 
@@ -225,6 +247,8 @@ export default function DatosEmpresa() {
             fullWidth
             value={datosEmpresa.telefono}
             onChange={handleRecoilStateChange}
+            error={validaciones.telefono}
+            helperText={validaciones.telefono}
           />
         </Grid>
       </Grid>
