@@ -2,10 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CameraAltOutlinedIcon from '@material-ui/icons/CameraAltOutlined';
 import { useState } from 'react';
-import { Grid, Avatar, Typography } from '@material-ui/core';
+import { Grid, Avatar, Typography, Badge } from '@material-ui/core';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 import { useRecoilState } from 'recoil';
 import { logoEmpresaState } from '../../recoil/registro-empresa-atoms';
+import ErrorIcon from '@material-ui/icons/Error';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -50,6 +51,7 @@ export default function ModalUpload() {
       setImagenState({
         imagenFile: imagen,
         imagenURL,
+        validacion: true,
       });
     }
   }
@@ -57,7 +59,18 @@ export default function ModalUpload() {
   return (
     <>
       <Grid item xs={12} md={6}>
-        <Avatar src={imagenState.imagenURL} className={classes.image} />
+        <Badge
+          overlap="circle"
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          badgeContent={
+            !imagenState.validacion ? <ErrorIcon color="error" /> : null
+          }
+        >
+          <Avatar src={imagenState.imagenURL} className={classes.image} />
+        </Badge>
         <input
           accept="image/png, image/jpg"
           className={classes.input}

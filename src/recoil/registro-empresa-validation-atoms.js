@@ -25,5 +25,6 @@ export const tipoEmpresaValidacion = atom({
     email: null,
     tipoEmpresa: null,
     descripcion: null,
+    logoEmpresa: null,
   },
 });

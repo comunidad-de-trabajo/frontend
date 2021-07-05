@@ -50,5 +50,6 @@ export const logoEmpresaState = atom({
   default: {
     imagenURL: usuario,
     imagenFile: '',
+    validacion: null,
   },
 });
