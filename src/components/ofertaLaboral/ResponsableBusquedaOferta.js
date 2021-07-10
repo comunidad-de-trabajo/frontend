@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormControl, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useRecoilState } from 'recoil';
+import { responsableOfertaState } from '../../recoil/oferta-laboral';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -13,6 +15,16 @@ const useStyles = makeStyles(() => ({
 
 export const ResponsableBusquedaOferta = () => {
   const classes = useStyles();
+  const [stateResponsableOferta, setStateResponsableOferta] = useRecoilState(
+    responsableOfertaState
+  );
+
+  const handleRecoilStateChange = ({ target }) => {
+    setStateResponsableOferta({
+      ...stateResponsableOferta,
+      [target.name]: target.value,
+    });
+  };
 
   return (
     <Grid item xs={8}>
@@ -29,9 +41,12 @@ export const ResponsableBusquedaOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="nombreCompletoRepresentante"
             variant="filled"
             className={classes.mt10}
+            name="nombreCompletoRepresentante"
+            value={stateResponsableOferta.nombreCompletoRepresentante}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
@@ -43,10 +58,13 @@ export const ResponsableBusquedaOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="emailRepresentante"
             variant="filled"
             type="email"
             className={classes.mt10}
+            name="emailRepresentante"
+            value={stateResponsableOferta.emailRepresentante}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
@@ -58,12 +76,15 @@ export const ResponsableBusquedaOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="detalles"
             variant="filled"
             type="text"
             multiline
             row={2}
             className={classes.mt10}
+            name="detalles"
+            value={stateResponsableOferta.detalles}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
@@ -75,12 +96,15 @@ export const ResponsableBusquedaOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="otrasAclaraciones"
             variant="filled"
             type="text"
             multiline
             row={3}
             className={classes.mt10}
+            name="otrasAclaraciones"
+            value={stateResponsableOferta.otrasAclaraciones}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
