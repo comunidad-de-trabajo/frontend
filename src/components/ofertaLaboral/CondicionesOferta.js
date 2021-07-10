@@ -9,6 +9,8 @@ import {
 import { FormControl } from '@material-ui/core';
 import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { useRecoilState } from 'recoil';
+import { condicionesOfertaState } from '../../recoil/oferta-laboral';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -21,6 +23,16 @@ const useStyles = makeStyles(() => ({
 
 export const CondicionesOferta = () => {
   const classes = useStyles();
+  const [stateCondicionesOferta, setStateCondicionesOferta] = useRecoilState(
+    condicionesOfertaState
+  );
+
+  const handleRecoilStateChange = ({ target }) => {
+    setStateCondicionesOferta({
+      ...stateCondicionesOferta,
+      [target.name]: target.value,
+    });
+  };
 
   return (
     <Grid item xs={8}>
@@ -33,13 +45,15 @@ export const CondicionesOferta = () => {
       <Grid item xs={12} sm={6} className={classes.mt15}>
         <Typography variant="caption">Jornada:</Typography>
       </Grid>
-      <Grid item xs={12} sm={3}>
+      <Grid item xs={12} sm={5}>
         <FormControl component="fieldset">
           <RadioGroup
             row
-            aria-label="gender"
-            name="position"
+            aria-label="jornada"
             defaultValue="end"
+            name="jornada"
+            value={stateCondicionesOferta.jornada}
+            onChange={handleRecoilStateChange}
           >
             <FormControlLabel
               value="porHora"
@@ -67,12 +81,14 @@ export const CondicionesOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="contrato"
             variant="filled"
             placeholder="Complete"
             multiline
-            row={2}
             className={classes.mt10}
+            name="contrato"
+            value={stateCondicionesOferta.contrato}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
@@ -84,10 +100,13 @@ export const CondicionesOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="lugarTrabajo"
             variant="filled"
             placeholder="Indicar zona"
             className={classes.mt10}
+            name="lugarTrabajo"
+            value={stateCondicionesOferta.lugarTrabajo}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
@@ -99,12 +118,15 @@ export const CondicionesOferta = () => {
         <FormControl fullWidth>
           <TextField
             required
-            id="filled-start-adornment"
+            id="ofrecen"
             variant="filled"
             rows={3}
             multiline
             placeholder="Ej: Buenas condiciones de contratación"
             className={classes.mt10}
+            name="ofrecen"
+            value={stateCondicionesOferta.ofrecen}
+            onChange={handleRecoilStateChange}
           />
         </FormControl>
       </Grid>
