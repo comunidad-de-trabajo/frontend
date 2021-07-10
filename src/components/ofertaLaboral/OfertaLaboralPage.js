@@ -8,6 +8,14 @@ import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
+import { useRecoilValue } from 'recoil';
+import {
+  condicionesOfertaState,
+  datosOfertaLaboralState,
+  requisitosOfertaState,
+  responsableOfertaState,
+} from '../../recoil/oferta-laboral';
+import { crearOfertaLaboral } from '../../services/oferta-laboral/registro-oferta-laboral';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -55,6 +63,28 @@ const GlobalCss = withStyles({
 export function OfertaLaboralPage() {
   const classes = useStyles();
 
+  const datosOfertaLaboral = useRecoilValue(datosOfertaLaboralState);
+  const requisitosOfertaLaboral = useRecoilValue(requisitosOfertaState);
+  const condicionesOfertaLaboral = useRecoilValue(condicionesOfertaState);
+  const responsableOfertaLaboral = useRecoilValue(responsableOfertaState);
+
+  console.log(datosOfertaLaboral);
+
+  const handlePublicar = async () => {
+    let objectNuevaOferta = {
+      ...datosOfertaLaboral,
+      ...requisitosOfertaLaboral,
+      ...condicionesOfertaLaboral,
+      ...responsableOfertaLaboral,
+    };
+    console.log(objectNuevaOferta);
+    try {
+      await crearOfertaLaboral(objectNuevaOferta);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <CssBaseline />
@@ -83,6 +113,7 @@ export function OfertaLaboralPage() {
                 variant="contained"
                 color="primary"
                 className={classes.button}
+                onClick={handlePublicar}
               >
                 Publicar
               </Button>
