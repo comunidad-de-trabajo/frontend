@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -8,7 +8,7 @@ import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
-import { useRecoilValue } from 'recoil';
+import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
 import {
   condicionesOfertaState,
   datosOfertaLaboralState,
@@ -16,6 +16,8 @@ import {
   responsableOfertaState,
 } from '../../recoil/oferta-laboral';
 import { crearOfertaLaboral } from '../../services/oferta-laboral/registro-oferta-laboral';
+import Loading from '../common/Loading';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -62,26 +64,46 @@ const GlobalCss = withStyles({
 
 export function OfertaLaboralPage() {
   const classes = useStyles();
+  const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
+    datosOfertaLaboralState
+  );
+  const [requisitosOfertaLaboral, setRequisitosOfertaLaboral] = useRecoilState(
+    requisitosOfertaState
+  );
+  const [
+    condicionesOfertaLaboral,
+    setCondicionesOfertaLaboral,
+  ] = useRecoilState(condicionesOfertaState);
+  const [
+    responsableOfertaLaboral,
+    setResponsableOfertaLaboral,
+  ] = useRecoilState(responsableOfertaState);
+  const [loading, setLoading] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
 
-  const datosOfertaLaboral = useRecoilValue(datosOfertaLaboralState);
-  const requisitosOfertaLaboral = useRecoilValue(requisitosOfertaState);
-  const condicionesOfertaLaboral = useRecoilValue(condicionesOfertaState);
-  const responsableOfertaLaboral = useRecoilValue(responsableOfertaState);
-
-  console.log(datosOfertaLaboral);
+  const resetValues = () => {
+    setDatosOfertaLaboral(new DefaultValue());
+    setRequisitosOfertaLaboral(new DefaultValue());
+    setCondicionesOfertaLaboral(new DefaultValue());
+    setResponsableOfertaLaboral(new DefaultValue());
+  };
 
   const handlePublicar = async () => {
-    let objectNuevaOferta = {
+    let nuevaOferta = {
       ...datosOfertaLaboral,
       ...requisitosOfertaLaboral,
       ...condicionesOfertaLaboral,
       ...responsableOfertaLaboral,
     };
-    console.log(objectNuevaOferta);
     try {
-      await crearOfertaLaboral(objectNuevaOferta);
+      setLoading(true);
+      await crearOfertaLaboral(nuevaOferta);
+      setOpenAlert(true);
+      resetValues();
     } catch (e) {
       console.log(e);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -89,38 +111,48 @@ export function OfertaLaboralPage() {
     <>
       <CssBaseline />
       <main className={classes.layout}>
-        <Paper className={classes.paper}>
-          <Typography component="h1" variant="h5" align="center">
-            Publicar oferta laboral
-          </Typography>
-          <Grid
-            container
-            spacing={3}
-            justify="center"
-            alignItems="center"
-            className={classes.mt15}
-          >
-            <DatosOferta />
+        {!loading && (
+          <Paper className={classes.paper}>
+            <Typography component="h1" variant="h5" align="center">
+              Publicar oferta laboral
+            </Typography>
+            <Grid
+              container
+              spacing={3}
+              justify="center"
+              alignItems="center"
+              className={classes.mt15}
+            >
+              <DatosOferta />
 
-            <RequisitosOferta />
+              <RequisitosOferta />
 
-            <CondicionesOferta />
+              <CondicionesOferta />
 
-            <ResponsableBusquedaOferta />
+              <ResponsableBusquedaOferta />
 
-            <Grid item xs={12} align="center" className={classes.mt15}>
-              <Button
-                variant="contained"
-                color="primary"
-                className={classes.button}
-                onClick={handlePublicar}
-              >
-                Publicar
-              </Button>
+              <Grid item xs={12} align="center" className={classes.mt15}>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  className={classes.button}
+                  onClick={handlePublicar}
+                >
+                  Publicar
+                </Button>
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
+        )}
+        {loading && <Loading />}
+        <AlertaOperacionTerminada
+          tipo="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+          mensaje="La oferta laboral se publió con éxito"
+        />
       </main>
+
       <GlobalCss />
     </>
   );
