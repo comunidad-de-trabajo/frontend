@@ -53,6 +53,7 @@ const BotonesDeLista = (props) => {
     mensajeModalConfirmacion,
   } = datosModalConfirmacion;
   const { setOpenAlert } = props;
+  const { render } = props;
 
   const handleClickOpen = () => {
     setOpenModalEmpresa(true);
@@ -134,6 +135,7 @@ const BotonesDeLista = (props) => {
         open={openModalConfirmacion}
         setOpen={setOpenModalConfirmacion}
         setOpenAlert={setOpenAlert}
+        render={render}
       />
     </div>
   );
@@ -145,6 +147,7 @@ BotonesDeLista.propTypes = {
   rechazar: propTypes.bool,
   empresa: propTypes.object,
   setOpenAlert: propTypes.func,
+  render: propTypes.func,
 };
 
 export default BotonesDeLista;

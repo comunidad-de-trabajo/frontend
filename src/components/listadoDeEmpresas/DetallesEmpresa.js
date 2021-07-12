@@ -49,16 +49,18 @@ export default function DetallesEmpresa({ empresa }) {
           </Grid>
           <Grid item xs={12} sm={9}>
             <Typography className={classes.datoEmpresa}>
-              <b>Provincia:</b> {empresa.provincia}
+              <b>Provincia:</b> {empresa.provinciaActual}
             </Typography>
           </Grid>
         </Grid>
         <Grid item sm={3}>
+          {/*
           <img
             src={empresa.logo}
-            alt={`logo ${empresa.nombre}`}
+            alt={`logo ${empresa.nombreComercial}`}
             className={classes.logo}
           ></img>
+          */}
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
@@ -82,27 +84,27 @@ export default function DetallesEmpresa({ empresa }) {
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
-            <b>Nombre:</b> {empresa.datosRepr.nombre}
+            <b>Nombre:</b> {empresa.nombreRepresentante}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
-            <b>Apellido:</b> {empresa.datosRepr.apellido}
+            <b>Apellido:</b> {empresa.apellidoRepresentante}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
-            <b>Cargo/Rol:</b> {empresa.datosRepr.cargo}
+            <b>Cargo/Rol:</b> {empresa.rolRepresentante}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
-            <b>Email:</b> {empresa.datosRepr.email}
+            <b>Email:</b> {empresa.emailRepresentante}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
-            <b>Telefono:</b> {empresa.datosRepr.telefono}
+            <b>Telefono:</b> {empresa.telefono1}
           </Typography>
         </Grid>
       </Grid>

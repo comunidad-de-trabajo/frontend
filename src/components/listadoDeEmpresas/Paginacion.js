@@ -1,6 +1,5 @@
 import { makeStyles } from '@material-ui/core';
 import React from 'react';
-import Pagination from '@material-ui/lab/Pagination';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,9 +18,19 @@ const useStyles = makeStyles((theme) => ({
 
 const Paginacion = () => {
   const classes = useStyles();
+  const [page, setPage] = React.useState(1);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
+
+  console.log(page);
+
   return (
     <div className={classes.root}>
-      <Pagination count={10} color="primary" />
+      {/*
+      <Pagination count={10} page={page} color="primary" onChange={handleChange} />
+      */}
     </div>
   );
 };

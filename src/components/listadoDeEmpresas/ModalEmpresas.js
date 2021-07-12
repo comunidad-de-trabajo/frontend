@@ -55,7 +55,7 @@ export default function ModalEmpresas(props) {
         fullWidth
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          {empresa.nombre}
+          {empresa.nombreComercial}
         </DialogTitle>
         <DetallesEmpresa empresa={empresa} />
       </Dialog>

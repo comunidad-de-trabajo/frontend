@@ -12,13 +12,14 @@ const ModalConfirmarAccion = (props) => {
   const { titulo, mensaje, accion, idEmpresa } = props;
   const { open, setOpen } = props;
   const { setOpenAlert } = props;
+  const { render } = props;
 
   const handleClose = () => {
     let acciones = getAccionesModalConfirmacion();
     if (accion === 'aceptar') {
-      acciones.aceptar(setOpenAlert, setOpen, idEmpresa);
+      acciones.aceptar(setOpenAlert, setOpen, idEmpresa, render);
     } else if (accion === 'rechazar') {
-      acciones.rechazar(setOpenAlert, setOpen, idEmpresa);
+      acciones.rechazar(setOpenAlert, setOpen, idEmpresa, render);
     }
   };
 
@@ -62,6 +63,7 @@ ModalConfirmarAccion.propTypes = {
   open: propTypes.bool,
   setOpen: propTypes.func,
   setOpenAlert: propTypes.func,
+  render: propTypes.func,
 };
 
 export default ModalConfirmarAccion;
