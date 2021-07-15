@@ -50,17 +50,13 @@ export const emailValidation = (email) => {
 };
 
 export const cuitValidation = (cuit) => {
-  if (notEmptyOrNullValidation(cuit)) {
-    return 'Campo requerido';
-  }
-
   let CUIT = cuit;
   const base = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2];
   const codigoVerificador = parseInt(CUIT[CUIT.length - 1]);
   const productoCUITConCadaElementoDeLaBase = [];
   let regex = /-/g;
   let sumatoriaProductos = 0;
-  let primerDecimalDeLaSumatoria = 0;
+  let modulo11DeLaSumatoriaDeProductos = 0;
   //Verificamos que tenga el formato correcto.
   if (CUIT[2] != '-' || CUIT[11] != '-' || CUIT.length != 13) {
     return 'Error de formato';
@@ -70,13 +66,8 @@ export const cuitValidation = (cuit) => {
     productoCUITConCadaElementoDeLaBase[i] = base[i] * CUIT[i];
   }
   for (let i of productoCUITConCadaElementoDeLaBase) sumatoriaProductos += i;
-  sumatoriaProductos = sumatoriaProductos / 11;
-  primerDecimalDeLaSumatoria =
-    sumatoriaProductos - Math.trunc(sumatoriaProductos);
-  //Redondeo el decimal
-  primerDecimalDeLaSumatoria = primerDecimalDeLaSumatoria * Math.pow(10, 1);
-  primerDecimalDeLaSumatoria = Math.round(primerDecimalDeLaSumatoria);
-  let resultado = 11 - primerDecimalDeLaSumatoria;
+  modulo11DeLaSumatoriaDeProductos = sumatoriaProductos % 11;
+  let resultado = 11 - modulo11DeLaSumatoriaDeProductos;
   if (resultado === codigoVerificador) {
     return null;
   }
