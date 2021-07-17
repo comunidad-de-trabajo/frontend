@@ -86,6 +86,8 @@ export const onlyNumbersValidation = (field) => {
 export const phoneValidation = (phone) => {
   if (notEmptyOrNullValidation(phone)) {
     return 'Campo requerido';
+  } else if (isNaN(phone)) {
+    return 'Solo se permiten numeros.';
   }
   let num = phone.replace(/\D/g, '');
   let validLengths = [6, 7, 8, 10];
