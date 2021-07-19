@@ -54,13 +54,11 @@ export default function DetallesEmpresa({ empresa }) {
           </Grid>
         </Grid>
         <Grid item sm={3}>
-          {/*
           <img
-            src={empresa.logo}
+            src={empresa.urlImagen}
             alt={`logo ${empresa.nombreComercial}`}
             className={classes.logo}
-          ></img>
-          */}
+          />
         </Grid>
         <Grid item xs={12} sm={12}>
           <Typography className={classes.datoEmpresa}>
