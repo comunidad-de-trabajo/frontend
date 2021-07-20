@@ -18,7 +18,7 @@ export const onlyNotEmptyOrNullValidation = (field) => {
 };
 
 export const onlyValidCharactersValidation = (field) => {
-  const regex = /^[\w\-\s]+$/;
+  const regex = /^[\w\-\s,.]+$/;
   if (notEmptyOrNullValidation(field)) {
     return 'Campo requerido';
   } else if (!regex.test(field)) {
