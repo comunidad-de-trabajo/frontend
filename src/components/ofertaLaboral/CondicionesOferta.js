@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Divider,
   FormControlLabel,
   Radio,
   RadioGroup,
@@ -35,17 +36,19 @@ export const CondicionesOferta = () => {
   };
 
   return (
-    <Grid item xs={8}>
+    <Grid item xs={12}>
       <Grid item xs={12} className={classes.mt15}>
         <Typography variant="subtitle2" gutterBottom>
           Condiciones:
         </Typography>
       </Grid>
 
-      <Grid item xs={12} sm={6} className={classes.mt15}>
-        <Typography variant="caption">Jornada:</Typography>
+      <Grid item xs={12} sm={4} className={classes.mt15}>
+        <Typography variant="body1" color="textSecondary">
+          Jornada
+        </Typography>
       </Grid>
-      <Grid item xs={12} sm={5}>
+      <Grid item xs={12} sm={8}>
         <FormControl component="fieldset">
           <RadioGroup
             row
@@ -73,20 +76,16 @@ export const CondicionesOferta = () => {
           </RadioGroup>
         </FormControl>
       </Grid>
-
-      <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Contrato:
-        </Typography>
+      <Divider style={{ margin: '16px 0 8px 0' }} />
+      <Grid item xs={12}>
         <FormControl fullWidth>
           <TextField
             required
             id="contrato"
-            variant="filled"
             placeholder="Complete"
             multiline
-            className={classes.mt10}
             name="contrato"
+            label="Contrato"
             value={stateCondicionesOferta.contrato}
             onChange={handleRecoilStateChange}
           />
@@ -94,17 +93,14 @@ export const CondicionesOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Lugar de trabajo:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="lugarTrabajo"
-            variant="filled"
             placeholder="Indicar zona"
             className={classes.mt10}
             name="lugarTrabajo"
+            label="Lugar de trabajo"
             value={stateCondicionesOferta.lugarTrabajo}
             onChange={handleRecoilStateChange}
           />
@@ -112,19 +108,15 @@ export const CondicionesOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Ofrecen:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="ofrecen"
-            variant="filled"
-            rows={3}
             multiline
             placeholder="Ej: Buenas condiciones de contratación"
             className={classes.mt10}
             name="ofrecen"
+            label="Ofrecen"
             value={stateCondicionesOferta.ofrecen}
             onChange={handleRecoilStateChange}
           />

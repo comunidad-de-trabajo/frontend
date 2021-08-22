@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  Divider,
   FormControl,
   FormControlLabel,
   Grid,
@@ -56,13 +57,13 @@ export const RequisitosOferta = () => {
   };
 
   return (
-    <Grid item xs={8}>
+    <Grid item xs={8} sm={12}>
       <Grid item xs={6} sm={6} className={classes.mt10}>
-        <Typography variant="subtitle2" gutterBottom>
+        <Typography variant="h6" gutterBottom>
           Requisitos:
         </Typography>
-        <Typography variant="caption" gutterBottom>
-          *Marque si/no segun corresponda.
+        <Typography variant="subtitle" gutterBottom>
+          * Marque si/no segun corresponda.
         </Typography>
       </Grid>
 
@@ -84,10 +85,10 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
-
+      <Divider />
       <div className={classes.containerItem}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="caption">
+          <Typography variant="subtitle" color="textSecondary">
             Estudios secundarios completos:
           </Typography>
         </Grid>
@@ -116,10 +117,10 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
-
+      <Divider />
       <div className={classes.containerItem}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="caption">
+          <Typography variant="subtitle" color="textSecondary">
             Conociemientos de paquete office:
           </Typography>
         </Grid>
@@ -148,10 +149,12 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
-
+      <Divider />
       <div className={classes.containerItem}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="caption">Licencia de conducir:</Typography>
+          <Typography variant="subtitle" color="textSecondary">
+            Licencia de conducir:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl component="fieldset">
@@ -178,10 +181,12 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
-
+      <Divider />
       <div className={classes.containerItem}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="caption">Edad:</Typography>
+          <Typography variant="subtitle" color="textSecondary">
+            Edad:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl component="fieldset">
@@ -208,40 +213,52 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
+      {stateRequisitosOferta.edad === 'si' ? (
+        <Grid item sm={6}>
+          <div
+            className={(classes.mt15, classes.containerItem)}
+            style={{ marginBottom: '8px' }}
+          >
+            <div className={classes.containerItem}>
+              <Typography variant="caption" color="textSecondary">
+                Desde:
+              </Typography>
+              <TextField
+                id="desdeEdad"
+                size="small"
+                className={classes.ml15}
+                name="desdeEdad"
+                value={stateRequisitosOferta.desdeEdad}
+                onChange={handleRecoilStateChange}
+              />
+            </div>
 
-      <Grid item sm={6}>
-        <div className={(classes.mt15, classes.containerItem)}>
-          <div className={classes.containerItem}>
-            <Typography variant="caption">Desde:</Typography>
-            <TextField
-              id="desdeEdad"
-              variant="filled"
-              size="small"
-              className={classes.ml15}
-              name="desdeEdad"
-              value={stateRequisitosOferta.desdeEdad}
-              onChange={handleRecoilStateChange}
-            />
+            <div
+              className={classes.containerItem}
+              style={{ marginLeft: '15px' }}
+            >
+              <Typography variant="caption" color="textSecondary">
+                Hasta:
+              </Typography>
+              <TextField
+                id="hastaEdad"
+                size="small"
+                className={classes.ml15}
+                name="hastaEdad"
+                value={stateRequisitosOferta.hastaEdad}
+                onChange={handleRecoilStateChange}
+              />
+            </div>
           </div>
+        </Grid>
+      ) : null}
 
-          <div className={classes.containerItem} style={{ marginLeft: '15px' }}>
-            <Typography variant="caption">Hasta:</Typography>
-            <TextField
-              id="hastaEdad"
-              variant="filled"
-              size="small"
-              className={classes.ml15}
-              name="hastaEdad"
-              value={stateRequisitosOferta.hastaEdad}
-              onChange={handleRecoilStateChange}
-            />
-          </div>
-        </div>
-      </Grid>
-
-      <div className={classes.containerItem} style={{ marginTop: '15px' }}>
+      <Divider mt={1} />
+      <div className={classes.containerItem}>
         <Grid item xs={12} sm={6}>
-          <Typography variant="caption">Experiencia previa:</Typography>
+          <Typography variant="subtitle" color="textSecondary">
+            Experiencia previa:
+          </Typography>
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormControl component="fieldset">
@@ -268,36 +285,22 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
+      <Divider />
+      <Grid item xs={12} className={classes.mt15}>
+        <Typography variant="subtitle2">
+          Complete los campos requeridos:{' '}
+        </Typography>
+      </Grid>
 
       <Grid item xs={12}>
         <FormControl fullWidth>
           <TextField
             required
-            id="experienciaPreviaDescription"
-            variant="filled"
-            placeholder="Complete los datos requeridos"
-            multiline
-            row={2}
-            className={classes.mt10}
-            name="experienciaPreviaDescription"
-            value={stateRequisitosOferta.experienciaPreviaDescription}
-            onChange={handleRecoilStateChange}
-          />
-        </FormControl>
-      </Grid>
-
-      <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Residencia:
-        </Typography>
-        <FormControl fullWidth>
-          <TextField
-            required
             id="residencia"
-            variant="filled"
             placeholder="Indicar zona"
             className={classes.mt10}
             name="residencia"
+            label="Residencia"
             value={stateRequisitosOferta.residencia}
             onChange={handleRecoilStateChange}
           />
@@ -305,19 +308,17 @@ export const RequisitosOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Capacitación acreditada en áreas de estudio como:
-        </Typography>
+        <Typography variant="caption" gutterBottom></Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="areasEstudio"
-            variant="filled"
-            placeholder="Complete"
             multiline
             row={2}
             className={classes.mt10}
             name="areasEstudio"
+            label="Capacitación acreditada en áreas de estudio"
+            placeholder="Ej: Informatica."
             value={stateRequisitosOferta.areasEstudio}
             onChange={handleRecoilStateChange}
           />
@@ -325,19 +326,16 @@ export const RequisitosOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Competencias:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="competencias"
-            variant="filled"
-            placeholder="Complete"
             multiline
             row={2}
             className={classes.mt10}
             name="competencias"
+            label="Competencias"
+            placeholder="Ej: Liderazgo."
             value={stateRequisitosOferta.competencias}
             onChange={handleRecoilStateChange}
           />
@@ -345,19 +343,16 @@ export const RequisitosOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          Otros detalles:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="otrosDetalles"
-            variant="filled"
-            placeholder="Complete"
             multiline
             row={3}
             className={classes.mt10}
             name="otrosDetalles"
+            label="Otros detalles"
+            placeholder="Otros detalles"
             value={stateRequisitosOferta.otrosDetalles}
             onChange={handleRecoilStateChange}
           />

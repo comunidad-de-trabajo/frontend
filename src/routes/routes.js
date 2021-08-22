@@ -7,7 +7,7 @@ import RegistroEmpresa from '../components/registroEmpresa/RegistroEmpresa';
 import DatosEmpresa from '../components/registroEmpresa/DatosEmpresa';
 import TipoEmpresa from '../components/registroEmpresa/TipoEmpresa';
 import { DatosRepresentante } from '../components/registroEmpresa/DatosRepresentante';
-import { OfertaLaboralPage } from '../components/ofertaLaboral/OfertaLaboralPage';
+import Checkout from '../components/ofertaLaboral/OfertaLaboral';
 
 export const routes = [
   {
@@ -57,6 +57,6 @@ export const routes = [
   },
   {
     path: '/ofertaLaboral',
-    component: OfertaLaboralPage,
+    component: Checkout,
   },
 ];

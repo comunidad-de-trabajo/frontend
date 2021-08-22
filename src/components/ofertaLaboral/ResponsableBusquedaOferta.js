@@ -27,24 +27,20 @@ export const ResponsableBusquedaOferta = () => {
   };
 
   return (
-    <Grid item xs={8}>
+    <Grid item xs={12}>
       <Grid item xs={12} className={classes.mt15}>
         <Typography variant="subtitle2" gutterBottom>
-          *Responsable de la búsqueda:
+          Responsable de la búsqueda:
         </Typography>
       </Grid>
 
-      <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          * Nombre y Apellido:
-        </Typography>
+      <Grid item xs={12} classes={classes.mt10}>
         <FormControl fullWidth>
           <TextField
             required
             id="nombreCompletoRepresentante"
-            variant="filled"
-            className={classes.mt10}
             name="nombreCompletoRepresentante"
+            label="Nombre y apellido"
             value={stateResponsableOferta.nombreCompletoRepresentante}
             onChange={handleRecoilStateChange}
           />
@@ -52,17 +48,13 @@ export const ResponsableBusquedaOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          * Email:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="emailRepresentante"
-            variant="filled"
             type="email"
-            className={classes.mt10}
             name="emailRepresentante"
+            label="Email representante"
             value={stateResponsableOferta.emailRepresentante}
             onChange={handleRecoilStateChange}
           />
@@ -70,19 +62,15 @@ export const ResponsableBusquedaOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          *Otro:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="detalles"
-            variant="filled"
             type="text"
             multiline
             row={2}
-            className={classes.mt10}
             name="detalles"
+            label="Detalles"
             value={stateResponsableOferta.detalles}
             onChange={handleRecoilStateChange}
           />
@@ -90,19 +78,14 @@ export const ResponsableBusquedaOferta = () => {
       </Grid>
 
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          * Otras aclaraciones:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="otrasAclaraciones"
-            variant="filled"
             type="text"
             multiline
-            row={3}
-            className={classes.mt10}
             name="otrasAclaraciones"
+            label="Otras aclaraciones"
             value={stateResponsableOferta.otrasAclaraciones}
             onChange={handleRecoilStateChange}
           />

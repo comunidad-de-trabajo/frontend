@@ -37,10 +37,14 @@ export const DatosOferta = () => {
   };
 
   return (
-    <Grid item xs={8}>
+    <Grid item>
       <GlobalCss />
-      <Grid item xs={6} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
+      <Grid item xs={12} className={classes.mt15}>
+        <Typography variant="h6" gutterBottom>
+          {' '}
+          Datos de la oferta{' '}
+        </Typography>
+        <Typography variant="caption" color="textSecondary" gutterBottom>
           * Fecha de vigencia:
         </Typography>
         <TextField
@@ -52,22 +56,18 @@ export const DatosOferta = () => {
             shrink: true,
           }}
           fullWidth
-          variant="filled"
           name="fechaVigencia"
           value={stateDatosOferta.fechaVigencia}
           onChange={handleRecoilStateChange}
         />
       </Grid>
       <Grid item xs={12} className={classes.mt15}>
-        <Typography variant="caption" gutterBottom>
-          * Titulo de la búsqueda:
-        </Typography>
         <FormControl fullWidth>
           <TextField
             required
             id="filled-start-adornment"
-            variant="filled"
             name="tituloBusqueda"
+            label="Titulo de la busqueda"
             value={stateDatosOferta.tituloBusqueda}
             onChange={handleRecoilStateChange}
           />
@@ -76,18 +76,14 @@ export const DatosOferta = () => {
 
       <div className={classes.mt15}>
         <Grid item xs={12}>
-          <Typography variant="caption" gutterBottom className={classes.mb5}>
-            * Descripción de la empresa:
-          </Typography>
           <FormControl fullWidth>
             <TextField
               required
               id="descripcionEmpresa"
-              variant="filled"
               fullwidth
-              row={2}
               multiline
               name="descripcionEmpresa"
+              label="Descripcion de la empresa"
               value={stateDatosOferta.descripcionEmpresa}
               onChange={handleRecoilStateChange}
             />
@@ -97,18 +93,13 @@ export const DatosOferta = () => {
 
       <div className={classes.mt15}>
         <Grid item xs={12}>
-          <Typography variant="caption" gutterBottom className={classes.mb5}>
-            Misión:
-          </Typography>
           <FormControl fullWidth>
             <TextField
-              required
               id="mision"
-              variant="filled"
               fullwidth
-              row={2}
               multiline
               name="mision"
+              label="Misión"
               value={stateDatosOferta.mision}
               onChange={handleRecoilStateChange}
             />
@@ -118,18 +109,14 @@ export const DatosOferta = () => {
 
       <div className={classes.mt15}>
         <Grid item xs={12}>
-          <Typography variant="caption" gutterBottom className={classes.mb5}>
-            Responsabilidades principales:
-          </Typography>
           <FormControl fullWidth>
             <TextField
               required
               id="responsabilidades"
-              variant="filled"
               fullwidth
-              row={2}
               multiline
               name="responsabilidades"
+              label="Responsabilidades principales"
               value={stateDatosOferta.responsabilidades}
               onChange={handleRecoilStateChange}
             />
