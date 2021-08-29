@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
@@ -7,10 +7,26 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import { DatosOferta } from './DatosOferta';
-import { RequisitosOferta } from './RequisitosOferta';
-import { CondicionesOferta } from './CondicionesOferta';
-import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
+import PropTypes from 'prop-types';
+import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
+import {
+  condicionesOfertaState,
+  datosOfertaLaboralState,
+  requisitosOfertaState,
+  responsableOfertaState,
+} from '../../recoil/oferta-laboral';
+import { AppRoutes } from '../../routes/AppRoutes';
+import { useHistory } from 'react-router';
+import { completeFormPublicarOfertaValidation } from '../../helpers/validation';
+import {
+  condicionesOfertaValidacionState,
+  datosOfertaLaboralValidacionState,
+  requisitosOfertaValidacionState,
+  responsableOfertaValidacionState,
+} from '../../recoil/oferta-laboral-validation-atoms';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { crearOfertaLaboral } from '../../services/oferta-laboral/registro-oferta-laboral';
+import Loading from '../common/Loading';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -56,33 +72,127 @@ const steps = [
   'Responsable de la busqueda',
 ];
 
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <DatosOferta />;
-    case 1:
-      return <RequisitosOferta />;
-    case 2:
-      return <CondicionesOferta />;
-    case 3:
-      return <ResponsableBusquedaOferta />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
-
-export default function Checkout() {
+export default function OfertaLaboral({ routes }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  let history = useHistory();
+  const datosOfertaValidacion = useRecoilValue(
+    datosOfertaLaboralValidacionState
+  );
+  const requisitosOfertaValidacion = useRecoilValue(
+    requisitosOfertaValidacionState
+  );
+  const condicionesOfertaValidacion = useRecoilValue(
+    condicionesOfertaValidacionState
+  );
+  const responsableOfertaValidacion = useRecoilValue(
+    responsableOfertaValidacionState
+  );
+  const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
+    datosOfertaLaboralState
+  );
+  const [requisitosOfertaLaboral, setRequisitosOfertaLaboral] = useRecoilState(
+    requisitosOfertaState
+  );
+  const [
+    condicionesOfertaLaboral,
+    setCondicionesOfertaLaboral,
+  ] = useRecoilState(condicionesOfertaState);
+  const [
+    responsableOfertaLaboral,
+    setResponsableOfertaLaboral,
+  ] = useRecoilState(responsableOfertaState);
+  const [loading, setLoading] = useState(false);
+  const [openAlert, setOpenAlert] = useState(false);
+  const [datosAlerta, setDatosAlerta] = useState({
+    severity: '',
+    mensaje: '',
+  });
+
+  useEffect(() => {
+    history.push(`/ofertaLaboral/${activeStep}`);
+  }, [history, activeStep]);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    if (validarStep(activeStep)) {
+      setActiveStep(activeStep + 1);
+      return;
+    }
+    setDatosAlerta({
+      severity: 'warning',
+      mensaje: 'Algunos campos estan incorrectos, o faltantes!',
+    });
+    setOpenAlert(true);
+    return;
   };
 
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const validarStep = (step) => {
+    let validaciones = {
+      0: completeFormPublicarOfertaValidation(
+        datosOfertaValidacion,
+        datosOfertaLaboral,
+        step
+      ),
+      1: completeFormPublicarOfertaValidation(
+        requisitosOfertaValidacion,
+        requisitosOfertaLaboral,
+        step
+      ),
+      2: completeFormPublicarOfertaValidation(
+        condicionesOfertaValidacion,
+        condicionesOfertaLaboral,
+        step
+      ),
+      3: completeFormPublicarOfertaValidation(
+        responsableOfertaValidacion,
+        responsableOfertaLaboral,
+        step
+      ),
+    };
+    return validaciones[step];
+  };
+
+  const resetValues = () => {
+    setDatosOfertaLaboral(new DefaultValue());
+    setRequisitosOfertaLaboral(new DefaultValue());
+    setCondicionesOfertaLaboral(new DefaultValue());
+    setResponsableOfertaLaboral(new DefaultValue());
+  };
+
+  const handlePublicar = async () => {
+    let nuevaOferta = {
+      ...datosOfertaLaboral,
+      ...requisitosOfertaLaboral,
+      ...condicionesOfertaLaboral,
+      ...responsableOfertaLaboral,
+    };
+    try {
+      setLoading(true);
+      await crearOfertaLaboral(nuevaOferta);
+      setDatosAlerta({
+        severity: 'success',
+        mensaje: 'La oferta laboral se publicó con éxito',
+      });
+      setOpenAlert(true);
+      resetValues();
+    } catch (e) {
+      setDatosAlerta({
+        severity: 'error',
+        mensaje:
+          'Lo sentimos, no pudimos registrar la oferta. Intentalo mas tarde.',
+      });
+      setOpenAlert(true);
+      setTimeout(() => {
+        history.push('/');
+      }, 4000);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <React.Fragment>
       <CssBaseline />
@@ -94,7 +204,7 @@ export default function Checkout() {
           <Stepper activeStep={activeStep} className={classes.stepper}>
             {steps.map((label) => (
               <Step key={label}>
-                <StepLabel>{label}</StepLabel>
+                <StepLabel></StepLabel>
               </Step>
             ))}
           </Stepper>
@@ -112,27 +222,51 @@ export default function Checkout() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                <AppRoutes routes={routes} />
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
                     <Button onClick={handleBack} className={classes.button}>
-                      Anterior
+                      Atras
                     </Button>
                   )}
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    onClick={handleNext}
-                    className={classes.button}
-                  >
-                    {activeStep === steps.length - 1 ? 'Publicar' : 'Siguiente'}
-                  </Button>
+                  {activeStep < 3 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handleNext}
+                      className={classes.button}
+                    >
+                      Siguiente
+                    </Button>
+                  )}
+                  {activeStep == 3 && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={handlePublicar}
+                      className={classes.button}
+                    >
+                      Enviar
+                    </Button>
+                  )}
                 </div>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
+        <AlertaOperacionTerminada
+          tipo={datosAlerta.severity}
+          mensaje={datosAlerta.mensaje}
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
       </main>
+      {loading && <Loading />}
     </React.Fragment>
   );
 }
+
+OfertaLaboral.propTypes = {
+  step: PropTypes.number,
+  routes: PropTypes.array,
+};

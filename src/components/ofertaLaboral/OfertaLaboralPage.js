@@ -8,7 +8,7 @@ import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
-import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
+import { DefaultValue, useRecoilState } from 'recoil';
 import {
   condicionesOfertaState,
   datosOfertaLaboralState,

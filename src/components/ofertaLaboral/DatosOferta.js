@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { useRecoilState } from 'recoil';
 import { datosOfertaLaboralState } from '../../recoil/oferta-laboral';
+import { datosOfertaLaboralValidacionState } from '../../recoil/oferta-laboral-validation-atoms';
+import { datosOfertaValidations } from './validation/validationByField';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -28,11 +30,18 @@ export const DatosOferta = () => {
   const [stateDatosOferta, setStateDatosOferta] = useRecoilState(
     datosOfertaLaboralState
   );
+  const [validaciones, setValidaciones] = useRecoilState(
+    datosOfertaLaboralValidacionState
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setStateDatosOferta({
       ...stateDatosOferta,
       [target.name]: target.value,
+    });
+    setValidaciones({
+      ...validaciones,
+      [target.name]: datosOfertaValidations[target.name](target.value),
     });
   };
 
@@ -59,6 +68,8 @@ export const DatosOferta = () => {
           name="fechaVigencia"
           value={stateDatosOferta.fechaVigencia}
           onChange={handleRecoilStateChange}
+          error={validaciones.fechaVigencia}
+          helperText={validaciones.fechaVigencia}
         />
       </Grid>
       <Grid item xs={12} className={classes.mt15}>
@@ -70,6 +81,8 @@ export const DatosOferta = () => {
             label="Titulo de la busqueda"
             value={stateDatosOferta.tituloBusqueda}
             onChange={handleRecoilStateChange}
+            error={validaciones.tituloBusqueda}
+            helperText={validaciones.tituloBusqueda}
           />
         </FormControl>
       </Grid>
@@ -86,6 +99,8 @@ export const DatosOferta = () => {
               label="Descripcion de la empresa"
               value={stateDatosOferta.descripcionEmpresa}
               onChange={handleRecoilStateChange}
+              error={validaciones.descripcionEmpresa}
+              helperText={validaciones.descripcionEmpresa}
             />
           </FormControl>
         </Grid>
@@ -102,6 +117,8 @@ export const DatosOferta = () => {
               label="Misión"
               value={stateDatosOferta.mision}
               onChange={handleRecoilStateChange}
+              error={validaciones.mision}
+              helperText={validaciones.mision}
             />
           </FormControl>
         </Grid>
@@ -119,6 +136,8 @@ export const DatosOferta = () => {
               label="Responsabilidades principales"
               value={stateDatosOferta.responsabilidades}
               onChange={handleRecoilStateChange}
+              error={validaciones.responsabilidades}
+              helperText={validaciones.responsabilidades}
             />
           </FormControl>
         </Grid>

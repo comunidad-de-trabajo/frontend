@@ -3,6 +3,8 @@ import { FormControl, Grid, TextField, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilState } from 'recoil';
 import { responsableOfertaState } from '../../recoil/oferta-laboral';
+import { responsableOfertaValidacionState } from '../../recoil/oferta-laboral-validation-atoms';
+import { responsableOfertaValidations } from './validation/validationByField';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -18,11 +20,18 @@ export const ResponsableBusquedaOferta = () => {
   const [stateResponsableOferta, setStateResponsableOferta] = useRecoilState(
     responsableOfertaState
   );
+  const [validaciones, setValidaciones] = useRecoilState(
+    responsableOfertaValidacionState
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setStateResponsableOferta({
       ...stateResponsableOferta,
       [target.name]: target.value,
+    });
+    setValidaciones({
+      ...validaciones,
+      [target.name]: responsableOfertaValidations[target.name](target.value),
     });
   };
 
@@ -43,6 +52,8 @@ export const ResponsableBusquedaOferta = () => {
             label="Nombre y apellido"
             value={stateResponsableOferta.nombreCompletoRepresentante}
             onChange={handleRecoilStateChange}
+            error={validaciones.nombreCompletoRepresentante}
+            helperText={validaciones.nombreCompletoRepresentante}
           />
         </FormControl>
       </Grid>
@@ -57,6 +68,8 @@ export const ResponsableBusquedaOferta = () => {
             label="Email representante"
             value={stateResponsableOferta.emailRepresentante}
             onChange={handleRecoilStateChange}
+            error={validaciones.emailRepresentante}
+            helperText={validaciones.emailRepresentante}
           />
         </FormControl>
       </Grid>
@@ -73,6 +86,8 @@ export const ResponsableBusquedaOferta = () => {
             label="Detalles"
             value={stateResponsableOferta.detalles}
             onChange={handleRecoilStateChange}
+            error={validaciones.detalles}
+            helperText={validaciones.detalles}
           />
         </FormControl>
       </Grid>
@@ -88,6 +103,8 @@ export const ResponsableBusquedaOferta = () => {
             label="Otras aclaraciones"
             value={stateResponsableOferta.otrasAclaraciones}
             onChange={handleRecoilStateChange}
+            error={validaciones.otrasAclaraciones}
+            helperText={validaciones.otrasAclaraciones}
           />
         </FormControl>
       </Grid>

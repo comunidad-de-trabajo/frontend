@@ -12,6 +12,8 @@ import {
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilState } from 'recoil';
 import { requisitosOfertaState } from '../../recoil/oferta-laboral';
+import { requisitosOfertaValidacionState } from '../../recoil/oferta-laboral-validation-atoms';
+import { requisitosValidations } from './validation/validationByField';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -48,11 +50,18 @@ export const RequisitosOferta = () => {
   const [stateRequisitosOferta, setStateRequisitosOferta] = useRecoilState(
     requisitosOfertaState
   );
+  const [validaciones, setValidaciones] = useRecoilState(
+    requisitosOfertaValidacionState
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setStateRequisitosOferta({
       ...stateRequisitosOferta,
       [target.name]: target.value,
+    });
+    setValidaciones({
+      ...validaciones,
+      [target.name]: requisitosValidations[target.name](target.value),
     });
   };
 
@@ -102,6 +111,8 @@ export const RequisitosOferta = () => {
               name="secundarioCompleto"
               value={stateRequisitosOferta.secundarioCompleto}
               onChange={handleRecoilStateChange}
+              error={validaciones.secundarioCompleto}
+              helperText={validaciones.secundarioCompleto}
             >
               <FormControlLabel
                 value="si"
@@ -134,6 +145,8 @@ export const RequisitosOferta = () => {
               name="paqueteOffice"
               value={stateRequisitosOferta.paqueteOffice}
               onChange={handleRecoilStateChange}
+              error={validaciones.paqueteOffice}
+              helperText={validaciones.paqueteOffice}
             >
               <FormControlLabel
                 value="si"
@@ -166,6 +179,8 @@ export const RequisitosOferta = () => {
               name="licenciaConducir"
               value={stateRequisitosOferta.licenciaConducir}
               onChange={handleRecoilStateChange}
+              error={validaciones.licenciaConducir}
+              helperText={validaciones.licenciaConducir}
             >
               <FormControlLabel
                 value="si"
@@ -198,6 +213,8 @@ export const RequisitosOferta = () => {
               name="edad"
               value={stateRequisitosOferta.edad}
               onChange={handleRecoilStateChange}
+              error={validaciones.edad}
+              helperText={validaciones.edad}
             >
               <FormControlLabel
                 value="si"
@@ -230,6 +247,8 @@ export const RequisitosOferta = () => {
                 name="desdeEdad"
                 value={stateRequisitosOferta.desdeEdad}
                 onChange={handleRecoilStateChange}
+                error={validaciones.desdeEdad}
+                helperText={validaciones.desdeEdad}
               />
             </div>
 
@@ -247,6 +266,8 @@ export const RequisitosOferta = () => {
                 name="hastaEdad"
                 value={stateRequisitosOferta.hastaEdad}
                 onChange={handleRecoilStateChange}
+                error={validaciones.hastaEdad}
+                helperText={validaciones.hastaEdad}
               />
             </div>
           </div>
@@ -270,6 +291,8 @@ export const RequisitosOferta = () => {
               name="experienciaPrevia"
               value={stateRequisitosOferta.experienciaPrevia}
               onChange={handleRecoilStateChange}
+              error={validaciones.experienciaPrevia}
+              helperText={validaciones.experienciaPrevia}
             >
               <FormControlLabel
                 value="si"
@@ -285,6 +308,31 @@ export const RequisitosOferta = () => {
           </FormControl>
         </Grid>
       </div>
+      {stateRequisitosOferta.experienciaPrevia === 'si' ? (
+        <Grid item sm={12}>
+          <div
+            className={(classes.mt15, classes.containerItem)}
+            style={{ marginBottom: '8px' }}
+          >
+            <Typography variant="caption" color="textSecondary">
+              Especifique:
+            </Typography>
+            <FormControl fullWidth>
+              <TextField
+                id="experienciaPreviaDescription"
+                size="small"
+                multiline
+                className={classes.ml15}
+                name="experienciaPreviaDescription"
+                value={stateRequisitosOferta.experienciaPreviaDescription}
+                onChange={handleRecoilStateChange}
+                error={validaciones.experienciaPreviaDescription}
+                helperText={validaciones.experienciaPreviaDescription}
+              />
+            </FormControl>
+          </div>
+        </Grid>
+      ) : null}
       <Divider />
       <Grid item xs={12} className={classes.mt15}>
         <Typography variant="subtitle2">
@@ -303,6 +351,8 @@ export const RequisitosOferta = () => {
             label="Residencia"
             value={stateRequisitosOferta.residencia}
             onChange={handleRecoilStateChange}
+            error={validaciones.residencia}
+            helperText={validaciones.residencia}
           />
         </FormControl>
       </Grid>
@@ -321,6 +371,8 @@ export const RequisitosOferta = () => {
             placeholder="Ej: Informatica."
             value={stateRequisitosOferta.areasEstudio}
             onChange={handleRecoilStateChange}
+            error={validaciones.areasEstudio}
+            helperText={validaciones.areasEstudio}
           />
         </FormControl>
       </Grid>
@@ -338,6 +390,8 @@ export const RequisitosOferta = () => {
             placeholder="Ej: Liderazgo."
             value={stateRequisitosOferta.competencias}
             onChange={handleRecoilStateChange}
+            error={validaciones.competencias}
+            helperText={validaciones.competencias}
           />
         </FormControl>
       </Grid>
@@ -355,6 +409,8 @@ export const RequisitosOferta = () => {
             placeholder="Otros detalles"
             value={stateRequisitosOferta.otrosDetalles}
             onChange={handleRecoilStateChange}
+            error={validaciones.otrosDetalles}
+            helperText={validaciones.otrosDetalles}
           />
         </FormControl>
       </Grid>

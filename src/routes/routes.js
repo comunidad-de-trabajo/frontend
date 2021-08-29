@@ -8,6 +8,10 @@ import DatosEmpresa from '../components/registroEmpresa/DatosEmpresa';
 import TipoEmpresa from '../components/registroEmpresa/TipoEmpresa';
 import { DatosRepresentante } from '../components/registroEmpresa/DatosRepresentante';
 import Checkout from '../components/ofertaLaboral/OfertaLaboral';
+import { DatosOferta } from '../components/ofertaLaboral/DatosOferta';
+import { RequisitosOferta } from '../components/ofertaLaboral/RequisitosOferta';
+import { CondicionesOferta } from '../components/ofertaLaboral/CondicionesOferta';
+import { ResponsableBusquedaOferta } from '../components/ofertaLaboral/ResponsableBusquedaOferta';
 
 export const routes = [
   {
@@ -58,5 +62,23 @@ export const routes = [
   {
     path: '/ofertaLaboral',
     component: Checkout,
+    routes: [
+      {
+        path: '/ofertaLaboral/0',
+        component: DatosOferta,
+      },
+      {
+        path: '/ofertaLaboral/1',
+        component: RequisitosOferta,
+      },
+      {
+        path: '/ofertaLaboral/2',
+        component: CondicionesOferta,
+      },
+      {
+        path: '/ofertaLaboral/3',
+        component: ResponsableBusquedaOferta,
+      },
+    ],
   },
 ];

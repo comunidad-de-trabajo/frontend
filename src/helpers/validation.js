@@ -18,11 +18,20 @@ export const onlyNotEmptyOrNullValidation = (field) => {
 };
 
 export const onlyValidCharactersValidation = (field) => {
-  const regex = /^[\w\-\s,.]+$/;
+  const regex = /^[\w\-\s,.\u00f1\u00d1]+$/;
   if (notEmptyOrNullValidation(field)) {
     return 'Campo requerido';
   } else if (!regex.test(field)) {
     return 'Caracteres no validos';
+  }
+  return null;
+};
+
+export const onlyValidCharactersValidationNotRequired = (field) => {
+  const regex = /^[\w\-\s,.\u00f1\u00d1]+$/;
+  if (!regex.test(field)) {
+    if (field === '') return null;
+    else return 'Caracteres no validos';
   }
   return null;
 };
@@ -97,7 +106,11 @@ export const phoneValidation = (phone) => {
   return null;
 };
 
-export const completeFormValidation = (objectValidacion, object, step) => {
+export const completeFormRegistroEmpresaValidation = (
+  objectValidacion,
+  object,
+  step
+) => {
   /* Aca lo que hago es verificar que en cada property de el objeto de validacion
      no haya ningun mensaje de error. Y tambien verifico que en cada property
      del objeto de datos no sea un string vacio. Esta es una verificacion necesaria
@@ -132,5 +145,47 @@ export const completeFormValidation = (objectValidacion, object, step) => {
   return (
     Object.entries(objectValidacion).every((entrie) => entrie[1] === null) &&
     Object.entries(object).every((entrie) => entrie[1].trim() != '')
+  );
+};
+
+export const completeFormPublicarOfertaValidation = (
+  objectValidacion,
+  object,
+  step
+) => {
+  /* Mismo que el anterior pero adaptado al form de publicar oferta
+   */
+
+  //particularidad step 1 , si la edad y la experiencia previa no son requisitos
+  //entonces no valido estos campos.
+  if (step === 1) {
+    let objectFiltrado = { ...object };
+    let objectValidacionFiltrado = { ...objectValidacion };
+
+    if (objectFiltrado.edad === 'no') {
+      delete objectFiltrado.desdeEdad;
+      delete objectFiltrado.hastaEdad;
+      delete objectValidacionFiltrado.desdeEdad;
+      delete objectValidacionFiltrado.hastaEdad;
+    }
+    if (objectFiltrado.experienciaPrevia === 'no') {
+      delete objectFiltrado.experienciaPreviaDescription;
+      delete objectValidacionFiltrado.experienciaPreviaDescription;
+    }
+
+    return (
+      Object.entries(objectValidacionFiltrado).every(
+        (entrie) => entrie[1] === null
+      ) &&
+      Object.entries(objectFiltrado).every((entrie) => entrie[1].trim() != '')
+    );
+  }
+
+  return (
+    Object.entries(objectValidacion).every((entrie) => entrie[1] === null) &&
+    Object.entries(object).every((entrie) => {
+      if (entrie[0] === 'mision') return true;
+      else return entrie[1].trim() != '';
+    })
   );
 };

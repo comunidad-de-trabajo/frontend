@@ -12,6 +12,8 @@ import { Grid } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useRecoilState } from 'recoil';
 import { condicionesOfertaState } from '../../recoil/oferta-laboral';
+import { condicionesOfertaValidacionState } from '../../recoil/oferta-laboral-validation-atoms';
+import { condicionesValidations } from './validation/validationByField';
 
 const useStyles = makeStyles(() => ({
   mt15: {
@@ -27,11 +29,18 @@ export const CondicionesOferta = () => {
   const [stateCondicionesOferta, setStateCondicionesOferta] = useRecoilState(
     condicionesOfertaState
   );
+  const [validaciones, setValidaciones] = useRecoilState(
+    condicionesOfertaValidacionState
+  );
 
   const handleRecoilStateChange = ({ target }) => {
     setStateCondicionesOferta({
       ...stateCondicionesOferta,
       [target.name]: target.value,
+    });
+    setValidaciones({
+      ...validaciones,
+      [target.name]: condicionesValidations[target.name](target.value),
     });
   };
 
@@ -57,6 +66,8 @@ export const CondicionesOferta = () => {
             name="jornada"
             value={stateCondicionesOferta.jornada}
             onChange={handleRecoilStateChange}
+            error={validaciones.jornada}
+            helperText={validaciones.jornada}
           >
             <FormControlLabel
               value="porHora"
@@ -88,6 +99,8 @@ export const CondicionesOferta = () => {
             label="Contrato"
             value={stateCondicionesOferta.contrato}
             onChange={handleRecoilStateChange}
+            error={validaciones.contrato}
+            helperText={validaciones.contrato}
           />
         </FormControl>
       </Grid>
@@ -103,6 +116,8 @@ export const CondicionesOferta = () => {
             label="Lugar de trabajo"
             value={stateCondicionesOferta.lugarTrabajo}
             onChange={handleRecoilStateChange}
+            error={validaciones.lugarTrabajo}
+            helperText={validaciones.lugarTrabajo}
           />
         </FormControl>
       </Grid>
@@ -119,6 +134,8 @@ export const CondicionesOferta = () => {
             label="Ofrecen"
             value={stateCondicionesOferta.ofrecen}
             onChange={handleRecoilStateChange}
+            error={validaciones.ofrecen}
+            helperText={validaciones.ofrecen}
           />
         </FormControl>
       </Grid>

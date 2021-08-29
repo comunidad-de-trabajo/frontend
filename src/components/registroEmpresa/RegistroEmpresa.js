@@ -25,7 +25,7 @@ import {
   datosRepresentanteValidacionState,
   tipoEmpresaValidacionState,
 } from '../../recoil/registro-empresa-validation-atoms';
-import { completeFormValidation } from './validation/validation';
+import { completeFormRegistroEmpresaValidation } from '../../helpers/validation';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -164,14 +164,21 @@ export default function RegistroEmpresa({ routes }) {
 
   const validarStep = (step) => {
     if (step === 0) {
-      return completeFormValidation(datosEmpresaValidacion, datosEmpresa, step);
+      return completeFormRegistroEmpresaValidation(
+        datosEmpresaValidacion,
+        datosEmpresa,
+        step
+      );
     } else if (step === 1) {
       return (
-        completeFormValidation(tipoEmpresaValidacion, tipoEmpresa, step) &&
-        logoEmpresa.validacion === true
+        completeFormRegistroEmpresaValidation(
+          tipoEmpresaValidacion,
+          tipoEmpresa,
+          step
+        ) && logoEmpresa.validacion === true
       );
     } else if (step === 2) {
-      return completeFormValidation(
+      return completeFormRegistroEmpresaValidation(
         datosRepresentanteValidacion,
         datosRepresentante,
         step

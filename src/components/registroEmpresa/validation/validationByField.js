@@ -11,7 +11,7 @@ import {
   onlyNumbersValidation,
   onlyValidCharactersValidation,
   phoneValidation,
-} from './validation';
+} from '../../../helpers/validation';
 
 export const datosEmpresaValidations = {
   nombreComercial: onlyValidCharactersValidation,
