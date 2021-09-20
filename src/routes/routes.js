@@ -18,66 +18,124 @@ export const routes = [
     path: '/',
     component: Home,
     exact: true,
+    protection: {
+      isPublic: true,
+    },
   },
   {
     path: '/home',
     component: Home,
+    protection: {
+      isPublic: true,
+    },
   },
   {
     path: '/listadoEmpresas',
     component: ListadoDeEmpresasPage,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['admin'],
+    },
     routes: [
       {
         path: '/listadoEmpresas/pendientes',
         component: ListaPendientes,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
       },
       {
         path: '/listadoEmpresas/rechazadas',
         component: ListaRechazadas,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
       },
       {
         path: '/listadoEmpresas/aceptadas',
         component: ListaAceptadas,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
       },
     ],
   },
   {
     path: '/registroDeEmpresa',
     component: RegistroEmpresa,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['empresa', 'admin'],
+    },
     routes: [
       {
         path: '/registroDeEmpresa/0',
         component: DatosEmpresa,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
       {
         path: '/registroDeEmpresa/1',
         component: TipoEmpresa,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
       {
         path: '/registroDeEmpresa/2',
         component: DatosRepresentante,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
     ],
   },
   {
     path: '/ofertaLaboral',
     component: Checkout,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['empresa', 'admin'],
+    },
     routes: [
       {
         path: '/ofertaLaboral/0',
         component: DatosOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
       {
         path: '/ofertaLaboral/1',
         component: RequisitosOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
       {
         path: '/ofertaLaboral/2',
         component: CondicionesOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
       {
         path: '/ofertaLaboral/3',
         component: ResponsableBusquedaOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
       },
     ],
   },
