@@ -1,5 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Route } from 'react-router';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { rolState } from '../recoil/usuario';
+import { auth } from '../services/autenticacionService';
 
 /**
  * Componente RouteWithSubRoutes, crea un componente de rutas con sus subrutas y
@@ -10,10 +13,11 @@ import { Redirect, Route } from 'react-router';
 export const RouteWithSubRoutes = (route) => {
   const { protection } = route;
   let isAuthenticated = true;
-  let role = 'empresa';
+  const userRole = useRecoilValue(rolState);
 
   const AutenticacionYRolesValidos = () => {
-    return isAuthenticated && protection.permittedRoles.includes(role);
+    console.log(userRole);
+    return isAuthenticated && protection.permittedRoles.includes(userRole);
   };
 
   return protection.isPublic ? (
