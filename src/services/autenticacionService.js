@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-class AutenticacionService {
-  async getRol(token) {
+const AutenticacionService = {
+  getRol: async function (token) {
     let rol = await axios
       .post('http://localhost:3001/api/usuario/getRole', { token })
       .then((res) => {
@@ -12,7 +12,7 @@ class AutenticacionService {
       });
 
     return rol;
-  }
-}
+  },
+};
 
-export const auth = new AutenticacionService();
+export default AutenticacionService;

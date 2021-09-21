@@ -8,6 +8,9 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
+import { rolState } from '../../../recoil/usuario';
+import tieneRolPermitido, { roles } from '../../../helpers/tieneRolPermitido';
 
 const useStyles = makeStyles({
   list: {
@@ -36,6 +39,7 @@ const SideBar = () => {
     right: false,
   });
   const history = useHistory();
+  const userRole = useRecoilValue(rolState);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -62,18 +66,27 @@ const SideBar = () => {
         <ListItem button onClick={() => history.push('/')}>
           <ListItemText primary={'Home'}></ListItemText>
         </ListItem>
-        <ListItem
-          button
-          onClick={() => history.push('/listadoEmpresas/pendientes')}
-        >
-          <ListItemText primary={'Listado de empresas'}></ListItemText>
-        </ListItem>
-        <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
-          <ListItemText primary={'Registro de empresas'}></ListItemText>
-        </ListItem>
-        <ListItem button onClick={() => history.push('/ofertaLaboral/0')}>
-          <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
-        </ListItem>
+
+        {tieneRolPermitido(userRole, roles.admin) ? (
+          <ListItem
+            button
+            onClick={() => history.push('/listadoEmpresas/pendientes')}
+          >
+            <ListItemText primary={'Listado de empresas'}></ListItemText>
+          </ListItem>
+        ) : null}
+
+        {tieneRolPermitido(userRole, roles.adminYEmpresa) ? (
+          <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
+            <ListItemText primary={'Registro de empresas'}></ListItemText>
+          </ListItem>
+        ) : null}
+
+        {tieneRolPermitido(userRole, roles.adminYEmpresa) ? (
+          <ListItem button onClick={() => history.push('/ofertaLaboral/0')}>
+            <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
+          </ListItem>
+        ) : null}
       </List>
     </div>
   );

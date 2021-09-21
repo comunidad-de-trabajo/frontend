@@ -4,20 +4,19 @@ import NavBar from './components/common/navBar/NavBar';
 import { routes } from './routes/routes';
 import SideBar from './components/common/sideBar/SideBar';
 import { useRecoilState } from 'recoil';
-import { auth } from './services/autenticacionService';
+import AutenticacionService from './services/autenticacionService';
 import { rolState } from './recoil/usuario';
 
 export default function App() {
   const [userRole, setUserRole] = useRecoilState(rolState);
 
+  //TODO: Sacar el hardcode del token, lo tengo que agarrar del localstorage
   useEffect(() => {
-    auth
-      .getRol(
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NywiZW1haWwiOiJlbXByZXNhIiwiaWF0IjoxNjMyMTc4MzY0LCJleHAiOjE2MzIxODU1NjR9.9VISAUq5ej3-lCvOzWDcwHGMlm-t_qKcKxLwHo7vYFs'
-      )
-      .then((res) => {
-        setUserRole(res);
-      });
+    AutenticacionService.getRol(
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhZG1pbiIsImlhdCI6MTYzMjI2MjgxMCwiZXhwIjoxNjMyMjcwMDEwfQ.CVSBjcfIg7go7Z-Vs5j9sQO-Jk7NNtZ8WncwsYGgKXU'
+    ).then((res) => {
+      setUserRole(res);
+    });
   }, [setUserRole]);
 
   return (

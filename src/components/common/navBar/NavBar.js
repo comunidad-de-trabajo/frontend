@@ -25,6 +25,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
+//TODO: Renderizar o no el logo del usuario segun haya token valido en el localstorage o no
 const NavBar = () => {
   const classes = useStyles();
 

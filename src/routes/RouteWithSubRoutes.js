@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Redirect, Route } from 'react-router';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { rolState } from '../recoil/usuario';
-import { auth } from '../services/autenticacionService';
 
 /**
  * Componente RouteWithSubRoutes, crea un componente de rutas con sus subrutas y
