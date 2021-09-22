@@ -14,7 +14,7 @@ import logoComunidadDeTrabajo from '../../assets/logoComunidadDeTrabajo.svg';
 import { makeStyles } from '@material-ui/core';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
-import loginService from '../../recoil/login';
+import { loginService } from '../../services/auth/login';
 import Loading from '../common/Loading';
 
 const theme = createTheme();
