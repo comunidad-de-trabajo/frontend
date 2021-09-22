@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -12,6 +12,10 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import logoComunidadDeTrabajo from '../../assets/logoComunidadDeTrabajo.svg';
 import { makeStyles } from '@material-ui/core';
+import { useSetRecoilState } from 'recoil';
+import { userState } from '../../recoil/user';
+import loginService from '../../recoil/login';
+import Loading from '../common/Loading';
 
 const theme = createTheme();
 
@@ -25,11 +29,25 @@ const useStyles = makeStyles(() => ({
 
 export const SignIn = () => {
   const classes = useStyles();
+  const setUser = useSetRecoilState(userState);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
+
+    try {
+      setLoading(true);
+      const { data } = await loginService({
+        email: data.get('email'),
+        password: data.get('password'),
+      });
+      setUser(data);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+
     console.log({
       email: data.get('email'),
       password: data.get('password'),
@@ -109,6 +127,7 @@ export const SignIn = () => {
           </Box>
         </Box>
       </Container>
+      {loading && <Loading />}
     </ThemeProvider>
   );
 };
