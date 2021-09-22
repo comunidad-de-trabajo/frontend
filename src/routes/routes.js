@@ -13,6 +13,7 @@ import { RequisitosOferta } from '../components/ofertaLaboral/RequisitosOferta';
 import { CondicionesOferta } from '../components/ofertaLaboral/CondicionesOferta';
 import { ResponsableBusquedaOferta } from '../components/ofertaLaboral/ResponsableBusquedaOferta';
 import Inscripcion from '../components/inscripcion/inscripcion-page';
+import { SignIn } from '../components/signIn/SignIn';
 
 export const routes = [
   {
@@ -23,6 +24,10 @@ export const routes = [
   {
     path: '/home',
     component: Home,
+  },
+  {
+    path: '/login',
+    component: SignIn,
   },
   {
     path: '/listadoEmpresas',
