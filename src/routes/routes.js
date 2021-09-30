@@ -12,6 +12,7 @@ import { DatosOferta } from '../components/ofertaLaboral/DatosOferta';
 import { RequisitosOferta } from '../components/ofertaLaboral/RequisitosOferta';
 import { CondicionesOferta } from '../components/ofertaLaboral/CondicionesOferta';
 import { ResponsableBusquedaOferta } from '../components/ofertaLaboral/ResponsableBusquedaOferta';
+import Inscripcion from '../components/inscripcion/inscripcion-page';
 
 export const routes = [
   {
@@ -80,5 +81,9 @@ export const routes = [
         component: ResponsableBusquedaOferta,
       },
     ],
+  },
+  {
+    path: '/registro',
+    component: Inscripcion,
   },
 ];
