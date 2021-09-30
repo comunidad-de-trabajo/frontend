@@ -109,6 +109,7 @@ export const SignIn = () => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              color="success"
             >
               INICIAR SESIÓN
             </Button>
