@@ -38,11 +38,11 @@ export const SignIn = () => {
 
     try {
       setLoading(true);
-      const { data } = await loginService({
+      const { user } = await loginService({
         email: data.get('email'),
-        password: data.get('password'),
+        contrasenia: data.get('password'),
       });
-      setUser(data);
+      setUser(user);
     } catch (error) {
       setLoading(false);
       console.log(error);
