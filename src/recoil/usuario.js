@@ -1,8 +1,9 @@
 import { atom } from 'recoil';
 
-export const rolState = atom({
-  key: 'rolState',
+export const userSessionState = atom({
+  key: 'userSessionState',
   default: {
-    rol: null,
+    isAuthenticated: false,
+    rol: '',
   },
 });

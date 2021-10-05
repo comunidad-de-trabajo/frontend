@@ -21,19 +21,24 @@ export const routes = [
     component: Home,
     exact: true,
     protection: {
-      isPublic: true,
+      isPublic: false,
+      permittedRoles: ['empresa', 'admin'],
     },
   },
   {
     path: '/home',
     component: Home,
     protection: {
-      isPublic: true,
+      isPublic: false,
+      permittedRoles: ['empresa', 'admin'],
     },
   },
   {
     path: '/login',
     component: SignIn,
+    protection: {
+      isPublic: true,
+    },
   },
   {
     path: '/listadoEmpresas',
@@ -148,5 +153,8 @@ export const routes = [
   {
     path: '/registro',
     component: Inscripcion,
+    protection: {
+      isPublic: true,
+    },
   },
 ];

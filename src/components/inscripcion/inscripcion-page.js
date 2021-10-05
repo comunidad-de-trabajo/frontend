@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import { nuevoRegistro } from '../../services/inscripcion-backend/inscripcion-endpoint';
+import { useHistory } from 'react-router';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -49,13 +50,13 @@ export default function Inscripcion() {
     contrasenia: '',
     rol: 'empresa',
   });
+  let history = useHistory();
 
   const handleChange = ({ target }) => {
-    console.log(target.value),
-      setRegistro({
-        ...registro,
-        [target.name]: target.value,
-      });
+    setRegistro({
+      ...registro,
+      [target.name]: target.value,
+    });
   };
 
   const handleRegistrar = async () => {
@@ -63,8 +64,8 @@ export default function Inscripcion() {
       ...registro,
     };
     try {
-      console.log(data);
       await nuevoRegistro(registro);
+      history.push('/login');
     } catch (e) {
       console.log(e);
     }

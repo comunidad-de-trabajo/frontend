@@ -16,6 +16,7 @@ import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
 import { loginService } from '../../services/auth/login';
 import Loading from '../common/Loading';
+import { useHistory } from 'react-router';
 
 const theme = createTheme();
 
@@ -31,27 +32,25 @@ export const SignIn = () => {
   const classes = useStyles();
   const setUser = useSetRecoilState(userState);
   const [loading, setLoading] = useState(false);
+  let history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const formData = new FormData(event.currentTarget);
 
     try {
       setLoading(true);
-      const { user } = await loginService({
-        email: data.get('email'),
-        contrasenia: data.get('password'),
+      const { data } = await loginService({
+        email: formData.get('email'),
+        contrasenia: formData.get('password'),
       });
-      setUser(user);
+      setUser(data);
+      localStorage.setItem('token', data.token);
+      history.push('/home');
     } catch (error) {
       setLoading(false);
       console.log(error);
     }
-
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
   };
 
   return (
@@ -120,7 +119,7 @@ export const SignIn = () => {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="/registro" variant="body2">
                   {'Registrarme'}
                 </Link>
               </Grid>

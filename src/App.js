@@ -3,21 +3,26 @@ import { AppRoutes } from './routes/AppRoutes';
 import NavBar from './components/common/navBar/NavBar';
 import { routes } from './routes/routes';
 import SideBar from './components/common/sideBar/SideBar';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import AutenticacionService from './services/autenticacionService';
-import { rolState } from './recoil/usuario';
+import { userSessionState } from './recoil/usuario';
+import { userState } from './recoil/user';
 
 export default function App() {
-  const [userRole, setUserRole] = useRecoilState(rolState);
+  const [userSession, setUserSession] = useRecoilState(userSessionState);
+  const user = useRecoilValue(userState);
 
   //TODO: Sacar el hardcode del token, lo tengo que agarrar del localstorage
   useEffect(() => {
-    AutenticacionService.getRol(
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NiwiZW1haWwiOiJhZG1pbiIsImlhdCI6MTYzMjI2MjgxMCwiZXhwIjoxNjMyMjcwMDEwfQ.CVSBjcfIg7go7Z-Vs5j9sQO-Jk7NNtZ8WncwsYGgKXU'
-    ).then((res) => {
-      setUserRole(res);
-    });
-  }, [setUserRole]);
+    let token = localStorage.getItem('token');
+    if (token != undefined) {
+      AutenticacionService.getAuthenticationAndRole(token).then((res) => {
+        setUserSession(res);
+      });
+    }
+    console.log('En el use effect, datossesion: ');
+    console.log(userSession);
+  }, [user]);
 
   return (
     <>

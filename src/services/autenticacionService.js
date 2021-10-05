@@ -1,17 +1,17 @@
 import axios from 'axios';
 
 const AutenticacionService = {
-  getRol: async function (token) {
-    let rol = await axios
-      .post('http://localhost:3001/api/usuario/getRole', { token })
+  getAuthenticationAndRole: async function (token) {
+    let auth = await axios
+      .post('http://localhost:3001/api/usuario/getAuth', { token })
       .then((res) => {
-        return res.data.rol;
+        return res.data.auth;
       })
       .catch((e) => {
         console.log(e.message);
+        return null;
       });
-
-    return rol;
+    return auth;
   },
 };
 

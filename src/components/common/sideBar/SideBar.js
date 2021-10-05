@@ -9,7 +9,7 @@ import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import { IconButton } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import { rolState } from '../../../recoil/usuario';
+import { userSessionState } from '../../../recoil/usuario';
 import tieneRolPermitido, { roles } from '../../../helpers/tieneRolPermitido';
 
 const useStyles = makeStyles({
@@ -39,7 +39,7 @@ const SideBar = () => {
     right: false,
   });
   const history = useHistory();
-  const userRole = useRecoilValue(rolState);
+  const { rol, isAuthenticated } = useRecoilValue(userSessionState);
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (
@@ -67,7 +67,7 @@ const SideBar = () => {
           <ListItemText primary={'Home'}></ListItemText>
         </ListItem>
 
-        {tieneRolPermitido(userRole, roles.admin) ? (
+        {tieneRolPermitido(rol, roles.admin) ? (
           <ListItem
             button
             onClick={() => history.push('/listadoEmpresas/pendientes')}
@@ -76,13 +76,13 @@ const SideBar = () => {
           </ListItem>
         ) : null}
 
-        {tieneRolPermitido(userRole, roles.adminYEmpresa) ? (
+        {tieneRolPermitido(rol, roles.adminYEmpresa) ? (
           <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
             <ListItemText primary={'Registro de empresas'}></ListItemText>
           </ListItem>
         ) : null}
 
-        {tieneRolPermitido(userRole, roles.adminYEmpresa) ? (
+        {tieneRolPermitido(rol, roles.adminYEmpresa) ? (
           <ListItem button onClick={() => history.push('/ofertaLaboral/0')}>
             <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
           </ListItem>
@@ -91,7 +91,7 @@ const SideBar = () => {
     </div>
   );
 
-  return (
+  return isAuthenticated ? (
     <div>
       <React.Fragment key={'left'}>
         <IconButton
@@ -110,7 +110,7 @@ const SideBar = () => {
         </SwipeableDrawer>
       </React.Fragment>
     </div>
-  );
+  ) : null;
 };
 
 export default SideBar;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router';
 import { useRecoilValue } from 'recoil';
-import { rolState } from '../recoil/usuario';
+import { userSessionState } from '../recoil/usuario';
 
 /**
  * Componente RouteWithSubRoutes, crea un componente de rutas con sus subrutas y
@@ -11,18 +11,26 @@ import { rolState } from '../recoil/usuario';
  */
 export const RouteWithSubRoutes = (route) => {
   const { protection } = route;
-  let isAuthenticated = true;
-  const userRole = useRecoilValue(rolState);
+  const { rol, isAuthenticated } = useRecoilValue(userSessionState);
 
   const AutenticacionYRolesValidos = () => {
-    console.log(userRole);
-    return isAuthenticated && protection.permittedRoles.includes(userRole);
+    return isAuthenticated && protection.permittedRoles.includes(rol);
+  };
+
+  const esLoginORegistro = (path) => {
+    path === '/login' || path === 'registro';
   };
 
   return protection.isPublic ? (
     <Route
       path={route.path}
-      render={(props) => <route.component {...props} routes={route.routes} />}
+      render={(props) =>
+        esLoginORegistro && isAuthenticated ? (
+          <Redirect to="/home" />
+        ) : (
+          <route.component {...props} routes={route.routes} />
+        )
+      }
     />
   ) : (
     <Route
