@@ -9,7 +9,7 @@ const AutenticacionService = {
       })
       .catch((e) => {
         console.log(e.message);
-        return null;
+        return { isAuthenticated: false, rol: null };
       });
     return auth;
   },
