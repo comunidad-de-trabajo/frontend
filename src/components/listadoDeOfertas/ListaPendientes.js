@@ -78,7 +78,7 @@ const ListaOfertasPendientes = () => {
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
-                      darDeBaja={true}
+                      enviar={true}
                       id={oferta.id}
                       setOpenAlert={setOpenAlert}
                       render={fetchListadoOfertasPendientes}

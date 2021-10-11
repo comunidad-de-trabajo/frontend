@@ -37,11 +37,17 @@ const useStyles = makeStyles({
 
 const BotonesDeLista = (props) => {
   const classes = useStyles();
-  const { ver, darDeBaja, id, setOpenAlert, eliminarOferta } = props;
+  const { ver, darDeBaja, id, setOpenAlert, eliminarOferta, enviar } = props;
   let history = useHistory();
 
   const handleClickBaja = () => {
     cambiarEstadoOferta(id, 'vencida');
+    eliminarOferta(id);
+    setOpenAlert(true);
+  };
+
+  const handleClickEnvio = () => {
+    cambiarEstadoOferta(id, 'enviada');
     eliminarOferta(id);
     setOpenAlert(true);
   };
@@ -72,6 +78,17 @@ const BotonesDeLista = (props) => {
           Dar de baja
         </Button>
       )}
+      {enviar && (
+        <Button
+          edge="end"
+          aria-label="ver"
+          className={`${classes.botonAceptar} ${classes.boton}`}
+          size="small"
+          onClick={handleClickEnvio}
+        >
+          Enviar
+        </Button>
+      )}
     </div>
   );
 };
@@ -79,6 +96,7 @@ const BotonesDeLista = (props) => {
 BotonesDeLista.propTypes = {
   ver: propTypes.bool,
   darDeBaja: propTypes.bool,
+  enviar: propTypes.bool,
   id: propTypes.number,
   setOpenAlert: propTypes.func,
   render: propTypes.func,

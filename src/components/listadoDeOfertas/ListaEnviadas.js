@@ -59,6 +59,14 @@ const ListaEnviadas = () => {
     setOfertasPendientes(await getAllOfertas('enviada'));
   };
 
+  const eliminarOferta = (id) => {
+    setOfertasPendientes(
+      ofertasPendientes.filter((oferta) => {
+        return oferta.id != id;
+      })
+    );
+  };
+
   useEffect(() => {
     fetchListadoOfertasPendientes();
     return () => {
@@ -79,9 +87,11 @@ const ListaEnviadas = () => {
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
+                      darDeBaja={true}
                       id={oferta.id}
                       setOpenAlert={setOpenAlert}
                       render={fetchListadoOfertasPendientes}
+                      eliminarOferta={eliminarOferta}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>
