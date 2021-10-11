@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -30,28 +30,56 @@ const useStyles = makeStyles(() => ({
 
 export const SignIn = () => {
   const classes = useStyles();
+  const history = useHistory();
   const setUser = useSetRecoilState(userState);
   const [loading, setLoading] = useState(false);
-  let history = useHistory();
+  const [cheked, setCheked] = useState(false);
+  const [rememberUser, setRememberUser] = useState({});
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-
-    try {
-      setLoading(true);
-      const { data } = await loginService({
-        email: formData.get('email'),
-        contrasenia: formData.get('password'),
-      });
-      setUser(data);
-      localStorage.setItem('token', data.token);
-      history.push('/home');
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
-    }
+  const handleChange = (event) => {
+    setCheked(event.target.checked);
   };
+
+  useEffect(() => {
+    const item = localStorage.getItem('@comunidad:email&password');
+    if (item) {
+      setRememberUser(JSON.parse(item));
+      setCheked(true);
+    }
+  }, []);
+
+  const handleSubmit = useCallback(
+    async (event) => {
+      event.preventDefault();
+      const formData = new FormData(event.currentTarget);
+
+      try {
+        setLoading(true);
+        const { data } = await loginService({
+          email: formData.get('email'),
+          contrasenia: formData.get('password'),
+        });
+        setUser(data);
+        localStorage.setItem('token', data.token);
+
+        cheked
+          ? localStorage.setItem(
+              '@comunidad:email&password',
+              JSON.stringify({
+                contrasenia: formData.get('password'),
+                email: data.email,
+              })
+            )
+          : localStorage.removeItem('@comunidad:email&password');
+
+        history.push('/home');
+      } catch (error) {
+        setLoading(false);
+        console.log(error);
+      }
+    },
+    [cheked, history, setUser]
+  );
 
   return (
     <ThemeProvider theme={theme}>
@@ -87,7 +115,8 @@ export const SignIn = () => {
               id="email"
               label="Email"
               name="email"
-              autoComplete="email"
+              type="email"
+              value={rememberUser.email}
             />
             <TextField
               margin="normal"
@@ -97,10 +126,18 @@ export const SignIn = () => {
               label="Contraseña"
               type="password"
               id="password"
-              autoComplete="current-password"
+              value={rememberUser.contrasenia}
             />
             <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
+              control={
+                <Checkbox
+                  type="checkbox"
+                  value="remember"
+                  color="success"
+                  checked={cheked}
+                  onChange={handleChange}
+                />
+              }
               label="Recordarme"
             />
             <Button
