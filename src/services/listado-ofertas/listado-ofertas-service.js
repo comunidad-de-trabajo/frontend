@@ -20,3 +20,9 @@ export const getEmpresaByUsuarioId = async (id) => {
   ).data;
   return empresa;
 };
+
+export const cambiarEstadoOferta = async (id, estado) => {
+  return axios.post(`http://localhost:3001/api/oferta/cambiarEstado?id=${id}`, {
+    estado,
+  });
+};

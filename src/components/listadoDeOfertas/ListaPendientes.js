@@ -50,6 +50,14 @@ const ListaOfertasPendientes = () => {
     setOfertasPendientes(await getAllOfertas('pendiente'));
   };
 
+  const eliminarOferta = (id) => {
+    setOfertasPendientes(
+      ofertasPendientes.filter((oferta) => {
+        return oferta.id != id;
+      })
+    );
+  };
+
   useEffect(() => {
     fetchListadoOfertasPendientes();
     return () => {
@@ -74,6 +82,7 @@ const ListaOfertasPendientes = () => {
                       id={oferta.id}
                       setOpenAlert={setOpenAlert}
                       render={fetchListadoOfertasPendientes}
+                      eliminarOferta={eliminarOferta}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>

@@ -1,9 +1,8 @@
 import { Button, makeStyles } from '@material-ui/core';
-import React, { useState } from 'react';
-import ModalEmpresas from './ModalEmpresas';
+import React from 'react';
 import propTypes from 'prop-types';
-import ModalConfirmarAccion from '../modales/modalConfirmarAccion/ModalConfirmarAccion';
 import { useHistory } from 'react-router';
+import { cambiarEstadoOferta } from '../../services/listado-ofertas/listado-ofertas-service';
 
 const useStyles = makeStyles({
   boton: {
@@ -38,13 +37,13 @@ const useStyles = makeStyles({
 
 const BotonesDeLista = (props) => {
   const classes = useStyles();
-  const { ver, darDeBaja, id } = props;
-  const { setOpenAlert } = props;
-  const { render } = props;
+  const { ver, darDeBaja, id, setOpenAlert, eliminarOferta } = props;
   let history = useHistory();
 
   const handleClickBaja = () => {
-    console.log('baja');
+    cambiarEstadoOferta(id, 'vencida');
+    eliminarOferta(id);
+    setOpenAlert(true);
   };
 
   return (
@@ -83,6 +82,7 @@ BotonesDeLista.propTypes = {
   id: propTypes.number,
   setOpenAlert: propTypes.func,
   render: propTypes.func,
+  eliminarOferta: propTypes.func,
 };
 
 export default BotonesDeLista;
