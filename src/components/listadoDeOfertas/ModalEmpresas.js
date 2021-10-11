@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -7,6 +7,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import propTypes from 'prop-types';
 import DetallesEmpresa from './DetallesEmpresa';
+import { getEmpresaByUsuarioId } from '../../services/listado-ofertas/listado-ofertas-service';
 
 const styles = (theme) => ({
   root: {
@@ -40,11 +41,19 @@ const DialogTitle = withStyles(styles)((props) => {
 });
 
 export default function ModalEmpresas(props) {
-  const { open, setOpen, empresa } = props;
+  const { open, setOpen, usuarioId } = props;
+  const [empresa, setEmpresa] = useState({});
 
   const handleClose = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    getEmpresaByUsuarioId(usuarioId).then((empresa) => {
+      setEmpresa(empresa);
+    });
+    console.log(empresa);
+  }, []);
 
   return (
     <div>
@@ -55,7 +64,7 @@ export default function ModalEmpresas(props) {
         fullWidth
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Nombre
+          {empresa.nombreComercial}
         </DialogTitle>
         <DetallesEmpresa empresa={empresa} />
       </Dialog>
@@ -66,5 +75,5 @@ export default function ModalEmpresas(props) {
 ModalEmpresas.propTypes = {
   open: propTypes.bool,
   setOpen: propTypes.func,
-  empresa: propTypes.object,
+  usuarioId: propTypes.number,
 };

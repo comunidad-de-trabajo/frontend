@@ -11,6 +11,12 @@ export const getOfertaId = async (id) => {
   let oferta = await (
     await axios.get(`http://localhost:3001/api/oferta/detalle?id=${id}`)
   ).data;
-  console.log(oferta);
   return oferta;
+};
+
+export const getEmpresaByUsuarioId = async (id) => {
+  let empresa = await (
+    await axios.get(`http://localhost:3001/api/usuario/empresa/${id}`)
+  ).data;
+  return empresa;
 };
