@@ -94,15 +94,13 @@ export default function RegistroEmpresa({ routes }) {
   const datosRepresentanteValidacion = useRecoilValue(
     datosRepresentanteValidacionState
   );
-  const userRecoilState = useRecoilValue(userState);
 
   const handleEnviar = async () => {
-    console.log(userRecoilState);
     let registroList = {
       ...datosEmpresa,
       ...tipoEmpresa,
       ...datosRepresentante,
-      usuarioEmail: userRecoilState.email,
+      token: localStorage.getItem('token'),
     };
 
     if (!validarStep(activeStep)) {
