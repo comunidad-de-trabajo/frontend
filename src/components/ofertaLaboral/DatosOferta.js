@@ -54,7 +54,7 @@ export const DatosOferta = () => {
           Datos de la oferta{' '}
         </Typography>
         <Typography variant="caption" color="textSecondary" gutterBottom>
-          * Fecha de vigencia:
+          * Indicar fecha de finalizacion de la oferta:
         </Typography>
         <TextField
           required
