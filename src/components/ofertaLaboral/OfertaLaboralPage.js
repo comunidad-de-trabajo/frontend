@@ -8,7 +8,7 @@ import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
-import { DefaultValue, useRecoilState } from 'recoil';
+import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
 import {
   condicionesOfertaState,
   datosOfertaLaboralState,
@@ -18,6 +18,7 @@ import {
 import { crearOfertaLaboral } from '../../services/oferta-laboral/registro-oferta-laboral';
 import Loading from '../common/Loading';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { userState } from '../../recoil/user';
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -80,6 +81,7 @@ export function OfertaLaboralPage() {
   ] = useRecoilState(responsableOfertaState);
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
+  const userRecoilState = useRecoilValue(userState);
 
   const resetValues = () => {
     setDatosOfertaLaboral(new DefaultValue());

@@ -26,6 +26,7 @@ import {
   tipoEmpresaValidacionState,
 } from '../../recoil/registro-empresa-validation-atoms';
 import { completeFormRegistroEmpresaValidation } from '../../helpers/validation';
+import { userState } from '../../recoil/user';
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
@@ -93,12 +94,15 @@ export default function RegistroEmpresa({ routes }) {
   const datosRepresentanteValidacion = useRecoilValue(
     datosRepresentanteValidacionState
   );
+  const userRecoilState = useRecoilValue(userState);
 
   const handleEnviar = async () => {
+    console.log(userRecoilState);
     let registroList = {
       ...datosEmpresa,
       ...tipoEmpresa,
       ...datosRepresentante,
+      usuarioEmail: userRecoilState.email,
     };
 
     if (!validarStep(activeStep)) {

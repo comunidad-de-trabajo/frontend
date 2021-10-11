@@ -87,6 +87,15 @@ const SideBar = () => {
             <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
           </ListItem>
         ) : null}
+
+        {tieneRolPermitido(rol, roles.admin) ? (
+          <ListItem
+            button
+            onClick={() => history.push('/listadoOfertasADM/pendientes')}
+          >
+            <ListItemText primary={'Listado de ofertas'}></ListItemText>
+          </ListItem>
+        ) : null}
       </List>
     </div>
   );

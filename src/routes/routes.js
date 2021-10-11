@@ -14,6 +14,10 @@ import { CondicionesOferta } from '../components/ofertaLaboral/CondicionesOferta
 import { ResponsableBusquedaOferta } from '../components/ofertaLaboral/ResponsableBusquedaOferta';
 import Inscripcion from '../components/inscripcion/inscripcion-page';
 import { SignIn } from '../components/signIn/SignIn';
+import ListadoDeOfertasPage from '../components/listadoDeOfertas/ListadoDeOfertasPage';
+import ListaVencidas from '../components/listadoDeOfertas/ListaVencidas';
+import ListaOfertasPendientes from '../components/listadoDeOfertas/ListaPendientes';
+import DetalleOfertaPage from '../components/listadoDeOfertas/DetalleOfertaPage';
 
 export const routes = [
   {
@@ -155,6 +159,48 @@ export const routes = [
     component: Inscripcion,
     protection: {
       isPublic: true,
+    },
+  },
+  {
+    path: '/listadoOfertasADM',
+    component: ListadoDeOfertasPage,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['admin'],
+    },
+    routes: [
+      {
+        path: '/listadoOfertasADM/pendientes',
+        component: ListaOfertasPendientes,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
+      },
+      {
+        path: '/listadoOfertasADM/enviadas',
+        component: ListaAceptadas,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
+      },
+      {
+        path: '/listadoOfertasADM/vencidas',
+        component: ListaVencidas,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['admin'],
+        },
+      },
+    ],
+  },
+  {
+    path: '/detalleOferta/:id',
+    component: DetalleOfertaPage,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['admin', 'empresa'],
     },
   },
 ];

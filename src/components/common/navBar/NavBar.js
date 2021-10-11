@@ -51,6 +51,7 @@ const NavBar = () => {
       email: undefined,
       token: undefined,
     });
+    history.push('/');
     location.reload();
   };
 
