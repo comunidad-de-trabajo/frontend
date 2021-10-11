@@ -10,8 +10,8 @@ import {
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import BotonesDeLista from './BotonesDeLista';
-import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { getAllOfertas } from '../../services/listado-ofertas/listado-ofertas-service';
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaVencidas = () => {
   const classes = useStyles();
-  const [empresasRechazadas, setEmpresasRechazadas] = useState([]);
+  const [ofertasPendientes, setOfertasPendientes] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
 
   /* paginacion*/
   const [limite] = React.useState(25);
   const [page, setPage] = React.useState(1);
-  const limitePaginacion = Math.ceil(empresasRechazadas.length / limite);
+  const limitePaginacion = Math.ceil(ofertasPendientes.length / limite);
   const indexOfLastPost = page * limite;
   const indexOfFirstPost = indexOfLastPost - limite;
-  const listaPaginada = empresasRechazadas.slice(
+  const listaPaginada = ofertasPendientes.slice(
     indexOfFirstPost,
     indexOfLastPost
   );
@@ -46,14 +46,14 @@ const ListaVencidas = () => {
   };
   /*-------*/
 
-  const fetchListadoEmpresasRechazadas = async () => {
-    setEmpresasRechazadas(await fetchListadoEmpresas('rechazada'));
+  const fetchListadoOfertasPendientes = async () => {
+    setOfertasPendientes(await getAllOfertas('vencida'));
   };
 
   useEffect(() => {
-    fetchListadoEmpresasRechazadas();
+    fetchListadoOfertasPendientes();
     return () => {
-      setEmpresasRechazadas([]);
+      setOfertasPendientes([]);
     };
   }, []);
 
@@ -62,19 +62,17 @@ const ListaVencidas = () => {
       <Grid item xs={12} md={12} className={classes.container}>
         <Divider />
         <List>
-          {empresasRechazadas.length > 0 &&
-            listaPaginada.map((emp) => (
-              <div key={emp.id}>
+          {ofertasPendientes.length > 0 &&
+            listaPaginada.map((oferta) => (
+              <div key={oferta.id}>
                 <ListItem>
-                  <ListItemText primary={emp.nombreComercial} />
+                  <ListItemText primary={oferta.tituloBusqueda} />
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
-                      aceptar={true}
-                      rechazar={false}
-                      empresa={emp}
+                      id={oferta.id}
                       setOpenAlert={setOpenAlert}
-                      render={fetchListadoEmpresasRechazadas}
+                      render={fetchListadoOfertasPendientes}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>

@@ -18,6 +18,7 @@ import ListadoDeOfertasPage from '../components/listadoDeOfertas/ListadoDeOferta
 import ListaVencidas from '../components/listadoDeOfertas/ListaVencidas';
 import ListaOfertasPendientes from '../components/listadoDeOfertas/ListaPendientes';
 import DetalleOfertaPage from '../components/listadoDeOfertas/DetalleOfertaPage';
+import ListaEnviadas from '../components/listadoDeOfertas/ListaEnviadas';
 
 export const routes = [
   {
@@ -179,7 +180,7 @@ export const routes = [
       },
       {
         path: '/listadoOfertasADM/enviadas',
-        component: ListaAceptadas,
+        component: ListaEnviadas,
         protection: {
           isPublic: false,
           permittedRoles: ['admin'],

@@ -10,7 +10,8 @@ import {
 } from '@material-ui/core';
 import Pagination from '@material-ui/lab/Pagination';
 import BotonesDeLista from './BotonesDeLista';
-import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
+import { getAllOfertas } from '../../services/listado-ofertas/listado-ofertas-service';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: theme.spacing(4),
@@ -35,15 +36,16 @@ const useStyles = makeStyles((theme) => ({
 
 const ListaEnviadas = () => {
   const classes = useStyles();
-  const [empresasAceptadas, setEmpresasAceptadas] = useState([]);
+  const [ofertasPendientes, setOfertasPendientes] = useState([]);
+  const [openAlert, setOpenAlert] = useState(false);
 
   /* paginacion*/
   const [limite] = React.useState(25);
   const [page, setPage] = React.useState(1);
-  const limitePaginacion = Math.ceil(empresasAceptadas.length / limite);
+  const limitePaginacion = Math.ceil(ofertasPendientes.length / limite);
   const indexOfLastPost = page * limite;
   const indexOfFirstPost = indexOfLastPost - limite;
-  const listaPaginada = empresasAceptadas.slice(
+  const listaPaginada = ofertasPendientes.slice(
     indexOfFirstPost,
     indexOfLastPost
   );
@@ -53,14 +55,14 @@ const ListaEnviadas = () => {
   };
   /*-------*/
 
-  const fetchListadoEmpresasAceptadas = async () => {
-    setEmpresasAceptadas(await fetchListadoEmpresas('aceptada'));
+  const fetchListadoOfertasPendientes = async () => {
+    setOfertasPendientes(await getAllOfertas('enviada'));
   };
 
   useEffect(() => {
-    fetchListadoEmpresasAceptadas();
+    fetchListadoOfertasPendientes();
     return () => {
-      setEmpresasAceptadas([]);
+      setOfertasPendientes([]);
     };
   }, []);
 
@@ -69,17 +71,17 @@ const ListaEnviadas = () => {
       <Grid item xs={12} md={12} className={classes.container}>
         <Divider />
         <List>
-          {empresasAceptadas.length > 0 &&
-            listaPaginada.map((emp) => (
-              <div key={emp.id}>
+          {ofertasPendientes.length > 0 &&
+            listaPaginada.map((oferta) => (
+              <div key={oferta.id}>
                 <ListItem>
-                  <ListItemText primary={emp.nombreComercial} />
+                  <ListItemText primary={oferta.tituloBusqueda} />
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
-                      aceptar={false}
-                      rechazar={false}
-                      empresa={emp}
+                      id={oferta.id}
+                      setOpenAlert={setOpenAlert}
+                      render={fetchListadoOfertasPendientes}
                     />
                   </ListItemSecondaryAction>
                 </ListItem>
@@ -87,6 +89,11 @@ const ListaEnviadas = () => {
               </div>
             ))}
         </List>
+        <AlertaOperacionTerminada
+          tipo="success"
+          open={openAlert}
+          setOpen={setOpenAlert}
+        />
       </Grid>
       <Pagination
         className={classes.paginacion}
