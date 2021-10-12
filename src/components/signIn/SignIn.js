@@ -30,9 +30,9 @@ const useStyles = makeStyles(() => ({
 
 export const SignIn = () => {
   const classes = useStyles();
+  const history = useHistory();
   const setUser = useSetRecoilState(userState);
   const [loading, setLoading] = useState(false);
-  let history = useHistory();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -114,7 +114,7 @@ export const SignIn = () => {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
+                <Link href="/recuperar-contraseña" variant="body2">
                   ¿Olvidaste tu contraseña?
                 </Link>
               </Grid>

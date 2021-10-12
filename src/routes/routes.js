@@ -19,6 +19,8 @@ import ListaVencidas from '../components/listadoDeOfertas/ListaVencidas';
 import ListaOfertasPendientes from '../components/listadoDeOfertas/ListaPendientes';
 import DetalleOfertaPage from '../components/listadoDeOfertas/DetalleOfertaPage';
 import ListaEnviadas from '../components/listadoDeOfertas/ListaEnviadas';
+import { RecuperarContrasenia } from '../components/recuperarContrasenia/RecuperarContrasenia';
+import { ResetearContrasenia } from '../components/resetearContrasenia/ResetearContrasenia';
 
 export const routes = [
   {
@@ -202,6 +204,20 @@ export const routes = [
     protection: {
       isPublic: false,
       permittedRoles: ['admin', 'empresa'],
+    },
+  },
+  {
+    path: '/recuperar-contraseña',
+    component: RecuperarContrasenia,
+    protection: {
+      isPublic: true,
+    },
+  },
+  {
+    path: '/resetear-contraseña/:token',
+    component: ResetearContrasenia,
+    protection: {
+      isPublic: true,
     },
   },
 ];

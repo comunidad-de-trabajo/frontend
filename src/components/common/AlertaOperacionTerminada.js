@@ -20,7 +20,7 @@ const AlertaOperacionTerminada = (props) => {
   return (
     <Snackbar
       open={open}
-      autoHideDuration={4000}
+      autoHideDuration={5000}
       onClose={handleCloseSnackbar}
       anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
     >
