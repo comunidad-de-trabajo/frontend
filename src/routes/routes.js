@@ -214,7 +214,8 @@ export const routes = [
     },
   },
   {
-    path: '/resetear-contraseña/:token',
+    exact: true,
+    path: '/reset-password/:token',
     component: ResetearContrasenia,
     protection: {
       isPublic: true,
