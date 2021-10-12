@@ -58,6 +58,15 @@ export const emailValidation = (email) => {
   return 'Email invalido';
 };
 
+export const passwordValidation = (password) => {
+  if (notEmptyOrNullValidation(password)) {
+    return 'Campo requerido';
+  } else if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{8,}$/.test(password)) {
+    return null;
+  }
+  return 'Requiere minimo una mayuscula, una minuscula, un numero y 8 digitos';
+};
+
 export const cuitValidation = (cuit) => {
   let CUIT = cuit;
   const base = [5, 4, 3, 2, 7, 6, 5, 4, 3, 2];

@@ -8,12 +8,20 @@ import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
 import { nuevoRegistro } from '../../services/inscripcion-backend/inscripcion-endpoint';
 import { useHistory } from 'react-router';
+import logoComunidadDeTrabajo from '../../assets/logoComunidadDeTrabajo.svg';
+import { datosSignUpValidation } from './validation/validationByField';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
   root: {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     height: '100vh',
+  },
+  logo: {
+    width: 300,
+    height: 100,
+    marginBottom: '10px',
   },
   container: {
     marginTop: theme.spacing(6),
@@ -50,12 +58,23 @@ export default function Inscripcion() {
     contrasenia: '',
     rol: 'empresa',
   });
+  const [validacion, setValidacion] = useState({
+    email: '',
+    contrasenia: '',
+  });
+  const [alerta, setAlerta] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [error, setError] = useState();
   let history = useHistory();
 
   const handleChange = ({ target }) => {
     setRegistro({
       ...registro,
       [target.name]: target.value,
+    });
+    setValidacion({
+      ...validacion,
+      [target.name]: datosSignUpValidation[target.name](target.value),
     });
   };
 
@@ -64,10 +83,29 @@ export default function Inscripcion() {
       ...registro,
     };
     try {
-      await nuevoRegistro(registro);
-      history.push('/login');
+      if (!(registro.email == '' || registro.contrasenia == '')) {
+        if (
+          !(
+            validacion.email == 'Email invalido' ||
+            validacion.contrasenia ==
+              'Requiere minimo una mayuscula, una minuscula, un numero y 8 digitos'
+          )
+        ) {
+          setAlerta(2);
+          await nuevoRegistro(registro);
+          setOpenSnackbar(true);
+          history.push('/login');
+        } else {
+          setAlerta(1);
+          setOpenSnackbar(true);
+        }
+      } else {
+        setOpenSnackbar(true);
+      }
     } catch (e) {
-      console.log(e);
+      setAlerta(3);
+      console.log(e.JSON);
+      setOpenSnackbar(true);
     }
   };
 
@@ -76,8 +114,9 @@ export default function Inscripcion() {
       <Container maxWidth="xs" className={classes.container}>
         <div className={classes.div}>
           <img
-            src="https://www.nodal.am/wp-content/uploads/2017/11/UNAHUR-300x125.png"
-            alt="UNAHUR"
+            src={logoComunidadDeTrabajo}
+            alt="logoComunidadDeTrabajo"
+            className={classes.logo}
           />
           <Typography
             className={classes.typography}
@@ -99,6 +138,8 @@ export default function Inscripcion() {
                 margin="normal"
                 value={registro.email}
                 onChange={handleChange}
+                error={validacion.email}
+                helperText={validacion.email}
               />
             </Grid>
             <Grid items xs="12">
@@ -113,6 +154,8 @@ export default function Inscripcion() {
                 type="password"
                 value={registro.contrasenia}
                 onChange={handleChange}
+                error={validacion.contrasenia}
+                helperText={validacion.contrasenia}
               />
             </Grid>
           </Grid>
@@ -125,10 +168,42 @@ export default function Inscripcion() {
           >
             Registrarse
           </Button>
-          <Link className={classes.link} href="x">
+          <Link className={classes.link} href="/login">
             Ya tenes una cuenta?Inicia sesion
           </Link>
         </div>
+        {alerta == 0 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="por favor llene los campos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 1 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="cumpla con los requisitos pedidos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 2 && (
+          <AlertaOperacionTerminada
+            tipo="success"
+            mensaje="registrado correctamente"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 3 && (
+          <AlertaOperacionTerminada
+            tipo="error"
+            mensaje="Error"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
       </Container>
     </Grid>
   );

@@ -65,6 +65,7 @@ const GlobalCss = withStyles({
 
 export function OfertaLaboralPage() {
   const classes = useStyles();
+  const [user] = useRecoilState(userState);
   const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
     datosOfertaLaboralState
   );
@@ -91,6 +92,12 @@ export function OfertaLaboralPage() {
   };
 
   const handlePublicar = async () => {
+    /* agregando al userEmail el email que se logeo de userState(recoil)*/
+    setDatosOfertaLaboral({
+      ...datosOfertaLaboral,
+      userEmail: user.email,
+    });
+
     let nuevaOferta = {
       ...datosOfertaLaboral,
       ...requisitosOfertaLaboral,

@@ -21,6 +21,7 @@ import DetalleOfertaPage from '../components/listadoDeOfertas/DetalleOfertaPage'
 import ListaEnviadas from '../components/listadoDeOfertas/ListaEnviadas';
 import { RecuperarContrasenia } from '../components/recuperarContrasenia/RecuperarContrasenia';
 import { ResetearContrasenia } from '../components/resetearContrasenia/ResetearContrasenia';
+import listadoOfertasXEmpresaPage from '../components/listadoOfertasXEmpresa/ListadoDeOfertaPage';
 
 export const routes = [
   {
@@ -219,6 +220,14 @@ export const routes = [
     component: ResetearContrasenia,
     protection: {
       isPublic: true,
+    }
+  },
+  {
+    path: '/listadoOfertasUsuario',
+    component: listadoOfertasXEmpresaPage,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['empresa'],
     },
   },
 ];
