@@ -67,7 +67,7 @@ const ListaPendientes = () => {
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
-                      aceptar={false}
+                      aceptar={true}
                       rechazar={true}
                       empresa={emp}
                       setOpenAlert={setOpenAlert}

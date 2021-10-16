@@ -6,3 +6,9 @@ export const crearOfertaLaboral = async (nuevaOferta) => {
     token: localStorage.getItem('token'),
   });
 };
+
+export const actualizarOferta = async (id, data) => {
+  return await api.patch(`api/oferta/${id}`, {
+    data,
+  });
+};

@@ -22,6 +22,11 @@ import ListaEnviadas from '../components/listadoDeOfertas/ListaEnviadas';
 import { RecuperarContrasenia } from '../components/recuperarContrasenia/RecuperarContrasenia';
 import { ResetearContrasenia } from '../components/resetearContrasenia/ResetearContrasenia';
 import listadoOfertasXEmpresaPage from '../components/listadoOfertasXEmpresa/ListadoDeOfertaPage';
+import editarOferta from '../components/editarOferta/OfertaLaboral';
+import editarDatosOferta from '../components/editarOferta/DatosOferta';
+import editarRequisitosOferta from '../components/editarOferta/RequisitosOferta';
+import editarCondicionesOferta from '../components/editarOferta/CondicionesOferta';
+import editarResponsableBusquedaOferta from '../components/editarOferta/ResponsableBusquedaOferta';
 
 export const routes = [
   {
@@ -227,7 +232,49 @@ export const routes = [
     component: listadoOfertasXEmpresaPage,
     protection: {
       isPublic: false,
-      permittedRoles: ['empresa'],
+      permittedRoles: ['empresa', 'admin'],
     },
+  },
+  {
+    path: '/editarOferta',
+    component: editarOferta,
+    protection: {
+      isPublic: false,
+      permittedRoles: ['empresa', 'admin'],
+    },
+    routes: [
+      {
+        path: '/editarOferta/0',
+        component: editarDatosOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
+      },
+      {
+        path: '/editarOferta/1',
+        component: editarRequisitosOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
+      },
+      {
+        path: '/editarOferta/2',
+        component: editarCondicionesOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
+      },
+      {
+        path: '/editarOferta/3',
+        component: editarResponsableBusquedaOferta,
+        protection: {
+          isPublic: false,
+          permittedRoles: ['empresa', 'admin'],
+        },
+      },
+    ],
   },
 ];

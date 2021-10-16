@@ -60,7 +60,7 @@ const BotonesDeLista = (props) => {
   const handleClickAceptar = () => {
     abrirModalConfirmacion(
       empresa,
-      'Editar',
+      'aceptar',
       'Editar oferta',
       'Seguro que quiere editar esta oferta?'
     );

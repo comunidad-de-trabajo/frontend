@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { envioMailsIndividual } from '../../../services/envio-mails-mailjet/envio-mails.services';
 import { eliminarOferta } from '../../../services/listadoDeOfertas/endpointListadoOfertaXEmpresa';
 
@@ -10,14 +11,6 @@ const aceptarEmpresa = async (
   render
 ) => {
   try {
-    /*
-    await envioMailsIndividual({
-      emailTo: email,
-      aceptado: true,
-      textPart: `For ${nombreComercial} this test email`,
-    });
-
-    await cambiarEstadoEmpresa('aceptada', idEmpresa);*/
     await setOpenAlert(true);
 
     await render();
@@ -28,14 +21,7 @@ const aceptarEmpresa = async (
   }
 };
 
-const rechazarEmpresa = async (
-  setOpenAlert,
-  setOpen,
-  idEmpresa,
-  nombreComercial,
-  email,
-  render
-) => {
+const rechazarEmpresa = async (setOpenAlert, setOpen, idEmpresa, render) => {
   try {
     /*
     await envioMailsIndividual({
@@ -46,7 +32,6 @@ const rechazarEmpresa = async (
     
 
     await cambiarEstadoEmpresa('rechazada', idEmpresa);*/
-    console.log(idEmpresa);
     await eliminarOferta(idEmpresa);
     await setOpenAlert(true);
 

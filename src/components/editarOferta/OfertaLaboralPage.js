@@ -8,14 +8,15 @@ import { DatosOferta } from './DatosOferta';
 import { RequisitosOferta } from './RequisitosOferta';
 import { CondicionesOferta } from './CondicionesOferta';
 import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
-import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
+import { DefaultValue, useRecoilState } from 'recoil';
 import {
-  condicionesOfertaState,
-  datosOfertaLaboralState,
-  requisitosOfertaState,
-  responsableOfertaState,
-} from '../../recoil/oferta-laboral';
-import { crearOfertaLaboral } from '../../services/oferta-laboral/registro-oferta-laboral';
+  idOferta,
+  editarCondicionesOferta,
+  editarDatosOfertaLaboral,
+  editarRequisitosOferta,
+  editarResponsableOferta,
+} from '../../recoil/editarOferta';
+import { actualizarOferta } from '../../services/oferta-laboral/registro-oferta-laboral';
 import Loading from '../common/Loading';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
@@ -64,33 +65,34 @@ const GlobalCss = withStyles({
 
 export function OfertaLaboralPage() {
   const classes = useStyles();
+  const [ofertaId] = useRecoilState(idOferta);
   const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
-    datosOfertaLaboralState
+    editarDatosOfertaLaboral
   );
   const [requisitosOfertaLaboral, setRequisitosOfertaLaboral] = useRecoilState(
-    requisitosOfertaState
+    editarRequisitosOferta
   );
   const [
     condicionesOfertaLaboral,
     setCondicionesOfertaLaboral,
-  ] = useRecoilState(condicionesOfertaState);
+  ] = useRecoilState(editarCondicionesOferta);
   const [
     responsableOfertaLaboral,
     setResponsableOfertaLaboral,
-  ] = useRecoilState(responsableOfertaState);
+  ] = useRecoilState(editarResponsableOferta);
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
-  const userRecoilState = useRecoilValue(userState);
 
+  /*
   const resetValues = () => {
     setDatosOfertaLaboral(new DefaultValue());
     setRequisitosOfertaLaboral(new DefaultValue());
     setCondicionesOfertaLaboral(new DefaultValue());
     setResponsableOfertaLaboral(new DefaultValue());
-  };
-
-  const handlePublicar = async () => {
-    let nuevaOferta = {
+  };    
+  */
+  const handleUpdate = async () => {
+    let data = {
       ...datosOfertaLaboral,
       ...requisitosOfertaLaboral,
       ...condicionesOfertaLaboral,
@@ -98,9 +100,9 @@ export function OfertaLaboralPage() {
     };
     try {
       setLoading(true);
-      await crearOfertaLaboral(nuevaOferta);
+      await actualizarOferta(ofertaId.id, data);
       setOpenAlert(true);
-      resetValues();
+      /*  resetValues();*/
     } catch (e) {
       console.log(e);
     } finally {
@@ -137,9 +139,9 @@ export function OfertaLaboralPage() {
                   variant="contained"
                   color="primary"
                   className={classes.button}
-                  onClick={handlePublicar}
+                  onClick={handleUpdate}
                 >
-                  Publicar
+                  Guardar
                 </Button>
               </Grid>
             </Grid>
@@ -150,7 +152,7 @@ export function OfertaLaboralPage() {
           tipo="success"
           open={openAlert}
           setOpen={setOpenAlert}
-          mensaje="La oferta laboral se publió con éxito"
+          mensaje="oferta actualizada con éxito"
         />
       </main>
 
