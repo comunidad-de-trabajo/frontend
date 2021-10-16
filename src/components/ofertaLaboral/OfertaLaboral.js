@@ -164,6 +164,14 @@ export default function OfertaLaboral({ routes }) {
   };
 
   const handlePublicar = async () => {
+    if (!validarStep(activeStep)) {
+      setDatosAlerta({
+        severity: 'warning',
+        mensaje: 'Algunos campos estan incorrectos, o faltantes!',
+      });
+      setOpenAlert(true);
+      return;
+    }
     let nuevaOferta = {
       ...datosOfertaLaboral,
       ...requisitosOfertaLaboral,
@@ -179,6 +187,10 @@ export default function OfertaLaboral({ routes }) {
       });
       setOpenAlert(true);
       resetValues();
+      setActiveStep(activeStep + 1);
+      setTimeout(() => {
+        history.push('/');
+      }, 4000);
     } catch (e) {
       setDatosAlerta({
         severity: 'error',
@@ -188,7 +200,7 @@ export default function OfertaLaboral({ routes }) {
       setOpenAlert(true);
       setTimeout(() => {
         history.push('/');
-      }, 4000);
+      }, 1000);
     } finally {
       setLoading(false);
     }
