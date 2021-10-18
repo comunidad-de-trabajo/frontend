@@ -18,11 +18,13 @@ const useStyles = makeStyles((theme) => ({
 
 const Paginacion = () => {
   const classes = useStyles();
-  const [page, setPage] = React.useState(1);
+  const [page] = React.useState(1);
 
+  /*
   const handleChange = (event, value) => {
     setPage(value);
   };
+  */
 
   console.log(page);
 

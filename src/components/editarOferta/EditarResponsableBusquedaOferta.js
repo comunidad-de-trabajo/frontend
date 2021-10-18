@@ -15,7 +15,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function ResponsableBusquedaOferta() {
+export default function EditarResponsableBusquedaOferta() {
   const classes = useStyles();
   const [stateResponsableOferta, setStateResponsableOferta] = useRecoilState(
     editarResponsableOferta

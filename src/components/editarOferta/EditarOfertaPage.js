@@ -4,11 +4,11 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Grid, withStyles, Button } from '@material-ui/core';
-import { DatosOferta } from './DatosOferta';
-import { RequisitosOferta } from './RequisitosOferta';
-import { CondicionesOferta } from './CondicionesOferta';
-import { ResponsableBusquedaOferta } from './ResponsableBusquedaOferta';
-import { DefaultValue, useRecoilState } from 'recoil';
+import { DatosOferta } from './EditarDatosOferta';
+import { RequisitosOferta } from './EditarRequisitosOferta';
+import { CondicionesOferta } from './EditarCondicionesOferta';
+import { ResponsableBusquedaOferta } from './EditarResponsableBusquedaOferta';
+import { useRecoilState } from 'recoil';
 import {
   idOferta,
   editarCondicionesOferta,
@@ -63,23 +63,13 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-export function OfertaLaboralPage() {
+export function EditarOFertaPage() {
   const classes = useStyles();
   const [ofertaId] = useRecoilState(idOferta);
-  const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
-    editarDatosOfertaLaboral
-  );
-  const [requisitosOfertaLaboral, setRequisitosOfertaLaboral] = useRecoilState(
-    editarRequisitosOferta
-  );
-  const [
-    condicionesOfertaLaboral,
-    setCondicionesOfertaLaboral,
-  ] = useRecoilState(editarCondicionesOferta);
-  const [
-    responsableOfertaLaboral,
-    setResponsableOfertaLaboral,
-  ] = useRecoilState(editarResponsableOferta);
+  const [datosOfertaLaboral] = useRecoilState(editarDatosOfertaLaboral);
+  const [requisitosOfertaLaboral] = useRecoilState(editarRequisitosOferta);
+  const [condicionesOfertaLaboral] = useRecoilState(editarCondicionesOferta);
+  const [responsableOfertaLaboral] = useRecoilState(editarResponsableOferta);
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
 
@@ -103,6 +93,9 @@ export function OfertaLaboralPage() {
       await actualizarOferta(ofertaId.id, data);
       setOpenAlert(true);
       /*  resetValues();*/
+      setTimeout(() => {
+        history.push('/listadoOfertasUsuario');
+      }, 2000);
     } catch (e) {
       console.log(e);
     } finally {

@@ -22,11 +22,11 @@ import ListaEnviadas from '../components/listadoDeOfertas/ListaEnviadas';
 import { RecuperarContrasenia } from '../components/recuperarContrasenia/RecuperarContrasenia';
 import { ResetearContrasenia } from '../components/resetearContrasenia/ResetearContrasenia';
 import listadoOfertasXEmpresaPage from '../components/listadoOfertasXEmpresa/ListadoDeOfertaPage';
-import editarOferta from '../components/editarOferta/OfertaLaboral';
-import editarDatosOferta from '../components/editarOferta/DatosOferta';
-import editarRequisitosOferta from '../components/editarOferta/RequisitosOferta';
-import editarCondicionesOferta from '../components/editarOferta/CondicionesOferta';
-import editarResponsableBusquedaOferta from '../components/editarOferta/ResponsableBusquedaOferta';
+import editarOferta from '../components/editarOferta/EditarOFerta';
+import editarDatosOferta from '../components/editarOferta/EditarDatosOferta';
+import editarRequisitosOferta from '../components/editarOferta/EditarRequisitosOferta';
+import editarCondicionesOferta from '../components/editarOferta/EditarCondicionesOferta';
+import editarResponsableBusquedaOferta from '../components/editarOferta/EditarResponsableBusquedaOferta';
 
 export const routes = [
   {

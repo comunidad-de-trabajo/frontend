@@ -25,7 +25,7 @@ const GlobalCss = withStyles({
   },
 })(() => null);
 
-export default function DatosOferta() {
+export default function EditarDatosOferta() {
   const classes = useStyles();
   const [stateDatosOferta, setStateDatosOferta] = useRecoilState(
     editarDatosOfertaLaboral

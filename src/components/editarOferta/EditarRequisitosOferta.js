@@ -45,7 +45,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function RequisitosOferta() {
+export default function EditarRequisitosOferta() {
   const classes = useStyles();
   const [stateRequisitosOferta, setStateRequisitosOferta] = useRecoilState(
     editarRequisitosOferta

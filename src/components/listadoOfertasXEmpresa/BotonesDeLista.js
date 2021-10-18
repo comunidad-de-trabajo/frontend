@@ -17,15 +17,15 @@ const useStyles = makeStyles({
       boxShadow: 'none',
     },
   },
-  botonAceptar: {
-    backgroundColor: '#8ce075',
+  botonEditar: {
+    backgroundColor: '#7faddd',
     '&:hover': {
-      backgroundColor: '#69ab57',
+      backgroundColor: '#809fbf',
       borderColor: '#0062cc',
       boxShadow: 'none',
     },
   },
-  botonRechazar: {
+  botonDarBaja: {
     backgroundColor: '#ff4747',
     '&:hover': {
       backgroundColor: '#bd3535',
@@ -37,8 +37,8 @@ const useStyles = makeStyles({
 
 const BotonesDeLista = (props) => {
   const classes = useStyles();
-  const { ver, aceptar, rechazar, empresa } = props;
-  const [openModalEmpresa, setOpenModalEmpresa] = useState(false);
+  const { ver, editar, darBaja, oferta } = props;
+  const [openModalOferta, setOpenModalOferta] = useState(false);
   const [openModalConfirmacion, setOpenModalConfirmacion] = useState(false);
   const [datosModalConfirmacion, setDatosModalConfirmacion] = useState({
     accion: '',
@@ -54,28 +54,28 @@ const BotonesDeLista = (props) => {
   const { render } = props;
 
   const handleClickOpen = () => {
-    setOpenModalEmpresa(true);
+    setOpenModalOferta(true);
   };
 
-  const handleClickAceptar = () => {
+  const handleClickEditar = () => {
     abrirModalConfirmacion(
-      empresa,
-      'aceptar',
+      oferta,
+      'editar',
       'Editar oferta',
       'Seguro que quiere editar esta oferta?'
     );
   };
 
-  const handleClickRechazar = () => {
+  const handleClickDarBaja = () => {
     abrirModalConfirmacion(
-      empresa,
-      'rechazar',
+      oferta,
+      'darBaja',
       'Dar Baja',
       'Una vez dado de baja la oferta se eliminara, esta seguro?'
     );
   };
 
-  const abrirModalConfirmacion = (empresa, accion, titulo, mensaje) => {
+  const abrirModalConfirmacion = (oferta, accion, titulo, mensaje) => {
     setDatosModalConfirmacion({
       accion: accion,
       tituloModalConfirmacion: titulo,
@@ -97,35 +97,35 @@ const BotonesDeLista = (props) => {
           Ver
         </Button>
       )}
-      {aceptar && (
+      {editar && (
         <Button
           edge="end"
           aria-label="ver"
-          className={`${classes.botonAceptar} ${classes.boton}`}
+          className={`${classes.botonEditar} ${classes.boton}`}
           size="small"
-          onClick={handleClickAceptar}
+          onClick={handleClickEditar}
         >
           Editar
         </Button>
       )}
-      {rechazar && (
+      {darBaja && (
         <Button
           edge="end"
           aria-label="ver"
-          className={`${classes.botonRechazar} ${classes.boton}`}
+          className={`${classes.botonDarBaja} ${classes.boton}`}
           size="small"
-          onClick={handleClickRechazar}
+          onClick={handleClickDarBaja}
         >
           Dar baja
         </Button>
       )}
       <ModalOFerta
-        open={openModalEmpresa}
-        setOpen={setOpenModalEmpresa}
-        empresa={empresa}
+        open={openModalOferta}
+        setOpen={setOpenModalOferta}
+        empresa={oferta}
       />
       <ModalConfirmarAccion
-        empresa={empresa}
+        oferta={oferta}
         accion={accion}
         titulo={tituloModalConfirmacion}
         mensaje={mensajeModalConfirmacion}
@@ -140,9 +140,9 @@ const BotonesDeLista = (props) => {
 
 BotonesDeLista.propTypes = {
   ver: propTypes.bool,
-  aceptar: propTypes.bool,
-  rechazar: propTypes.bool,
-  empresa: propTypes.object,
+  editar: propTypes.bool,
+  darBaja: propTypes.bool,
+  oferta: propTypes.object,
   setOpenAlert: propTypes.func,
   render: propTypes.func,
 };

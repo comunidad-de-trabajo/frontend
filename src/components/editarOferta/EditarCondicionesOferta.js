@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-export default function CondicionesOferta() {
+export default function EditarCondicionesOferta() {
   const classes = useStyles();
   const [stateCondicionesOferta, setStateCondicionesOferta] = useRecoilState(
     editarCondicionesOferta

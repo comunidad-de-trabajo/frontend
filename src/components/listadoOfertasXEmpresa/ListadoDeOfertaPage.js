@@ -1,11 +1,9 @@
-import React, { useEffect } from 'react';
 import Typography from '@material-ui/core/Typography';
 import ListadoDeOferta from './ListadoDeOferta';
 import Paginacion from './Paginacion';
 import MediaCard from '../common/MediaCard';
-import PropTypes from 'prop-types';
 
-export default function ListadoDeEmpresasPage() {
+export default function ListadoDeOfertaPage() {
   return (
     <>
       <MediaCard>
@@ -18,7 +16,3 @@ export default function ListadoDeEmpresasPage() {
     </>
   );
 }
-
-ListadoDeEmpresasPage.propTypes = {
-  routes: PropTypes.array,
-};

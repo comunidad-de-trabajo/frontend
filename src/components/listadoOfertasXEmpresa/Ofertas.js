@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListaPendientes = () => {
+const Oferta = () => {
   const classes = useStyles();
   const [ofertas, setOfertas] = useState([]);
   const [openAlert, setOpenAlert] = useState(false);
@@ -60,16 +60,16 @@ const ListaPendientes = () => {
         <Divider />
         <List>
           {ofertas.length > 0 &&
-            listaPaginada.map((emp) => (
-              <div key={emp.id}>
+            listaPaginada.map((oferta) => (
+              <div key={oferta.id}>
                 <ListItem>
-                  <ListItemText primary={emp.tituloBusqueda} />
+                  <ListItemText primary={oferta.tituloBusqueda} />
                   <ListItemSecondaryAction>
                     <BotonesDeLista
                       ver={true}
-                      aceptar={true}
-                      rechazar={true}
-                      empresa={emp}
+                      editar={true}
+                      darBaja={true}
+                      oferta={oferta}
                       setOpenAlert={setOpenAlert}
                       render={fetchListadoDeOfertas}
                     />
@@ -96,4 +96,4 @@ const ListaPendientes = () => {
   );
 };
 
-export default ListaPendientes;
+export default Oferta;

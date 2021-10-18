@@ -1,6 +1,5 @@
 import { Grid, makeStyles, Typography } from '@material-ui/core';
 import React from 'react';
-import PropTypes from 'prop-types';
 import Ofertas from './Ofertas';
 
 const useStyles = makeStyles((theme) => ({
@@ -19,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ListadoDeEmpresas = ({ routes }) => {
+const ListadoDeOferta = () => {
   const classes = useStyles();
 
   return (
@@ -38,8 +37,4 @@ const ListadoDeEmpresas = ({ routes }) => {
   );
 };
 
-ListadoDeEmpresas.propTypes = {
-  routes: PropTypes.array,
-};
-
-export default ListadoDeEmpresas;
+export default ListadoDeOferta;

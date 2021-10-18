@@ -18,7 +18,7 @@ import {
 } from '../../../recoil/editarOferta';
 
 const ModalConfirmarAccion = (props) => {
-  const { titulo, mensaje, accion, empresa } = props;
+  const { titulo, mensaje, accion, oferta } = props;
   const { open, setOpen } = props;
   const { setOpenAlert } = props;
   const { render } = props;
@@ -41,92 +41,52 @@ const ModalConfirmarAccion = (props) => {
 
   const handleClose = () => {
     let acciones = getAccionesModalConfirmacion();
-    if (accion === 'aceptar') {
-      acciones.aceptar(setOpenAlert, setOpen, empresa.id, render);
+    if (accion === 'editar') {
+      acciones.aceptar(setOpenAlert, setOpen, render);
       setOfertaId({
         ...ofertaId,
-        id: empresa.id,
+        id: oferta.id,
       });
       setDatosOfertaLaboral({
         ...datosOfertaLaboral,
-        fechaVigencia: empresa.fechaVigencia,
-        tituloBusqueda: empresa.tituloBusqueda,
-        descripcionEmpresa: empresa.descripcionEmpresa,
-        mision: empresa.mision,
-        responsabilidades: empresa.responsabilidades,
+        fechaVigencia: oferta.fechaVigencia,
+        tituloBusqueda: oferta.tituloBusqueda,
+        descripcionEmpresa: oferta.descripcionEmpresa,
+        mision: oferta.mision,
+        responsabilidades: oferta.responsabilidades,
       });
       setRequisitosOfertaLaboral({
         ...requisitosOfertaLaboral,
-        secundarioCompleto: empresa.secundarioCompleto,
-        paqueteOffice: empresa.paqueteOffice,
-        licenciaConducir: empresa.licenciaConducir,
-        edad: empresa.edad,
-        desdeEdad: empresa.desdeEdad,
-        hastaEdad: empresa.hastaEdad,
-        experienciaPrevia: empresa.experienciaPrevia,
-        experienciaPreviaDescription: empresa.experienciaPreviaDescription,
-        residencia: empresa.residencia,
-        areasEstudio: empresa.areasEstudio,
-        competencias: empresa.competencias,
-        otrosDetalles: empresa.otrosDetalles,
+        secundarioCompleto: oferta.secundarioCompleto,
+        paqueteOffice: oferta.paqueteOffice,
+        licenciaConducir: oferta.licenciaConducir,
+        edad: oferta.edad,
+        desdeEdad: oferta.desdeEdad,
+        hastaEdad: oferta.hastaEdad,
+        experienciaPrevia: oferta.experienciaPrevia,
+        experienciaPreviaDescription: oferta.experienciaPreviaDescription,
+        residencia: oferta.residencia,
+        areasEstudio: oferta.areasEstudio,
+        competencias: oferta.competencias,
+        otrosDetalles: oferta.otrosDetalles,
       });
       setCondicionesOfertaLaboral({
         ...condicionesOfertaLaboral,
-        jornada: empresa.jornada,
-        contrato: empresa.contrato,
-        lugarTrabajo: empresa.lugarTrabajo,
-        ofrecen: empresa.ofrecen,
+        jornada: oferta.jornada,
+        contrato: oferta.contrato,
+        lugarTrabajo: oferta.lugarTrabajo,
+        ofrecen: oferta.ofrecen,
       });
       setResponsableOfertaLaboral({
         ...responsableOfertaLaboral,
-        nombreCompletoRepresentante: empresa.nombreCompletoRepresentante,
-        emailRepresentante: empresa.emailRepresentante,
-        detalles: empresa.detalles,
-        otrasAclaraciones: empresa.otrasAclaraciones,
+        nombreCompletoRepresentante: oferta.nombreCompletoRepresentante,
+        emailRepresentante: oferta.emailRepresentante,
+        detalles: oferta.detalles,
+        otrasAclaraciones: oferta.otrasAclaraciones,
       });
-
-      /*VALIDACION     
-      setDatosOfertaLaboralValidacion({
-        ...datosOfertaLaboralValidacion,
-        fechaVigencia: empresa.fechaVigencia,
-        tituloBusqueda: empresa.tituloBusqueda,
-        descripcionEmpresa: empresa.descripcionEmpresa,
-        mision: empresa.mision,
-        responsabilidades: empresa.responsabilidades,
-      });
-      setRequisitosOfertaLaboralValidacion({
-        ...requisitosOfertaLaboralValidacion,
-        secundarioCompleto: empresa.secundarioCompleto,
-        paqueteOffice: empresa.paqueteOffice,
-        licenciaConducir:empresa.licenciaConducir,
-        edad: empresa.edad,
-        desdeEdad: empresa.desdeEdad,
-        hastaEdad: empresa.hastaEdad,
-        experienciaPrevia: empresa.experienciaPrevia,
-        experienciaPreviaDescription: empresa.experienciaPreviaDescription,
-        residencia: empresa.residencia ,
-        areasEstudio: empresa.areasEstudio,
-        competencias: empresa.competencias,
-        otrosDetalles: empresa.otrosDetalles,
-      });
-      setCondicionesOfertaLaboralValidacion({
-        ...condicionesOfertaLaboralValidacion,
-        jornada: empresa.jornada,
-        contrato: empresa.contrato,
-        lugarTrabajo: empresa.lugarTrabajo,
-        ofrecen: empresa.ofrecen,
-      });
-      setResponsableOfertaLaboralValidacion({
-        ...responsableOfertaLaboralValidacion,
-        nombreCompletoRepresentante: empresa.nombreCompletoRepresentante,
-        emailRepresentante: empresa.emailRepresentante,
-        detalles: empresa.detalles,
-        otrasAclaraciones: empresa.otrasAclaraciones,
-      });
-      */
       history.push('/editarOferta');
-    } else if (accion === 'rechazar') {
-      acciones.rechazar(setOpenAlert, setOpen, empresa.id, render);
+    } else if (accion === 'darBaja') {
+      acciones.rechazar(setOpenAlert, setOpen, oferta.id, render);
     }
   };
 
@@ -163,7 +123,7 @@ const ModalConfirmarAccion = (props) => {
 };
 
 ModalConfirmarAccion.propTypes = {
-  empresa: propTypes.object,
+  oferta: propTypes.object,
   accion: propTypes.string,
   titulo: propTypes.string,
   mensaje: propTypes.string,

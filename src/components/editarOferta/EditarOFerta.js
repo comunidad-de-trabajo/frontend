@@ -8,7 +8,7 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
-import { DefaultValue, useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState } from 'recoil';
 import {
   idOferta,
   editarCondicionesOferta,
@@ -18,6 +18,7 @@ import {
 } from '../../recoil/editarOferta';
 import { AppRoutes } from '../../routes/AppRoutes';
 import { useHistory } from 'react-router';
+/*
 import { completeFormPublicarOfertaValidation } from '../../helpers/validation';
 import {
   editarCondicionesOfertaValidacionState,
@@ -25,6 +26,7 @@ import {
   editarRequisitosOfertaValidacionState,
   editarResponsableOfertaValidacionState,
 } from '../../recoil/editarOfertaValidation';
+*/
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 import { actualizarOferta } from '../../services/oferta-laboral/registro-oferta-laboral';
 import Loading from '../common/Loading';
@@ -73,7 +75,7 @@ const steps = [
   'Responsable de la busqueda',
 ];
 
-export default function OfertaLaboral({ routes }) {
+export default function EditarOferta({ routes }) {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const [ofertaId] = useRecoilState(idOferta);
@@ -92,20 +94,10 @@ export default function OfertaLaboral({ routes }) {
     editarResponsableOfertaValidacionState
   );
   */
-  const [datosOfertaLaboral, setDatosOfertaLaboral] = useRecoilState(
-    editarDatosOfertaLaboral
-  );
-  const [requisitosOfertaLaboral, setRequisitosOfertaLaboral] = useRecoilState(
-    editarRequisitosOferta
-  );
-  const [
-    condicionesOfertaLaboral,
-    setCondicionesOfertaLaboral,
-  ] = useRecoilState(editarCondicionesOferta);
-  const [
-    responsableOfertaLaboral,
-    setResponsableOfertaLaboral,
-  ] = useRecoilState(editarResponsableOferta);
+  const [datosOfertaLaboral] = useRecoilState(editarDatosOfertaLaboral);
+  const [requisitosOfertaLaboral] = useRecoilState(editarRequisitosOferta);
+  const [condicionesOfertaLaboral] = useRecoilState(editarCondicionesOferta);
+  const [responsableOfertaLaboral] = useRecoilState(editarResponsableOferta);
   const [loading, setLoading] = useState(false);
   const [openAlert, setOpenAlert] = useState(false);
   const [datosAlerta, setDatosAlerta] = useState({
@@ -188,6 +180,9 @@ export default function OfertaLaboral({ routes }) {
       });
       setOpenAlert(true);
       /*resetValues();*/
+      setTimeout(() => {
+        history.push('/listadoOfertasUsuario');
+      }, 2000);
     } catch (e) {
       setDatosAlerta({
         severity: 'error',
@@ -195,9 +190,6 @@ export default function OfertaLaboral({ routes }) {
           'Lo sentimos, no pudimos actualizar la oferta. Intentalo mas tarde.',
       });
       setOpenAlert(true);
-      setTimeout(() => {
-        history.push('/listadoOfertasUsuario');
-      }, 4000);
     } finally {
       setLoading(false);
     }
@@ -266,7 +258,7 @@ export default function OfertaLaboral({ routes }) {
   );
 }
 
-OfertaLaboral.propTypes = {
+EditarOferta.propTypes = {
   step: PropTypes.number,
   routes: PropTypes.array,
 };
