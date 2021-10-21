@@ -103,9 +103,10 @@ const SideBar = () => {
           >
             <ListItemText primary={'Listado de ofertas'}></ListItemText>
           </ListItem>
-        ): null}
-        
-        {tieneRolPermitido(rol, roles.empresa) ? (
+        ) : null}
+
+        {tieneRolPermitido(rol, roles.empresa) &&
+        debeRenderizarPublicarOferta(rol, empresaRegistrada) ? (
           <ListItem
             button
             onClick={() => history.push('/listadoOfertasUsuario')}
