@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
   },
   link: {
     marginTop: theme.spacing(2),
-    marginLeft: theme.spacing(22),
+    marginLeft: theme.spacing(20),
     [theme.breakpoints.down(428 + theme.spacing(2) + 2)]: {
       marginLeft: 0,
     },
@@ -169,7 +169,7 @@ export default function Inscripcion() {
             Registrarse
           </Button>
           <Link className={classes.link} href="/login">
-            Ya tenes una cuenta?Iniciar sesión
+            ¿Ya tenes una cuenta?Iniciar sesión
           </Link>
         </div>
         {alerta == 0 && (
