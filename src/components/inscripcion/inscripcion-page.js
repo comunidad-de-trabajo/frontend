@@ -169,7 +169,7 @@ export default function Inscripcion() {
             Registrarse
           </Button>
           <Link className={classes.link} href="/login">
-            Ya tenes una cuenta?Inicia sesion
+            Ya tenes una cuenta?Iniciar sesión
           </Link>
         </div>
         {alerta == 0 && (
