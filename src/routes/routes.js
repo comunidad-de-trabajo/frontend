@@ -225,7 +225,7 @@ export const routes = [
     component: ResetearContrasenia,
     protection: {
       isPublic: true,
-    }
+    },
   },
   {
     path: '/listadoOfertasUsuario',
