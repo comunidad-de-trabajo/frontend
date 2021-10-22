@@ -1,109 +1,196 @@
-import { Button, Grid, TextField, Typography } from '@mui/material';
-import { Box } from '@mui/system';
 import React, { useState } from 'react';
 import { recuperarContraseniaService } from '../../services/auth/recuperarContrasenia';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 import { useHistory } from 'react-router';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles';
+import logoComunidadDeTrabajo from '../../assets/logoComunidadDeTrabajo.svg';
+import { datosRecuperarContraseniaValidation } from './validation/validationByField';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100vh',
+  },
+  logo: {
+    width: 300,
+    height: 100,
+    marginBottom: '10px',
+  },
+  container: {
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.down(400 + theme.spacing(2) + 2)]: {
+      marginTop: 0,
+      width: '100%',
+      height: '100%',
+    },
+  },
+  div: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  typography: {
+    marginBottom: theme.spacing(2),
+  },
+  button: {
+    marginTop: theme.spacing(2),
+  },
+  link: {
+    marginTop: theme.spacing(2),
+  },
+}));
 
 export const RecuperarContrasenia = () => {
   const history = useHistory();
+  const classes = useStyles();
   const [inputValue, setInputValue] = useState({
     email: '',
   });
-  const [loading, setLoading] = useState(false);
-  const [openAlert, setOpenAlert] = useState(false);
-  const [datosAlerta, setDatosAlerta] = useState({
-    severity: '',
-    mensaje: '',
+  const [validacion, setValidacion] = useState({
+    email: '',
   });
+  const [alerta, setAlerta] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
 
-  const handleChange = (e) => {
-    setInputValue(e.target.value);
-    console.log(e.target.value);
+  const handleChange = ({ target }) => {
+    setInputValue({
+      ...inputValue,
+      [target.name]: target.value,
+    });
+
+    setValidacion({
+      ...validacion,
+      [target.name]: datosRecuperarContraseniaValidation[target.name](
+        target.value
+      ),
+    });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
-      setLoading(true);
-      const { data } = await recuperarContraseniaService({ email: inputValue });
-
-      setDatosAlerta({
-        severity: 'success',
-        mensaje: data.message,
-      });
-      setOpenAlert(true);
-      setTimeout(() => {
-        history.push('/login');
-      }, 5500);
+      if (!(inputValue.email == '')) {
+        if (
+          !(
+            validacion.email == 'Email invalido' ||
+            validacion.email == 'Campo requerido'
+          )
+        ) {
+          setAlerta(2);
+          await recuperarContraseniaService({ email: inputValue.email });
+          setOpenSnackbar(true);
+          setTimeout(() => {
+            history.push('/login');
+          }, 3000);
+        } else {
+          setAlerta(1);
+          setOpenSnackbar(true);
+        }
+      } else {
+        setOpenSnackbar(true);
+      }
     } catch (error) {
-      setDatosAlerta({
-        severity: 'error',
-        mensaje: error.response.data.message,
-      });
-      setOpenAlert(true);
-    } finally {
-      setLoading(false);
+      setAlerta(3);
+      console.log(error.response.data.message);
+      setOpenSnackbar(true);
     }
-  };
-
-  const volverLogin = () => {
-    history.push('/login');
   };
 
   return (
     <>
-      <Box mt={5} display="flex" justifyContent="center">
-        <Typography variant="h4" style={{ color: '#5E7D32' }}>
-          Recuperar contraseña
-        </Typography>
-      </Box>
-
-      <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 3 }}>
-        <Grid container spacing={4} align="center">
-          <Grid item xs={12}>
-            <Grid item xs={9} sm={7} md={4} style={{ marginTop: 10 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email"
-                name="email"
-                value={inputValue.email}
-                onChange={handleChange}
-                sx={{ mt: 5 }}
-              />
+      <Grid container component="main" className={classes.root}>
+        <Container maxWidth="xs" className={classes.container}>
+          <div className={classes.div}>
+            <img
+              src={logoComunidadDeTrabajo}
+              alt="logoComunidadDeTrabajo"
+              className={classes.logo}
+            />
+            <Typography
+              className={classes.typography}
+              component="h1"
+              variant="h5"
+            >
+              Recuperar contraseña
+            </Typography>
+            <Grid container>
+              <Grid items xs="12">
+                <TextField
+                  required
+                  id="email"
+                  label="email"
+                  fullWidth
+                  name="email"
+                  type="email"
+                  variant="outlined"
+                  margin="normal"
+                  error={validacion.email}
+                  helperText={validacion.email}
+                  value={inputValue.email}
+                  onChange={handleChange}
+                />
+              </Grid>
             </Grid>
-          </Grid>
-        </Grid>
-        <Grid
-          container
-          style={{
-            marginTop: 20,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <Grid>
-            <Button color="success" type="submit" fullWidth>
-              Enviar enlace
-            </Button>
-          </Grid>
-          <Grid>
-            <Button onClick={volverLogin}>Volver al inicio</Button>
-          </Grid>
-        </Grid>
-      </Box>
+            <Grid container className={classes.link}>
+              <Grid item xs>
+                <Button href="/login" color="primary">
+                  Volver al inicio
+                </Button>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="submit"
+                  fullWidth
+                  onClick={handleSubmit}
+                  variant="contained"
+                  color="primary"
+                >
+                  ENVIAR ENLACE
+                </Button>
+              </Grid>
+            </Grid>
+          </div>
+        </Container>
 
-      <AlertaOperacionTerminada
-        tipo={datosAlerta.severity}
-        mensaje={datosAlerta.mensaje}
-        open={openAlert}
-        setOpen={setOpenAlert}
-      />
+        {alerta == 0 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="Por favor llene los campos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 1 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="cumpla con los requisitos pedidos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 2 && (
+          <AlertaOperacionTerminada
+            tipo="success"
+            mensaje="El enlace se envió correctamente"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 3 && (
+          <AlertaOperacionTerminada
+            tipo="error"
+            mensaje="Error"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+      </Grid>
     </>
   );
 };

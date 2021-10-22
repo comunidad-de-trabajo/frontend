@@ -1,133 +1,217 @@
 import React, { useState } from 'react';
-import Button from '@mui/material/Button';
-import CssBaseline from '@mui/material/CssBaseline';
-import TextField from '@mui/material/TextField';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
-import Grid from '@mui/material/Grid';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Grid from '@material-ui/core/Grid';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Typography from '@material-ui/core/Typography';
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import { useHistory } from 'react-router';
 import logoComunidadDeTrabajo from '../../assets/logoComunidadDeTrabajo.svg';
-import { makeStyles } from '@material-ui/core';
+import { datosLoginValidation } from './validation/validationByField';
+import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
+import { loginService } from '../../services/auth/login';
 import { useSetRecoilState } from 'recoil';
 import { userState } from '../../recoil/user';
-import { loginService } from '../../services/auth/login';
-import Loading from '../common/Loading';
-import { useHistory } from 'react-router';
 
-const theme = createTheme();
-
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundSize: 'cover',
+    backgroundPosition: 'center',
+    height: '100vh',
+  },
   logo: {
     width: 300,
     height: 100,
     marginBottom: '10px',
+  },
+  container: {
+    marginTop: theme.spacing(6),
+    [theme.breakpoints.down(400 + theme.spacing(2) + 2)]: {
+      marginTop: 0,
+      width: '100%',
+      height: '100%',
+    },
+  },
+  div: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  typography: {
+    marginBottom: theme.spacing(2),
+  },
+  button: {
+    marginTop: theme.spacing(2),
+  },
+  link: {
+    marginTop: theme.spacing(2),
   },
 }));
 
 export const SignIn = () => {
   const classes = useStyles();
   const history = useHistory();
+  const [inputValues, setInputValues] = useState({
+    email: '',
+    contrasenia: '',
+  });
+  const [validacion, setValidacion] = useState({
+    email: '',
+    contrasenia: '',
+  });
+  const [alerta, setAlerta] = useState(0);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
   const setUser = useSetRecoilState(userState);
-  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const handleChange = ({ target }) => {
+    setInputValues({
+      ...inputValues,
+      [target.name]: target.value,
+    });
+    setValidacion({
+      ...validacion,
+      [target.name]: datosLoginValidation[target.name](target.value),
+    });
+  };
 
+  const handleSignin = async () => {
     try {
-      setLoading(true);
-      const { data } = await loginService({
-        email: formData.get('email'),
-        contrasenia: formData.get('password'),
-      });
-      setUser(data);
-      localStorage.setItem('token', data.token);
-      history.push('/home');
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+      if (!(inputValues.email == '' || inputValues.contrasenia == '')) {
+        if (
+          !(
+            validacion.email == 'Email invalido' ||
+            validacion.contrasenia == 'Campo requerido'
+          )
+        ) {
+          setAlerta(2);
+          const { data } = await loginService({
+            email: inputValues.email,
+            contrasenia: inputValues.contrasenia,
+          });
+          setUser(data);
+          localStorage.setItem('token', data.token);
+          setOpenSnackbar(true);
+          history.push('/home');
+        } else {
+          setAlerta(1);
+          setOpenSnackbar(true);
+        }
+      } else {
+        setOpenSnackbar(true);
+      }
+    } catch (e) {
+      setAlerta(3);
+      console.log(e);
+      setOpenSnackbar(true);
     }
   };
 
   return (
-    <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
+    <Grid container component="main" className={classes.root}>
+      <Container maxWidth="xs" className={classes.container}>
+        <div className={classes.div}>
           <img
             src={logoComunidadDeTrabajo}
             alt="logoComunidadDeTrabajo"
             className={classes.logo}
           />
-
-          <Typography component="h1" variant="h5">
+          <Typography
+            className={classes.typography}
+            component="h1"
+            variant="h5"
+          >
             Login
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Contraseña"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Recordarme"
-            />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              color="success"
-            >
-              INICIAR SESIÓN
-            </Button>
-            <Grid container>
-              <Grid item xs>
-                <Link href="/recuperar-contraseña" variant="body2">
-                  ¿Olvidaste tu contraseña?
-                </Link>
-              </Grid>
-              <Grid item>
-                <Link href="/registro" variant="body2">
-                  {'Registrarme'}
-                </Link>
-              </Grid>
+          <Grid container>
+            <Grid items xs="12">
+              <TextField
+                required
+                id="email"
+                label="email"
+                fullWidth
+                name="email"
+                type="email"
+                variant="outlined"
+                margin="normal"
+                value={inputValues.email}
+                onChange={handleChange}
+                error={validacion.email}
+                helperText={validacion.email}
+              />
             </Grid>
-          </Box>
-        </Box>
+            <Grid items xs="12">
+              <TextField
+                required
+                id="contrasenia"
+                label="contraseña"
+                fullWidth
+                name="contrasenia"
+                variant="outlined"
+                margin="normal"
+                type="password"
+                value={inputValues.contrasenia}
+                onChange={handleChange}
+                error={validacion.contrasenia}
+                helperText={validacion.contrasenia}
+              />
+            </Grid>
+          </Grid>
+          <Button
+            variant="contained"
+            onClick={handleSignin}
+            color="primary"
+            className={classes.button}
+            fullWidth
+          >
+            INICIAR SESIÓN
+          </Button>
+          <Grid container className={classes.link}>
+            <Grid item xs>
+              <Link href="/recuperar-contraseña" variant="body2">
+                ¿Olvidaste tu contraseña?
+              </Link>
+            </Grid>
+            <Grid item>
+              <Link href="/registro" variant="body2">
+                {'Registrarme'}
+              </Link>
+            </Grid>
+          </Grid>
+        </div>
+        {alerta == 0 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="Por favor llene los campos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 1 && (
+          <AlertaOperacionTerminada
+            tipo="warning"
+            mensaje="cumpla con los requisitos pedidos"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 2 && (
+          <AlertaOperacionTerminada
+            tipo="success"
+            mensaje="Iniciando sesión...."
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
+        {alerta == 3 && (
+          <AlertaOperacionTerminada
+            tipo="error"
+            mensaje="Error"
+            open={openSnackbar}
+            setOpen={setOpenSnackbar}
+          />
+        )}
       </Container>
-      {loading && <Loading />}
-    </ThemeProvider>
+    </Grid>
   );
 };
