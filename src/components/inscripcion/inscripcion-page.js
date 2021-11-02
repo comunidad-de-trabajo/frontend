@@ -67,6 +67,10 @@ export default function Inscripcion() {
   const [alerta, setAlerta] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [error, setError] = useState();
+  const [mensajeError, setMensajeError] = useState(
+    'Lo sentimos hubo un error.'
+  );
+
   let history = useHistory();
 
   const handleChange = ({ target }) => {
@@ -95,13 +99,17 @@ export default function Inscripcion() {
       ...registro,
     };
     try {
-      if (!(registro.email == '' || registro.contrasenia == '')) {
+      if (
+        !(
+          registro.email == '' ||
+          registro.contrasenia == '' ||
+          registro.repetirContrasenia == ''
+        )
+      ) {
         if (
-          !(
-            validacion.email == 'Email invalido' ||
-            validacion.contrasenia ==
-              'Requiere minimo una mayuscula, una minuscula, un numero y 8 digitos'
-          )
+          validacion.email == null ||
+          validacion.contrasenia == null ||
+          validacion.repetirContrasenia == null
         ) {
           setAlerta(2);
           await nuevoRegistro(registro);
@@ -116,7 +124,14 @@ export default function Inscripcion() {
       }
     } catch (e) {
       setAlerta(3);
-      console.log(e.JSON);
+      if (e.response != undefined) {
+        if (e.response.data.message === 'El usuario ya existe') {
+          setMensajeError('El email ingresado ya esta en uso.');
+          setOpenSnackbar(true);
+          return;
+        }
+      }
+      setMensajeError('Lo sentimos, hubo un error.');
       setOpenSnackbar(true);
     }
   };
@@ -227,7 +242,7 @@ export default function Inscripcion() {
         {alerta == 3 && (
           <AlertaOperacionTerminada
             tipo="error"
-            mensaje="Error"
+            mensaje={mensajeError}
             open={openSnackbar}
             setOpen={setOpenSnackbar}
           />
