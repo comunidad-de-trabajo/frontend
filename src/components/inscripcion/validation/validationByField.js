@@ -5,10 +5,12 @@
 
 import {
   emailValidation,
+  passwordEqualsTo,
   passwordValidation,
 } from '../../../helpers/validation';
 
 export const datosSignUpValidation = {
   email: emailValidation,
   contrasenia: passwordValidation,
+  repetirContrasenia: passwordEqualsTo,
 };

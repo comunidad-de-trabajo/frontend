@@ -198,3 +198,15 @@ export const completeFormPublicarOfertaValidation = (
     })
   );
 };
+
+/**
+ * Valida que dos contraseñas -- str1 y str2 -- sean exactamente iguales
+ * @param {*} str1
+ * @param {*} str2
+ */
+export const passwordEqualsTo = (str1, str2) => {
+  if (str1 === str2) {
+    return null;
+  }
+  return 'Las contraseñas son diferentes.';
+};

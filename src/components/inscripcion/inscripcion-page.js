@@ -56,11 +56,13 @@ export default function Inscripcion() {
   const [registro, setRegistro] = useState({
     email: '',
     contrasenia: '',
+    repetirContrasenia: '',
     rol: 'empresa',
   });
   const [validacion, setValidacion] = useState({
     email: '',
     contrasenia: '',
+    repetirContrasenia: '',
   });
   const [alerta, setAlerta] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -72,9 +74,19 @@ export default function Inscripcion() {
       ...registro,
       [target.name]: target.value,
     });
+    if (target.name != 'repetirContrasenia') {
+      setValidacion({
+        ...validacion,
+        [target.name]: datosSignUpValidation[target.name](target.value),
+      });
+      return;
+    }
     setValidacion({
       ...validacion,
-      [target.name]: datosSignUpValidation[target.name](target.value),
+      [target.name]: datosSignUpValidation[target.name](
+        target.value,
+        registro.contrasenia
+      ),
     });
   };
 
@@ -156,6 +168,22 @@ export default function Inscripcion() {
                 onChange={handleChange}
                 error={validacion.contrasenia}
                 helperText={validacion.contrasenia}
+              />
+            </Grid>
+            <Grid items xs="12">
+              <TextField
+                required
+                id="repetirContrasenia"
+                label="repetir contraseña"
+                fullWidth
+                name="repetirContrasenia"
+                variant="outlined"
+                margin="normal"
+                type="password"
+                value={registro.repetirContrasenia}
+                onChange={handleChange}
+                error={validacion.repetirContrasenia}
+                helperText={validacion.repetirContrasenia}
               />
             </Grid>
           </Grid>
