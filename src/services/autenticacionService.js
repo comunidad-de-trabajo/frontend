@@ -3,7 +3,7 @@ import axios from 'axios';
 const AutenticacionService = {
   getAuthenticationAndRole: async function (token) {
     let auth = await axios
-      .post('http://35.247.236.141:3000/api/usuario/getAuth', { token })
+      .post('https://35.247.236.141:3000/api/usuario/getAuth', { token })
       .then((res) => {
         return res.data.auth;
       })
