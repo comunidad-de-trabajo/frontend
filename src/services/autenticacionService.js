@@ -1,9 +1,10 @@
 import axios from 'axios';
+import api from './envio-mails-mailjet/api';
 
 const AutenticacionService = {
   getAuthenticationAndRole: async function (token) {
-    let auth = await axios
-      .post('http://localhost:3001/api/usuario/getAuth', { token })
+    let auth = await api
+      .post('/api/usuario/getAuth', { token })
       .then((res) => {
         return res.data.auth;
       })
