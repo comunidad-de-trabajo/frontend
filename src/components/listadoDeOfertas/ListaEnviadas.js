@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
+  Typography,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
@@ -13,6 +14,9 @@ import BotonesDeLista from './BotonesDeLista';
 import { getAllOfertas } from '../../services/listado-ofertas/listado-ofertas-service';
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 const useStyles = makeStyles((theme) => ({
+  mensaje: {
+    marginTop: theme.spacing(20),
+  },
   container: {
     marginTop: theme.spacing(4),
   },
@@ -79,6 +83,17 @@ const ListaEnviadas = () => {
       <Grid item xs={12} md={12} className={classes.container}>
         <Divider />
         <List>
+          {ofertasPendientes.length == 0 && (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={classes.mensaje}
+            >
+              <Typography>No hay ofertas enviadas</Typography>
+            </Grid>
+          )}
           {ofertasPendientes.length > 0 &&
             listaPaginada.map((oferta) => (
               <div key={oferta.id}>

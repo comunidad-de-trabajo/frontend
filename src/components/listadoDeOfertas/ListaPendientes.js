@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
+  Typography,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
@@ -14,6 +15,9 @@ import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 import { getAllOfertas } from '../../services/listado-ofertas/listado-ofertas-service';
 
 const useStyles = makeStyles((theme) => ({
+  mensaje: {
+    marginTop: theme.spacing(20),
+  },
   container: {
     marginTop: theme.spacing(4),
   },
@@ -89,6 +93,17 @@ const ListaOfertasPendientes = () => {
                 <Divider />
               </div>
             ))}
+          {ofertasPendientes.length == 0 && (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={classes.mensaje}
+            >
+              <Typography>No hay ofertas pendientes</Typography>
+            </Grid>
+          )}
         </List>
         <AlertaOperacionTerminada
           tipo="success"

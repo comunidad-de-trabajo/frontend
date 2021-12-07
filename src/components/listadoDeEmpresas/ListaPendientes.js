@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
+  Typography,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
@@ -14,6 +15,9 @@ import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchLista
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
+  mensaje: {
+    marginTop: theme.spacing(20),
+  },
   container: {
     marginTop: theme.spacing(4),
   },
@@ -62,6 +66,17 @@ const ListaPendientes = () => {
       <Grid item xs={12} md={12} className={classes.container}>
         <Divider />
         <List>
+          {empresasPendientes.length == 0 && (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={classes.mensaje}
+            >
+              <Typography>No hay solicitudes de empresas</Typography>
+            </Grid>
+          )}
           {empresasPendientes.length > 0 &&
             listaPaginada.map((emp) => (
               <div key={emp.id}>

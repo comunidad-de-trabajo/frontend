@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
+  Typography,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
@@ -12,6 +13,9 @@ import Pagination from '@material-ui/lab/Pagination';
 import BotonesDeLista from './BotonesDeLista';
 import { fetchListadoEmpresas } from '../../services/listado-empresas/fetchListadoEmpresas';
 const useStyles = makeStyles((theme) => ({
+  mensaje: {
+    marginTop: theme.spacing(20),
+  },
   container: {
     marginTop: theme.spacing(4),
   },
@@ -69,6 +73,17 @@ const ListaAceptadas = () => {
       <Grid item xs={12} md={12} className={classes.container}>
         <Divider />
         <List>
+          {empresasAceptadas.length == 0 && (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={classes.mensaje}
+            >
+              <Typography>No hay registro de empresas aceptadas</Typography>
+            </Grid>
+          )}
           {empresasAceptadas.length > 0 &&
             listaPaginada.map((emp) => (
               <div key={emp.id}>

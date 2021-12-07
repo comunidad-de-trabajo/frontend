@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Grid,
+  Typography,
   ListItem,
   ListItemText,
   ListItemSecondaryAction,
@@ -14,6 +15,9 @@ import { fetchListadoOfertas } from '../../services/listadoDeOfertas/endpointLis
 import AlertaOperacionTerminada from '../common/AlertaOperacionTerminada';
 
 const useStyles = makeStyles((theme) => ({
+  mensaje: {
+    marginTop: theme.spacing(20),
+  },
   container: {
     marginTop: theme.spacing(4),
   },
@@ -78,6 +82,17 @@ const Oferta = () => {
                 <Divider />
               </div>
             ))}
+          {ofertas.length == 0 && (
+            <Grid
+              container
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              className={classes.mensaje}
+            >
+              <Typography>No hay oferta registrada</Typography>
+            </Grid>
+          )}
         </List>
         <AlertaOperacionTerminada
           tipo="success"

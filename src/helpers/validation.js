@@ -18,7 +18,7 @@ export const onlyNotEmptyOrNullValidation = (field) => {
 };
 
 export const onlyValidCharactersValidation = (field) => {
-  const regex = /^[\w\-\s,.\u00f1\u00d1]+$/;
+  const regex = /^[\w\-\s,. áéíóúñüàè]+$/i;
   if (notEmptyOrNullValidation(field)) {
     return 'Campo requerido';
   } else if (!regex.test(field)) {
@@ -28,7 +28,7 @@ export const onlyValidCharactersValidation = (field) => {
 };
 
 export const onlyValidCharactersValidationNotRequired = (field) => {
-  const regex = /^[\w\-\s,.\u00f1\u00d1]+$/;
+  const regex = /^[\w\-\s,. áéíóúñüàè \u00f1\u00d1]+$/;
   if (!regex.test(field)) {
     if (field === '') return null;
     else return 'Caracteres no validos';
@@ -39,7 +39,7 @@ export const onlyValidCharactersValidationNotRequired = (field) => {
 export const onlyLettersValidation = (field) => {
   if (notEmptyOrNullValidation(field)) {
     return 'Campo requerido';
-  } else if (/[^a-zA-Z -]/.test(field)) {
+  } else if (/[^a-zA-Z -]+ áéíóúñüàè/.test(field)) {
     return 'Caracteres no validos';
   }
   return null;
