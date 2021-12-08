@@ -63,6 +63,7 @@ export const SignIn = () => {
   const [alerta, setAlerta] = useState(0);
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const setUser = useSetRecoilState(userState);
+  const [mensajeAlerta, setMensajeAlerta] = useState('');
 
   const handleChange = ({ target }) => {
     setInputValues({
@@ -102,7 +103,7 @@ export const SignIn = () => {
       }
     } catch (e) {
       setAlerta(3);
-      console.log(e);
+      setMensajeAlerta(e.response.data.msg);
       setOpenSnackbar(true);
     }
   };
@@ -206,7 +207,7 @@ export const SignIn = () => {
         {alerta == 3 && (
           <AlertaOperacionTerminada
             tipo="error"
-            mensaje="Error"
+            mensaje={mensajeAlerta}
             open={openSnackbar}
             setOpen={setOpenSnackbar}
           />
