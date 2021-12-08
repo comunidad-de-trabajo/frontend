@@ -10,13 +10,11 @@ const aceptarEmpresa = async (
   render
 ) => {
   try {
-    /*
     await envioMailsIndividual({
       emailTo: email,
       aceptado: true,
       textPart: `For ${nombreComercial} this test email`,
     });
-    */
 
     await cambiarEstadoEmpresa('aceptada', idEmpresa);
     await setOpenAlert(true);
@@ -38,13 +36,11 @@ const rechazarEmpresa = async (
   render
 ) => {
   try {
-    /*
     await envioMailsIndividual({
       emailTo: email,
       aceptado: false,
       textPart: `For ${nombreComercial} this test email`,
     });
-    */
 
     await cambiarEstadoEmpresa('rechazada', idEmpresa);
     await setOpenAlert(true);
