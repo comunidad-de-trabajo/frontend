@@ -82,14 +82,14 @@ const SideBar = () => {
           </ListItem>
         ) : null}
 
-        {tieneRolPermitido(rol, roles.adminYEmpresa) &&
+        {tieneRolPermitido(rol, roles.empresa) &&
         debeRenderizarRegistroDeEmpresa(rol, empresaRegistrada) ? (
           <ListItem button onClick={() => history.push('/registroDeEmpresa/0')}>
             <ListItemText primary={'Registro de empresas'}></ListItemText>
           </ListItem>
         ) : null}
 
-        {tieneRolPermitido(rol, roles.adminYEmpresa) &&
+        {tieneRolPermitido(rol, roles.empresa) &&
         debeRenderizarPublicarOferta(rol, empresaRegistrada) ? (
           <ListItem button onClick={() => history.push('/ofertaLaboral/0')}>
             <ListItemText primary={'Publicar oferta laboral'}></ListItemText>
